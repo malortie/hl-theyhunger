@@ -157,7 +157,11 @@ void CApache :: Spawn( void )
 		pev->nextthink = gpGlobals->time + 1.0;
 	}
 
+#if defined ( HUNGER_DLL )
+	m_iRockets = 0;
+#else
 	m_iRockets = 10;
+#endif
 }
 
 

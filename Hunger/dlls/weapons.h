@@ -175,7 +175,7 @@ public:
 #define SNARK_MAX_CLIP			WEAPON_NOCLIP
 #if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 #define AP9_MAX_CLIP			40
-#define TAURUS_MAX_CLIP			10
+#define TAURUS_MAX_CLIP			20
 #define SNIPER_MAX_CLIP			5
 #define CHAINGUN_MAX_CLIP		100
 #define MEDKIT_MAX_CLIP			WEAPON_NOCLIP
@@ -200,7 +200,7 @@ public:
 #define HIVEHAND_DEFAULT_GIVE		8
 #if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 #define AP9_DEFAULT_GIVE			40
-#define TAURUS_DEFAULT_GIVE			10
+#define TAURUS_DEFAULT_GIVE			20
 #define SNIPER_DEFAULT_GIVE			5
 #define CHAINGUN_DEFAULT_GIVE		100
 #define MEDKIT_DEFAULT_GIVE			12

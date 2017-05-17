@@ -264,6 +264,12 @@ enum
 //=========================================================
 void CHGrunt :: SpeakSentence( void )
 {
+#if defined ( HUNGER_DLL )
+	// Prevent Cyberfranklin from emitting Grunt taunt sounds. 
+	if ( FClassnameIs( pev, "monster_th_cyberfranklin" ) )
+		return;
+#endif
+
 	if ( m_iSentence == HGRUNT_SENT_NONE )
 	{
 		// no sentence cued up.

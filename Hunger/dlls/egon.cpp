@@ -560,10 +560,13 @@ void CEgon::WeaponIdle( void )
 {
 	ResetEmptySound( );
 
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+	if ( m_flTimeWeaponIdle > UTIL_WeaponTimeBase() )
+		return;
+#else
 	if ( m_flTimeWeaponIdle > gpGlobals->time )
 		return;
 
-#if !defined ( HUNGER_DLL ) && !defined ( HUNGER_CLIENT_DLL )
 	if ( m_fireState != FIRE_OFF )
 		 EndAttack();
 #endif // !defined ( HUNGER_DLL ) && !defined ( HUNGER_CLIENT_DLL )
