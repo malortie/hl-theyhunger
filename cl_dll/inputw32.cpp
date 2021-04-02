@@ -423,7 +423,7 @@ void IN_ScaleMouse( float *x, float *y )
 		float acceleration_scale = m_customaccel_scale->value;
 		float accelerated_sensitivity_max = m_customaccel_max->value;
 		float accelerated_sensitivity_exponent = m_customaccel_exponent->value;
-		float accelerated_sensitivity = ( (float)pow( raw_mouse_movement_distance, accelerated_sensitivity_exponent ) * acceleration_scale + mouse_senstivity );
+		float accelerated_sensitivity = ( std::pow( raw_mouse_movement_distance, accelerated_sensitivity_exponent ) * acceleration_scale + mouse_senstivity );
 
 		if ( accelerated_sensitivity_max > 0.0001f && 
 			accelerated_sensitivity > accelerated_sensitivity_max )
@@ -908,7 +908,7 @@ void IN_JoyMove ( float frametime, usercmd_t *cmd )
 				// y=ax^b; where a = 300 and b = 1.3
 				// also x values are in increments of 800 (so this is factored out)
 				// then bounds check result to level out excessively high spin rates
-				fTemp = 300.0 * pow(abs(fAxisValue) / 800.0, 1.3);
+				fTemp = 300.0 * std::pow(abs(fAxisValue) / 800.0, 1.3);
 				if (fTemp > 14000.0)
 					fTemp = 14000.0;
 				// restore direction information
