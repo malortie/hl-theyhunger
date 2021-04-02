@@ -3293,7 +3293,7 @@ void CGraph :: ComputeStaticRoutingTables( void )
 						int i;
 						for (i = 0; i < m_nRouteInfo - nRoute; i++)
 						{
-							if (memcmp(m_pRouteInfo + i, pRoute, nRoute) == 0)
+							if (std::memcmp(m_pRouteInfo + i, pRoute, nRoute) == 0)
 							{
 								break;
 							}

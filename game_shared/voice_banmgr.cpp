@@ -173,7 +173,7 @@ CVoiceBanMgr::BannedPlayer* CVoiceBanMgr::InternalFindPlayerSquelch(char const p
 	BannedPlayer *pListHead = &m_PlayerHash[index];
 	for(BannedPlayer *pCur=pListHead->m_pNext; pCur != pListHead; pCur=pCur->m_pNext)
 	{
-		if(memcmp(playerID, pCur->m_PlayerID, 16) == 0)
+		if(std::memcmp(playerID, pCur->m_PlayerID, 16) == 0)
 			return pCur;
 	}
 
