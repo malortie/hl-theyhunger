@@ -673,7 +673,7 @@ void CHud::AddHudElem(CHudBase *phudelem)
 	if (!pdl)
 		return;
 
-	memset(pdl, 0, sizeof(HUDLIST));
+	std::memset(pdl, 0, sizeof(HUDLIST));
 	pdl->p = phudelem;
 
 	if (!m_pHudList)

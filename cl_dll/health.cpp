@@ -64,7 +64,7 @@ int CHudHealth::Init(void)
 	giDmgHeight = 0;
 	giDmgWidth = 0;
 
-	memset(m_dmg, 0, sizeof(DAMAGE_IMAGE) * NUM_DMG_TYPES);
+	std::memset(m_dmg, 0, sizeof(DAMAGE_IMAGE) * NUM_DMG_TYPES);
 
 
 	gHUD.AddHudElem(this);

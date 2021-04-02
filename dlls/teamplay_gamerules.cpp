@@ -35,8 +35,8 @@ CHalfLifeTeamplay :: CHalfLifeTeamplay()
 	m_DisableDeathMessages = FALSE;
 	m_DisableDeathPenalty = FALSE;
 
-	memset( team_names, 0, sizeof(team_names) );
-	memset( team_scores, 0, sizeof(team_scores) );
+	std::memset( team_names, 0, sizeof(team_names) );
+	std::memset( team_scores, 0, sizeof(team_scores) );
 	num_teams = 0;
 
 	// Copy over the team from the server config
@@ -524,7 +524,7 @@ const char *CHalfLifeTeamplay::TeamWithFewestPlayers( void )
 	int teamCount[ MAX_TEAMS ];
 	char *pTeamName = NULL;
 
-	memset( teamCount, 0, MAX_TEAMS * sizeof(int) );
+	std::memset( teamCount, 0, MAX_TEAMS * sizeof(int) );
 	
 	// loop through all clients, count number of players on each team
 	for ( i = 1; i <= gpGlobals->maxClients; i++ )
@@ -585,7 +585,7 @@ void CHalfLifeTeamplay::RecountTeams( bool bResendInfo )
 	}
 
 	// Sanity check
-	memset( team_scores, 0, sizeof(team_scores) );
+	std::memset( team_scores, 0, sizeof(team_scores) );
 
 	// loop through all clients
 	for ( int i = 1; i <= gpGlobals->maxClients; i++ )

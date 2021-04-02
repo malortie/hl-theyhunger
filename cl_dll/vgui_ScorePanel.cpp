@@ -246,8 +246,8 @@ void ScorePanel::Initialize( void )
 	m_fLastKillTime = 0;
 	m_iPlayerNum = 0;
 	m_iNumTeams = 0;
-	memset( g_PlayerExtraInfo, 0, sizeof g_PlayerExtraInfo );
-	memset( g_TeamInfo, 0, sizeof g_TeamInfo );
+	std::memset( g_PlayerExtraInfo, 0, sizeof g_PlayerExtraInfo );
+	std::memset( g_TeamInfo, 0, sizeof g_TeamInfo );
 }
 
 bool HACK_GetPlayerUniqueID( int iPlayer, char playerID[16] )
@@ -521,7 +521,7 @@ void ScorePanel::RebuildTeams()
 	for ( i = 1; i <= m_iNumTeams; i++ )
 	{
 		if ( g_TeamInfo[i].players < 1 )
-			memset( &g_TeamInfo[i], 0, sizeof(team_info_t) );
+			std::memset( &g_TeamInfo[i], 0, sizeof(team_info_t) );
 	}
 
 	// Update the scoreboard

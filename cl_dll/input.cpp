@@ -240,7 +240,7 @@ void KB_Add( const char *name, kbutton_t *pkb )
 		return;
 
 	p = ( kblist_t * )std::malloc( sizeof( kblist_t ) );
-	memset( p, 0, sizeof( *p ) );
+	std::memset( p, 0, sizeof( *p ) );
 
 	strcpy( p->name, name );
 	p->pkey = pkb;
@@ -673,7 +673,7 @@ void CL_DLLEXPORT CL_CreateMove ( float frametime, struct usercmd_s *cmd, int ac
 
 		CL_AdjustAngles ( frametime, viewangles );
 
-		memset (cmd, 0, sizeof(*cmd));
+		std::memset (cmd, 0, sizeof(*cmd));
 		
 		gEngfuncs.SetViewAngles( (float *)viewangles );
 

@@ -1326,7 +1326,7 @@ int ReloadMapCycleFile( char *filename, mapcycle_t *cycle )
 		while ( 1 )
 		{
 			hasbuffer = 0;
-			memset( szBuffer, 0, MAX_RULE_BUFFER );
+			std::memset( szBuffer, 0, MAX_RULE_BUFFER );
 
 			pFileList = COM_Parse( pFileList );
 			if ( strlen( com_token ) <= 0 )
@@ -1358,7 +1358,7 @@ int ReloadMapCycleFile( char *filename, mapcycle_t *cycle )
 				item->minplayers = 0;
 				item->maxplayers = 0;
 
-				memset( item->rulebuffer, 0, MAX_RULE_BUFFER );
+				std::memset( item->rulebuffer, 0, MAX_RULE_BUFFER );
 
 				if ( hasbuffer )
 				{

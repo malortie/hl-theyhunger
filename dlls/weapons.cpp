@@ -280,7 +280,7 @@ void UTIL_PrecacheOtherWeapon( const char *szClassname )
 	{
 		ItemInfo II;
 		pEntity->Precache( );
-		memset( &II, 0, sizeof II );
+		std::memset( &II, 0, sizeof II );
 		if ( ((CBasePlayerItem*)pEntity)->GetItemInfo( &II ) )
 		{
 			CBasePlayerItem::ItemInfoArray[II.iId] = II;
@@ -295,7 +295,7 @@ void UTIL_PrecacheOtherWeapon( const char *szClassname )
 				AddAmmoNameToAmmoRegistry( II.pszAmmo2 );
 			}
 
-			memset( &II, 0, sizeof II );
+			std::memset( &II, 0, sizeof II );
 		}
 	}
 
@@ -305,8 +305,8 @@ void UTIL_PrecacheOtherWeapon( const char *szClassname )
 // called by worldspawn
 void W_Precache(void)
 {
-	memset( CBasePlayerItem::ItemInfoArray, 0, sizeof(CBasePlayerItem::ItemInfoArray) );
-	memset( CBasePlayerItem::AmmoInfoArray, 0, sizeof(CBasePlayerItem::AmmoInfoArray) );
+	std::memset( CBasePlayerItem::ItemInfoArray, 0, sizeof(CBasePlayerItem::ItemInfoArray) );
+	std::memset( CBasePlayerItem::AmmoInfoArray, 0, sizeof(CBasePlayerItem::AmmoInfoArray) );
 	giAmmoIndex = 0;
 
 	// custom items...

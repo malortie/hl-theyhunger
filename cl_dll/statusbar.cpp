@@ -66,7 +66,7 @@ void CHudStatusBar :: Reset( void )
 	m_iFlags &= ~HUD_ACTIVE;  // start out inactive
 	for ( i = 0; i < MAX_STATUSBAR_LINES; i++ )
 		m_szStatusText[i][0] = 0;
-	memset( m_iStatusValues, 0, sizeof m_iStatusValues );
+	std::memset( m_iStatusValues, 0, sizeof m_iStatusValues );
 
 	m_iStatusValues[0] = 1;  // 0 is the special index, which always returns true
 
@@ -79,11 +79,11 @@ void CHudStatusBar :: ParseStatusString( int line_num )
 {
 	// localise string first
 	char szBuffer[MAX_STATUSTEXT_LENGTH];
-	memset( szBuffer, 0, sizeof szBuffer );
+	std::memset( szBuffer, 0, sizeof szBuffer );
 	gHUD.m_TextMessage.LocaliseTextString( m_szStatusText[line_num], szBuffer, MAX_STATUSTEXT_LENGTH );
 
 	// parse m_szStatusText & m_iStatusValues into m_szStatusBar
-	memset( m_szStatusBar[line_num], 0, MAX_STATUSTEXT_LENGTH );
+	std::memset( m_szStatusBar[line_num], 0, MAX_STATUSTEXT_LENGTH );
 	char *src = szBuffer;
 	char *dst = m_szStatusBar[line_num];
 

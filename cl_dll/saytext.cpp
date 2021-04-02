@@ -67,9 +67,9 @@ int CHudSayText :: Init( void )
 
 void CHudSayText :: InitHUDData( void )
 {
-	memset( g_szLineBuffer, 0, sizeof g_szLineBuffer );
-	memset( g_pflNameColors, 0, sizeof g_pflNameColors );
-	memset( g_iNameLengths, 0, sizeof g_iNameLengths );
+	std::memset( g_szLineBuffer, 0, sizeof g_szLineBuffer );
+	std::memset( g_pflNameColors, 0, sizeof g_pflNameColors );
+	std::memset( g_iNameLengths, 0, sizeof g_iNameLengths );
 }
 
 int CHudSayText :: VidInit( void )

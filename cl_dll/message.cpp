@@ -55,8 +55,8 @@ int CHudMessage::VidInit( void )
 
 void CHudMessage::Reset( void )
 {
- 	memset( m_pMessages, 0, sizeof( m_pMessages[0] ) * maxHUDMessages );
-	memset( m_startTime, 0, sizeof( m_startTime[0] ) * maxHUDMessages );
+ 	std::memset( m_pMessages, 0, sizeof( m_pMessages[0] ) * maxHUDMessages );
+	std::memset( m_startTime, 0, sizeof( m_startTime[0] ) * maxHUDMessages );
 	
 	m_gameTitleTime = 0;
 	m_pGameTitle = NULL;

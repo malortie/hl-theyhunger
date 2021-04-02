@@ -1151,7 +1151,7 @@ int AddToFullPack( struct entity_state_s *state, int e, edict_t *ent, edict_t *h
 		UTIL_UnsetGroupTrace();
 	}
 
-	memset( state, 0, sizeof( *state ) );
+	std::memset( state, 0, sizeof( *state ) );
 
 	// Assign index so we can track this entity from frame to frame and
 	//  delta from it.
@@ -1593,7 +1593,7 @@ int GetWeaponData( struct edict_s *player, struct weapon_data_s *info )
 	
 	ItemInfo II;
 
-	memset( info, 0, 32 * sizeof( weapon_data_t ) );
+	std::memset( info, 0, 32 * sizeof( weapon_data_t ) );
 
 	if ( !pl )
 		return 1;
@@ -1612,7 +1612,7 @@ int GetWeaponData( struct edict_s *player, struct weapon_data_s *info )
 				if ( gun && gun->UseDecrement() )
 				{
 					// Get The ID.
-					memset( &II, 0, sizeof( II ) );
+					std::memset( &II, 0, sizeof( II ) );
 					gun->GetItemInfo( &II );
 
 					if ( II.iId >= 0 && II.iId < 32 )
@@ -1744,7 +1744,7 @@ void UpdateClientData ( const edict_t *ent, int sendweapons, struct clientdata_s
 				if ( gun && gun->UseDecrement() )
 				{
 					ItemInfo II;
-					memset( &II, 0, sizeof( II ) );
+					std::memset( &II, 0, sizeof( II ) );
 					gun->GetItemInfo( &II );
 
 					cd->m_iId = II.iId;
@@ -1878,7 +1878,7 @@ void CreateInstancedBaselines ( void )
 	int iret = 0;
 	entity_state_t state;
 
-	memset( &state, 0, sizeof( state ) );
+	std::memset( &state, 0, sizeof( state ) );
 
 	// Create any additional baselines here for things like grendates, etc.
 	// iret = ENGINE_INSTANCE_BASELINE( pc->pev->classname, &state );

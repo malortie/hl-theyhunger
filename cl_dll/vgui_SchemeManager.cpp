@@ -185,7 +185,7 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 
 	const static int numTmpSchemes = 64;
 	static CScheme tmpSchemes[numTmpSchemes];
-	memset( tmpSchemes, 0, sizeof(tmpSchemes) );
+	std::memset( tmpSchemes, 0, sizeof(tmpSchemes) );
 	int currentScheme = -1;
 	CScheme *pScheme = NULL;
 

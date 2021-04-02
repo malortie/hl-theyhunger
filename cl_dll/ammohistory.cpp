@@ -115,7 +115,7 @@ int HistoryResource :: DrawAmmoHistory( float flTime )
 
 			if ( rgAmmoHistory[i].DisplayTime <= flTime )
 			{  // pic drawing time has expired
-				memset( &rgAmmoHistory[i], 0, sizeof(HIST_ITEM) );
+				std::memset( &rgAmmoHistory[i], 0, sizeof(HIST_ITEM) );
 				CheckClearHistory();
 			}
 			else if ( rgAmmoHistory[i].type == HISTSLOT_AMMO )

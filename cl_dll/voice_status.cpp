@@ -138,7 +138,7 @@ CVoiceStatus::CVoiceStatus()
 
 	m_bTalking = m_bServerAcked = false;
 
-	memset(m_pBanButtons, 0, sizeof(m_pBanButtons));
+	std::memset(m_pBanButtons, 0, sizeof(m_pBanButtons));
 
 	m_pParentPanel = NULL;
 
@@ -203,7 +203,7 @@ int CVoiceStatus::Init(
 
 	m_BlinkTimer = 0;
 	m_VoiceHeadModel = NULL;
-	memset(m_Labels, 0, sizeof(m_Labels));
+	std::memset(m_Labels, 0, sizeof(m_Labels));
 	
 	for(int i=0; i < MAX_VOICE_SPEAKERS; i++)
 	{
@@ -366,7 +366,7 @@ void CVoiceStatus::CreateEntities()
 		cl_entity_s *pEnt = &m_VoiceHeadModels[iOutModel];
 		++iOutModel;
 
-		memset(pEnt, 0, sizeof(*pEnt));
+		std::memset(pEnt, 0, sizeof(*pEnt));
 
 		pEnt->curstate.rendermode = kRenderTransAdd;
 		pEnt->curstate.renderamt = 255;
@@ -452,7 +452,7 @@ void CVoiceStatus::UpdateSpeakerStatus( int entindex, qboolean bTalking )
 					{
 						// Get the name from the engine.
 						hud_player_info_t info;
-						memset( &info, 0, sizeof( info ) );
+						std::memset( &info, 0, sizeof( info ) );
 						gEngfuncs.pfnGetPlayerInfo( entindex, &info );
 
 						char paddedName[512];

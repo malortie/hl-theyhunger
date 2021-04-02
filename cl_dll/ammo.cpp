@@ -84,10 +84,10 @@ void WeaponsResource :: LoadWeaponSprites( WEAPON *pWeapon )
 	if ( !pWeapon )
 		return;
 
-	memset( &pWeapon->rcActive, 0, sizeof(wrect_t) );
-	memset( &pWeapon->rcInactive, 0, sizeof(wrect_t) );
-	memset( &pWeapon->rcAmmo, 0, sizeof(wrect_t) );
-	memset( &pWeapon->rcAmmo2, 0, sizeof(wrect_t) );
+	std::memset( &pWeapon->rcActive, 0, sizeof(wrect_t) );
+	std::memset( &pWeapon->rcInactive, 0, sizeof(wrect_t) );
+	std::memset( &pWeapon->rcAmmo, 0, sizeof(wrect_t) );
+	std::memset( &pWeapon->rcAmmo2, 0, sizeof(wrect_t) );
 	pWeapon->hInactive = 0;
 	pWeapon->hActive = 0;
 	pWeapon->hAmmo = 0;

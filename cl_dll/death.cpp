@@ -81,7 +81,7 @@ int CHudDeathNotice :: Init( void )
 
 void CHudDeathNotice :: InitHUDData( void )
 {
-	memset( rgDeathNoticeList, 0, sizeof(rgDeathNoticeList) );
+	std::memset( rgDeathNoticeList, 0, sizeof(rgDeathNoticeList) );
 }
 
 

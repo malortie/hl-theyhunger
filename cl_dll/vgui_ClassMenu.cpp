@@ -62,7 +62,7 @@ CClassMenuPanel::CClassMenuPanel(int iTrans, int iRemoveMe, int x,int y,int wide
 		bShowClassGraphic = false;
 	}
 
-	memset( m_pClassImages, 0, sizeof(m_pClassImages) );
+	std::memset( m_pClassImages, 0, sizeof(m_pClassImages) );
 
 	// Get the scheme used for the Titles
 	CSchemeManager *pSchemes = gViewPort->GetSchemeManager();

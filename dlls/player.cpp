@@ -689,8 +689,8 @@ void CBasePlayer::PackDeadPlayerItems( void )
 	int iPW = 0;// index into packweapons array
 	int iPA = 0;// index into packammo array
 
-	memset(rgpPackWeapons, 0, sizeof(rgpPackWeapons) );
-	memset(iPackAmmo, -1, sizeof(iPackAmmo) );
+	std::memset(rgpPackWeapons, 0, sizeof(rgpPackWeapons) );
+	std::memset(iPackAmmo, -1, sizeof(iPackAmmo) );
 
 	// get the game rules 
 	iWeaponRules = g_pGameRules->DeadPlayerWeapons( this );
@@ -1748,7 +1748,7 @@ void CBasePlayer::UpdateStatusBar()
 	char sbuf0[ SBAR_STRING_SIZE ];
 	char sbuf1[ SBAR_STRING_SIZE ];
 
-	memset( newSBarState, 0, sizeof(newSBarState) );
+	std::memset( newSBarState, 0, sizeof(newSBarState) );
 	strcpy( sbuf0, m_SbarString0 );
 	strcpy( sbuf1, m_SbarString1 );
 

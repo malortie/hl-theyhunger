@@ -2413,7 +2413,7 @@ int CRestore::ReadFields( const char *pname, void *pBaseData, TYPEDESCRIPTION *p
 	{
 		// Don't clear global fields
 		if ( !m_global || !(pFields[i].flags & FTYPEDESC_GLOBAL) )
-			memset( ((char *)pBaseData + pFields[i].fieldOffset), 0, pFields[i].fieldSize * gSizes[pFields[i].fieldType] );
+			std::memset( ((char *)pBaseData + pFields[i].fieldOffset), 0, pFields[i].fieldSize * gSizes[pFields[i].fieldType] );
 	}
 
 	for ( i = 0; i < fileCount; i++ )

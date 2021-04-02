@@ -652,7 +652,7 @@ void CHudServers::SortServers( const char *fieldname )
 	server_t **pSortArray;
 	
 	pSortArray = new server_t *[ c ];
-	memset( pSortArray, 0, c  * sizeof( server_t * ) );
+	std::memset( pSortArray, 0, c  * sizeof( server_t * ) );
 
 	// Now copy the list into the pSortArray:
 	p = m_pServers;
@@ -921,7 +921,7 @@ void CHudServers::RequestBroadcastList( int clearpending )
 	m_dStarted		= m_fElapsed;
 
 	netadr_t		adr;
-	memset( &adr, 0, sizeof( adr ) );
+	std::memset( &adr, 0, sizeof( adr ) );
 
 	if ( clearpending )
 	{

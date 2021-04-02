@@ -496,7 +496,7 @@ void *TeamFortressViewport::operator new( size_t stAllocateBlock )
 {
 //	void *mem = Panel::operator new( stAllocateBlock );
 	void *mem = ::operator new( stAllocateBlock );
-	memset( mem, 0, stAllocateBlock );
+	std::memset( mem, 0, stAllocateBlock );
 	return mem;
 }
 

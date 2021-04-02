@@ -110,7 +110,7 @@ we set up the m_pPlayer field.
 */
 void HUD_PrepEntity( CBaseEntity *pEntity, CBasePlayer *pWeaponOwner )
 {
-	memset( &ev[ num_ents ], 0, sizeof( entvars_t ) );
+	std::memset( &ev[ num_ents ], 0, sizeof( entvars_t ) );
 	pEntity->pev = &ev[ num_ents++ ];
 
 	pEntity->Precache();
@@ -485,7 +485,7 @@ Don't actually trace, but act like the trace didn't hit anything.
 */
 void UTIL_TraceLine( const Vector &vecStart, const Vector &vecEnd, IGNORE_MONSTERS igmon, edict_t *pentIgnore, TraceResult *ptr )
 {
-	memset( ptr, 0, sizeof( *ptr ) );
+	std::memset( ptr, 0, sizeof( *ptr ) );
 	ptr->flFraction = 1.0;
 }
 
@@ -673,7 +673,7 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 	weapon_data_t nulldata, *pfrom, *pto;
 	static int lasthealth;
 
-	memset( &nulldata, 0, sizeof( nulldata ) );
+	std::memset( &nulldata, 0, sizeof( nulldata ) );
 
 	HUD_InitClientWeapons();	
 
@@ -945,7 +945,7 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 
 		if ( !pCurrent )
 		{
-			memset( pto, 0, sizeof( weapon_data_t ) );
+			std::memset( pto, 0, sizeof( weapon_data_t ) );
 			continue;
 		}
 	

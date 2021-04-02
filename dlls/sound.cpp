@@ -1274,12 +1274,12 @@ void SENTENCEG_Init()
 	if (fSentencesInit)
 		return;
 
-	memset(gszallsentencenames, 0, CVOXFILESENTENCEMAX * CBSENTENCENAME_MAX);
+	std::memset(gszallsentencenames, 0, CVOXFILESENTENCEMAX * CBSENTENCENAME_MAX);
 	gcallsentences = 0;
 
-	memset(rgsentenceg, 0, CSENTENCEG_MAX * sizeof(SENTENCEG));
-	memset(buffer, 0, 512);
-	memset(szgroup, 0, 64);
+	std::memset(rgsentenceg, 0, CSENTENCEG_MAX * sizeof(SENTENCEG));
+	std::memset(buffer, 0, 512);
+	std::memset(szgroup, 0, 64);
 	isentencegs = -1;
 
 	
@@ -1546,11 +1546,11 @@ void TEXTURETYPE_Init()
 	if (fTextureTypeInit)
 		return;
 
-	memset(&(grgszTextureName[0][0]), 0, CTEXTURESMAX * CBTEXTURENAMEMAX);
-	memset(grgchTextureType, 0, CTEXTURESMAX);
+	std::memset(&(grgszTextureName[0][0]), 0, CTEXTURESMAX * CBTEXTURENAMEMAX);
+	std::memset(grgchTextureType, 0, CTEXTURESMAX);
 
 	gcTextures = 0;
-	memset(buffer, 0, 512);
+	std::memset(buffer, 0, 512);
 
 	pMemFile = g_engfuncs.pfnLoadFileForMe( "sound/materials.txt", &fileSize );
 	if ( !pMemFile )

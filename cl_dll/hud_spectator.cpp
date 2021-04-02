@@ -175,8 +175,8 @@ int CHudSpectator::Init()
 	m_chatEnabled = (gHUD.m_SayText.m_HUD_saytext->value!=0);
 	iJumpSpectator	= 0;
 
-	memset( &m_OverviewData, 0, sizeof(m_OverviewData));
-	memset( &m_OverviewEntities, 0, sizeof(m_OverviewEntities));
+	std::memset( &m_OverviewData, 0, sizeof(m_OverviewData));
+	std::memset( &m_OverviewEntities, 0, sizeof(m_OverviewEntities));
 	m_lastPrimaryObject = m_lastSecondaryObject = 0;
 
 	gEngfuncs.pfnAddCommand ("spec_mode", SpectatorMode );
@@ -1217,7 +1217,7 @@ void CHudSpectator::SetModes(int iNewMainMode, int iNewInsetMode)
 		}
 		else
 		{
-			memset( &m_crosshairRect,0,sizeof(m_crosshairRect) );
+			std::memset( &m_crosshairRect,0,sizeof(m_crosshairRect) );
 			SetCrosshair( 0, m_crosshairRect, 0, 0, 0 );
 		} 
 
@@ -1253,7 +1253,7 @@ bool CHudSpectator::ParseOverviewFile( )
 	
 	char *pfile  = NULL;
 
-	memset( &m_OverviewData, 0, sizeof(m_OverviewData));
+	std::memset( &m_OverviewData, 0, sizeof(m_OverviewData));
 
 	// fill in standrd values
 	m_OverviewData.insetWindowX = 4;	// upper left corner
@@ -1772,7 +1772,7 @@ void CHudSpectator::CheckOverviewEntities()
 		// remove entity from list if it is too old
 		if ( m_OverviewEntities[i].killTime < time )
 		{
-			memset( &m_OverviewEntities[i], 0, sizeof (overviewEntity_t) );
+			std::memset( &m_OverviewEntities[i], 0, sizeof (overviewEntity_t) );
 		}
 	}
 }
@@ -1884,7 +1884,7 @@ void CHudSpectator::CheckSettings()
 	}
 	else
 	{
-		memset( &m_crosshairRect,0,sizeof(m_crosshairRect) );
+		std::memset( &m_crosshairRect,0,sizeof(m_crosshairRect) );
 		SetCrosshair( 0, m_crosshairRect, 0, 0, 0 );
 	} 
 
@@ -1941,7 +1941,7 @@ void CHudSpectator::Reset()
 		LoadMapSprites();
 	}
 
-	memset( &m_OverviewEntities, 0, sizeof(m_OverviewEntities));
+	std::memset( &m_OverviewEntities, 0, sizeof(m_OverviewEntities));
 
 	m_FOV = 90.0f;
 
@@ -1961,8 +1961,8 @@ void CHudSpectator::InitHUDData()
 	iJumpSpectator	= 0;
 	g_iUser1 = g_iUser2 = 0;
 
-	memset( &m_OverviewData, 0, sizeof(m_OverviewData));
-	memset( &m_OverviewEntities, 0, sizeof(m_OverviewEntities));
+	std::memset( &m_OverviewData, 0, sizeof(m_OverviewData));
+	std::memset( &m_OverviewEntities, 0, sizeof(m_OverviewEntities));
 
 	if ( gEngfuncs.IsSpectateOnly() || gEngfuncs.pDemoAPI->IsPlayingback() )
 		m_autoDirector->value = 1.0f;

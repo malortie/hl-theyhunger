@@ -1683,7 +1683,7 @@ void CTestHull :: BuildNodeGraph( void )
 	{// print all node numbers and their locations to the file.
 		WorldGraph.m_pNodes[ i ].m_cNumLinks = 0;
 		WorldGraph.m_pNodes[ i ].m_iFirstLink = 0;
-		memset(WorldGraph.m_pNodes[ i ].m_pNextBestNode, 0, sizeof(WorldGraph.m_pNodes[ i ].m_pNextBestNode));
+		std::memset(WorldGraph.m_pNodes[ i ].m_pNextBestNode, 0, sizeof(WorldGraph.m_pNodes[ i ].m_pNextBestNode));
 
 		std::fprintf ( file, "Node#         %4d\n", i );
 		std::fprintf ( file, "Location      %4d,%4d,%4d\n",(int)WorldGraph.m_pNodes[ i ].m_vecOrigin.x, (int)WorldGraph.m_pNodes[ i ].m_vecOrigin.y, (int)WorldGraph.m_pNodes[ i ].m_vecOrigin.z );
@@ -3037,7 +3037,7 @@ void CGraph::BuildRegionTables(void)
 
 	// Initialize the cache.
 	//
-	memset(m_Cache, 0, sizeof(m_Cache));
+	std::memset(m_Cache, 0, sizeof(m_Cache));
 }
 
 void CGraph :: ComputeStaticRoutingTables( void )

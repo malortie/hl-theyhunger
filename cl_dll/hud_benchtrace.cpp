@@ -11,6 +11,8 @@
 #include <dlfcn.h>
 #endif
 
+#include <cstring> // For memset
+
 // For tracking the trace threads
 typedef struct
 {
@@ -103,7 +105,7 @@ int Trace_GetHopCount( char *pServer, int nMaxHops )
 		traceOptions.ucTTL = (unsigned char)c;
 
 		// Clear out return structure
-		memset( &traceReturn, 0, sizeof( traceReturn ) );
+		std::memset( &traceReturn, 0, sizeof( traceReturn ) );
 
 		// Send echo request, 2000 milliseconds maximum waiting time
 		pfnICMPSendEcho ( hIP, *dwIPAddr, 0, 0, &traceOptions, &traceReturn, sizeof(traceReturn), 2000 );
