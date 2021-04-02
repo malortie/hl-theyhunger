@@ -6,6 +6,7 @@
 //=============================================================================
 
 #include<cstdio>
+#include<cstring>
 #include"vgui_ControlConfigPanel.h"
 #include<VGUI_HeaderPanel.h>
 #include<VGUI_TablePanel.h>
@@ -102,7 +103,7 @@ public:
 	}
 	virtual Panel* startCellEditing(int column,int row)
 	{
-		_textEntry->setText("Goat",strlen("Goat"));
+		_textEntry->setText("Goat",std::strlen("Goat"));
 		_textEntry->requestFocus();
 		return _textEntry;
 	}

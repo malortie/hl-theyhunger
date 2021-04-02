@@ -158,7 +158,7 @@ int KB_ConvertString( char *in, char **ppout )
 			*pEnd =  '\0';
 
 			pBinding = NULL;
-			if ( strlen( binding + 1 ) > 0 )
+			if ( std::strlen( binding + 1 ) > 0 )
 			{
 				// See if there is a binding for binding?
 				pBinding = gEngfuncs.Key_LookupBinding( binding + 1 );
@@ -192,7 +192,7 @@ int KB_ConvertString( char *in, char **ppout )
 
 	*pOut = '\0';
 
-	pOut = ( char * )std::malloc( strlen( sz ) + 1 );
+	pOut = ( char * )std::malloc( std::strlen( sz ) + 1 );
 	std::strcpy( pOut, sz );
 	*ppout = pOut;
 

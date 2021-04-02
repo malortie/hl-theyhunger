@@ -810,7 +810,7 @@ void UTIL_HudMessage( CBaseEntity *pEntity, const hudtextparms_t &textparms, con
 		if ( textparms.effect == 2 )
 			WRITE_SHORT( FixedUnsigned16( textparms.fxTime, 1<<8 ) );
 		
-		if ( strlen( pMessage ) < 512 )
+		if ( std::strlen( pMessage ) < 512 )
 		{
 			WRITE_STRING( pMessage );
 		}
@@ -1892,7 +1892,7 @@ void CSave :: WriteString( const char *pname, const char *pdata )
 	short	token = (short)TokenHash( pdata );
 	WriteShort( pname, &token, 1 );
 #else
-	BufferField( pname, strlen(pdata) + 1, pdata );
+	BufferField( pname, std::strlen(pdata) + 1, pdata );
 #endif
 }
 
@@ -1913,13 +1913,13 @@ void CSave :: WriteString( const char *pname, const int *stringId, int count )
 
 	size = 0;
 	for ( i = 0; i < count; i++ )
-		size += strlen( STRING( stringId[i] ) ) + 1;
+		size += std::strlen( STRING( stringId[i] ) ) + 1;
 
 	BufferHeader( pname, size );
 	for ( i = 0; i < count; i++ )
 	{
 		const char *pString = STRING(stringId[i]);
-		BufferData( pString, strlen(pString)+1 );
+		BufferData( pString, std::strlen(pString)+1 );
 	}
 #endif
 }
@@ -1977,7 +1977,7 @@ void CSave :: WriteFunction( const char *pname, void **data, int count )
 
 	functionName = NAME_FOR_FUNCTION( (uint32)*data );
 	if ( functionName )
-		BufferField( pname, strlen(functionName) + 1, functionName );
+		BufferField( pname, std::strlen(functionName) + 1, functionName );
 	else
 		ALERT( at_error, "Invalid function pointer in entity!" );
 }
@@ -2267,7 +2267,7 @@ int CRestore::ReadField( void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCou
 							pString++;
 						}
 						pInputData = pString;
-						if ( strlen( (char *)pInputData ) == 0 )
+						if ( std::strlen( (char *)pInputData ) == 0 )
 							*((int *)pOutputData) = 0;
 						else
 						{
@@ -2353,7 +2353,7 @@ int CRestore::ReadField( void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCou
 						*((int *)pOutputData) = *( int *)pInputData;
 					break;
 					case FIELD_FUNCTION:
-						if ( strlen( (char *)pInputData ) == 0 )
+						if ( std::strlen( (char *)pInputData ) == 0 )
 							*((int *)pOutputData) = 0;
 						else
 							*((int *)pOutputData) = FUNCTION_FROM_NAME( (char *)pInputData );
@@ -2538,7 +2538,7 @@ int	CRestore::BufferCheckZString( const char *string )
 		return 0;
 
 	int maxLen = m_pdata->bufferSize - m_pdata->size;
-	int len = strlen( string );
+	int len = std::strlen( string );
 	if ( len <= maxLen )
 	{
 		if ( !strncmp( string, m_pdata->pCurrentData, len ) )

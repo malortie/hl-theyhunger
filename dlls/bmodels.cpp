@@ -450,7 +450,7 @@ void CFuncRotating :: Precache( void )
 
 	// set up fan sounds
 
-	if (!FStringNull( pev->message ) && strlen( szSoundFile ) > 0)
+	if (!FStringNull( pev->message ) && std::strlen( szSoundFile ) > 0)
 	{
 		// if a path is set for a wave, use it
 
@@ -485,7 +485,7 @@ void CFuncRotating :: Precache( void )
 
 		case 0:
 		default:
-			if (!FStringNull( pev->message ) && strlen( szSoundFile ) > 0)
+			if (!FStringNull( pev->message ) && std::strlen( szSoundFile ) > 0)
 			{
 				PRECACHE_SOUND(szSoundFile);
 				

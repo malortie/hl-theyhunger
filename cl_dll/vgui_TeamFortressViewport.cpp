@@ -728,10 +728,10 @@ try
 	m_pCurrentCommandMenu = m_pCommandMenus[newIndex];
 	char szLastButtonText[32] = "file start";
 	pfile = gEngfuncs.COM_ParseFile(pfile, token);
-	while ( ( strlen ( token ) > 0 ) && ( m_iNumMenus < MAX_MENUS ) )
+	while ( ( std::strlen ( token ) > 0 ) && ( m_iNumMenus < MAX_MENUS ) )
 	{
 		// Keep looping until we hit the end of this menu
-		while ( token[0] != '}' && ( strlen( token ) > 0 ) )
+		while ( token[0] != '}' && ( std::strlen( token ) > 0 ) )
 		{
 			char cText[32] = "";
 			char cBoundKey[32] = "";
@@ -1562,7 +1562,7 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 			_snprintf( tempString, sizeof( tempString ) - 1, "%c%s", HUD_PRINTCENTER, CHudTextMessage::BufferedLocaliseTextString( "#Spec_Duck" ) );
 			tempString[ sizeof( tempString ) - 1 ] = '\0';
 
-			gHUD.m_TextMessage.MsgFunc_TextMsg( NULL, strlen( tempString ) + 1, tempString );
+			gHUD.m_TextMessage.MsgFunc_TextMsg( NULL, std::strlen( tempString ) + 1, tempString );
 		}
 		
 		std::sprintf(bottomText,"#Spec_Mode%d", g_iUser1 );
@@ -1771,7 +1771,7 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow( int iTextToShow )
 			if ( ch )
 			{
 				// move the string back over the '/'
-				std::memmove( m_sMapName, ch+1, strlen(ch)+1 );
+				std::memmove( m_sMapName, ch+1, std::strlen(ch)+1 );
 			}
 		}
 
@@ -2386,7 +2386,7 @@ int TeamFortressViewport::MsgFunc_MOTD( const char *pszName, int iSize, void *pb
 
 	m_iGotAllMOTD = READ_BYTE();
 
-	int roomInArray = sizeof(m_szMOTD) - strlen(m_szMOTD) - 1;
+	int roomInArray = sizeof(m_szMOTD) - std::strlen(m_szMOTD) - 1;
 
 	strncat( m_szMOTD, READ_STRING(), roomInArray >= 0 ? roomInArray : 0 );
 	m_szMOTD[ sizeof(m_szMOTD)-1 ] = '\0';

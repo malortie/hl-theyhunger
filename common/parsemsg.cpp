@@ -238,7 +238,7 @@ void BufferWriter::WriteString( const char *str )
 	if (!str)
 		str = "";
 
-	int len = strlen(str)+1;
+	int len = std::strlen(str)+1;
 	if ( len > m_remaining )
 	{
 		m_overflow = true;

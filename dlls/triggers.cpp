@@ -1370,14 +1370,14 @@ void CChangeLevel :: KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "map"))
 	{
-		if (strlen(pkvd->szValue) >= cchMapNameMost)
+		if (std::strlen(pkvd->szValue) >= cchMapNameMost)
 			ALERT( at_error, "Map name '%s' too long (32 chars)\n", pkvd->szValue );
 		std::strcpy(m_szMapName, pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "landmark"))
 	{
-		if (strlen(pkvd->szValue) >= cchMapNameMost)
+		if (std::strlen(pkvd->szValue) >= cchMapNameMost)
 			ALERT( at_error, "Landmark name '%s' too long (32 chars)\n", pkvd->szValue );
 		std::strcpy(m_szLandmarkName, pkvd->szValue);
 		pkvd->fHandled = TRUE;

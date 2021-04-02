@@ -1329,7 +1329,7 @@ int ReloadMapCycleFile( char *filename, mapcycle_t *cycle )
 			std::memset( szBuffer, 0, MAX_RULE_BUFFER );
 
 			pFileList = COM_Parse( pFileList );
-			if ( strlen( com_token ) <= 0 )
+			if ( std::strlen( com_token ) <= 0 )
 				break;
 
 			std::strcpy( szMap, com_token );
@@ -1338,7 +1338,7 @@ int ReloadMapCycleFile( char *filename, mapcycle_t *cycle )
 			if ( COM_TokenWaiting( pFileList ) )
 			{
 				pFileList = COM_Parse( pFileList );
-				if ( strlen( com_token ) > 0 )
+				if ( std::strlen( com_token ) > 0 )
 				{
 					hasbuffer = 1;
 					std::strcpy( szBuffer, com_token );
@@ -1495,7 +1495,7 @@ void ExtractCommandString( char *s, char *szCommand )
 		*o = 0;
 
 		std::strcat( szCommand, pkey );
-		if ( strlen( value ) > 0 )
+		if ( std::strlen( value ) > 0 )
 		{
 			std::strcat( szCommand, " " );
 			std::strcat( szCommand, value );
@@ -1630,13 +1630,13 @@ void CHalfLifeMultiplay :: ChangeLevel( void )
 	{
 		ALERT( at_console, "PLAYER COUNT:  min %i max %i current %i\n", minplayers, maxplayers, curplayers );
 	}
-	if ( strlen( szRules ) > 0 )
+	if ( std::strlen( szRules ) > 0 )
 	{
 		ALERT( at_console, "RULES:  %s\n", szRules );
 	}
 	
 	CHANGE_LEVEL( szNextMap, NULL );
-	if ( strlen( szCommands ) > 0 )
+	if ( std::strlen( szCommands ) > 0 )
 	{
 		SERVER_COMMAND( szCommands );
 	}
@@ -1664,7 +1664,7 @@ void CHalfLifeMultiplay :: SendMOTDToClient( edict_t *client )
 	{
 		char chunk[MAX_MOTD_CHUNK+1];
 		
-		if ( strlen( pFileList ) < MAX_MOTD_CHUNK )
+		if ( std::strlen( pFileList ) < MAX_MOTD_CHUNK )
 		{
 			std::strcpy( chunk, pFileList );
 		}
@@ -1674,7 +1674,7 @@ void CHalfLifeMultiplay :: SendMOTDToClient( edict_t *client )
 			chunk[MAX_MOTD_CHUNK] = 0;		// strncpy doesn't always append the null terminator
 		}
 
-		char_count += strlen( chunk );
+		char_count += std::strlen( chunk );
 		if ( char_count < MAX_MOTD_LENGTH )
 			pFileList = aFileList + char_count; 
 		else

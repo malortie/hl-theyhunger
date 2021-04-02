@@ -382,7 +382,7 @@ int CHudMessage::Draw( float fTime )
 			
 			// Fade in is per character in scanning messages
 			case 2:
-				endTime = m_startTime[i] + (pMessage->fadein * strlen( pMessage->pMessage )) + pMessage->fadeout + pMessage->holdtime;
+				endTime = m_startTime[i] + (pMessage->fadein * std::strlen( pMessage->pMessage )) + pMessage->fadeout + pMessage->holdtime;
 				break;
 			}
 

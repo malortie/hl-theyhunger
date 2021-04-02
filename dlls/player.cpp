@@ -2823,7 +2823,7 @@ edict_t *EntSelectSpawnPoint( CBaseEntity *pPlayer )
 	}
 
 	// If startspot is set, (re)spawn there.
-	if ( FStringNull( gpGlobals->startspot ) || !strlen(STRING(gpGlobals->startspot)))
+	if ( FStringNull( gpGlobals->startspot ) || !std::strlen(STRING(gpGlobals->startspot)))
 	{
 		pSpot = UTIL_FindEntityByClassname(NULL, "info_player_start");
 		if ( !FNullEnt(pSpot) )
@@ -4512,7 +4512,7 @@ void CBasePlayer::DropPlayerItem ( char *pszItemName )
 		return;
 	}
 
-	if ( !strlen( pszItemName ) )
+	if ( !std::strlen( pszItemName ) )
 	{
 		// if this string has no length, the client didn't type a name!
 		// assume player wants to drop the active item.

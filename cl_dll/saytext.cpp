@@ -130,7 +130,7 @@ int CHudSayText :: Draw( float flTime )
 			if ( *g_szLineBuffer[i] == 2 && g_pflNameColors[i] )
 			{
 				// it's a saytext string
-				char *buf = static_cast<char *>( _alloca( strlen( g_szLineBuffer[i] ) ) );
+				char *buf = static_cast<char *>( _alloca( std::strlen( g_szLineBuffer[i] ) ) );
 				if ( buf )
 				{
 					//char buf[MAX_PLAYER_NAME_LENGTH+32];
@@ -140,8 +140,8 @@ int CHudSayText :: Draw( float flTime )
 					buf[ std::min(g_iNameLengths[i], MAX_PLAYER_NAME_LENGTH+31) ] = 0;
 					gEngfuncs.pfnDrawSetTextColor( g_pflNameColors[i][0], g_pflNameColors[i][1], g_pflNameColors[i][2] );
 					int x = DrawConsoleString( LINE_START, y, buf + 1 ); // don't draw the control code at the start
-					strncpy( buf, g_szLineBuffer[i] + g_iNameLengths[i], strlen( g_szLineBuffer[i] ));
-					buf[ strlen( g_szLineBuffer[i] + g_iNameLengths[i] ) - 1 ] = '\0';
+					strncpy( buf, g_szLineBuffer[i] + g_iNameLengths[i], std::strlen( g_szLineBuffer[i] ));
+					buf[ std::strlen( g_szLineBuffer[i] + g_iNameLengths[i] ) - 1 ] = '\0';
 					// color is reset after each string draw
 					DrawConsoleString( x, y, buf ); 
 				}
@@ -211,7 +211,7 @@ void CHudSayText :: SayTextPrint( const char *pszBuf, int iBufSize, int clientIn
 
 			if ( nameInString )
 			{
-				g_iNameLengths[i] = strlen( pName ) + (nameInString - pszBuf);
+				g_iNameLengths[i] = std::strlen( pName ) + (nameInString - pszBuf);
 				g_pflNameColors[i] = GetClientColor( clientIndex );
 			}
 		}
@@ -301,15 +301,15 @@ void CHudSayText :: EnsureTextFitsInOneLineAndWrapIfHaveTo( int line )
 				// copy remaining string into next buffer,  making sure it starts with a space character
 				if ( (char)*last_break == (char)' ' )
 				{
-					int linelen = strlen(g_szLineBuffer[j]);
-					int remaininglen = strlen(last_break);
+					int linelen = std::strlen(g_szLineBuffer[j]);
+					int remaininglen = std::strlen(last_break);
 
 					if ( (linelen - remaininglen) <= MAX_CHARS_PER_LINE )
 						std::strcat( g_szLineBuffer[j], last_break );
 				}
 				else
 				{
-					if ( (strlen(g_szLineBuffer[j]) - strlen(last_break) - 2) < MAX_CHARS_PER_LINE )
+					if ( (std::strlen(g_szLineBuffer[j]) - std::strlen(last_break) - 2) < MAX_CHARS_PER_LINE )
 					{
 						std::strcat( g_szLineBuffer[j], " " );
 						std::strcat( g_szLineBuffer[j], last_break );

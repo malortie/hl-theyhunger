@@ -929,7 +929,7 @@ void ScorePanel::mousePressed(MouseCode code, Panel* panel)
 					std::sprintf( string1, CHudTextMessage::BufferedLocaliseTextString( "#Unmuted" ), pl_info->name );
 					std::sprintf( string, "%c** %s\n", HUD_PRINTTALK, string1 );
 
-					gHUD.m_TextMessage.MsgFunc_TextMsg(NULL, strlen(string)+1, string );
+					gHUD.m_TextMessage.MsgFunc_TextMsg(NULL, std::strlen(string)+1, string );
 				}
 				else
 				{
@@ -943,7 +943,7 @@ void ScorePanel::mousePressed(MouseCode code, Panel* panel)
 					std::sprintf( string2, CHudTextMessage::BufferedLocaliseTextString( "#No_longer_hear_that_player" ) );
 					std::sprintf( string, "%c** %s %s\n", HUD_PRINTTALK, string1, string2 );
 
-					gHUD.m_TextMessage.MsgFunc_TextMsg(NULL, strlen(string)+1, string );
+					gHUD.m_TextMessage.MsgFunc_TextMsg(NULL, std::strlen(string)+1, string );
 				}
 			}
 		}

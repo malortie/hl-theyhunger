@@ -186,7 +186,7 @@ void CHudServers::ServerResponse( struct net_response_s *response )
 		if ( response->response )
 		{
 			szresponse = (char *)response->response;
-			len = strlen( szresponse ) + 100 + 1;
+			len = std::strlen( szresponse ) + 100 + 1;
 			std::sprintf( sz, "%i", (int)( 1000.0 * response->ping ) );
 
 			browser = new server_t;
@@ -788,7 +788,7 @@ int CHudServers::LoadMasterAddresses( int maxservers, int *count, netadr_t *padr
 	{
 		pstart = gEngfuncs.COM_ParseFile( pstart, m_szToken );
 
-		if ( strlen(m_szToken) <= 0)
+		if ( std::strlen(m_szToken) <= 0)
 			break;
 
 		bIgnore = true;
@@ -801,7 +801,7 @@ int CHudServers::LoadMasterAddresses( int maxservers, int *count, netadr_t *padr
 
 		// Now parse all addresses between { }
 		pstart = gEngfuncs.COM_ParseFile( pstart, m_szToken );
-		if ( strlen(m_szToken) <= 0 )
+		if ( std::strlen(m_szToken) <= 0 )
 			break;
 
 		if ( stricmp ( m_szToken, "{" ) )
@@ -815,7 +815,7 @@ int CHudServers::LoadMasterAddresses( int maxservers, int *count, netadr_t *padr
 			// Now parse all addresses between { }
 			pstart = gEngfuncs.COM_ParseFile( pstart, m_szToken );
 			
-			if (strlen(m_szToken) <= 0)
+			if (std::strlen(m_szToken) <= 0)
 				break;
 
 			if ( !stricmp ( m_szToken, "}" ) )
@@ -825,7 +825,7 @@ int CHudServers::LoadMasterAddresses( int maxservers, int *count, netadr_t *padr
 				
 			pstart = gEngfuncs.COM_ParseFile( pstart, m_szToken );
 			
-			if (strlen(m_szToken) <= 0)
+			if (std::strlen(m_szToken) <= 0)
 				break;
 
 			if ( stricmp( m_szToken, ":" ) )
@@ -833,7 +833,7 @@ int CHudServers::LoadMasterAddresses( int maxservers, int *count, netadr_t *padr
 
 			pstart = gEngfuncs.COM_ParseFile( pstart, m_szToken );
 			
-			if (strlen(m_szToken) <= 0)
+			if (std::strlen(m_szToken) <= 0)
 				break;
 
 			nPort = std::atoi ( m_szToken );

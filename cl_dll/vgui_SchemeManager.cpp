@@ -199,7 +199,7 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 	bool hasFgColor, hasBgColor, hasArmedFgColor, hasArmedBgColor, hasMouseDownFgColor, hasMouseDownBgColor;
 
 	pFile = gEngfuncs.COM_ParseFile( pFile, token );
-	while ( strlen(token) > 0 && (currentScheme < numTmpSchemes) )
+	while ( std::strlen(token) > 0 && (currentScheme < numTmpSchemes) )
 	{
 		// get the paramName name
 		static const int tokenSize = 64;

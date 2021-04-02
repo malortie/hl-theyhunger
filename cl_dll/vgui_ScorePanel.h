@@ -153,7 +153,7 @@ public:
 		char buf[512];
 		std::strcpy(buf, text);
 
-		int len = strlen(buf);
+		int len = std::strlen(buf);
 		while (len && std::isspace(buf[--len]))
 		{
 			buf[len] = 0;

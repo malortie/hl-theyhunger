@@ -193,7 +193,7 @@ void CAmbientGeneric :: Spawn( void )
 	
 	char* szSoundFile = (char*) STRING(pev->message);
 
-	if ( FStringNull( pev->message ) || strlen( szSoundFile ) < 1 )
+	if ( FStringNull( pev->message ) || std::strlen( szSoundFile ) < 1 )
 	{
 		ALERT( at_error, "EMPTY AMBIENT AT: %f, %f, %f\n", pev->origin.x, pev->origin.y, pev->origin.z );
 		pev->nextthink = gpGlobals->time + 0.1;
@@ -228,7 +228,7 @@ void CAmbientGeneric :: Precache( void )
 {
 	char* szSoundFile = (char*) STRING(pev->message);
 
-	if ( !FStringNull( pev->message ) && strlen( szSoundFile ) > 1 )
+	if ( !FStringNull( pev->message ) && std::strlen( szSoundFile ) > 1 )
 	{
 		if (*szSoundFile != '!')
 			PRECACHE_SOUND(szSoundFile);
@@ -1320,7 +1320,7 @@ void SENTENCEG_Init()
 		buffer[j] = 0;
 		const char *pString = buffer + i;
 
-		if ( strlen( pString ) >= CBSENTENCENAME_MAX )
+		if ( std::strlen( pString ) >= CBSENTENCENAME_MAX )
 			ALERT( at_warning, "Sentence %s longer than %d letters\n", pString, CBSENTENCENAME_MAX-1 );
 
 		std::strcpy( gszallsentencenames[gcallsentences++], pString );
@@ -1824,7 +1824,7 @@ void CSpeaker :: Spawn( void )
 {
 	char* szSoundFile = (char*) STRING(pev->message);
 
-	if ( !m_preset && (FStringNull( pev->message ) || strlen( szSoundFile ) < 1 ))
+	if ( !m_preset && (FStringNull( pev->message ) || std::strlen( szSoundFile ) < 1 ))
 	{
 		ALERT( at_error, "SPEAKER with no Level/Sentence! at: %f, %f, %f\n", pev->origin.x, pev->origin.y, pev->origin.z );
 		pev->nextthink = gpGlobals->time + 0.1;

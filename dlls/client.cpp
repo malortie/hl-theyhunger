@@ -387,7 +387,7 @@ void Host_Say( edict_t *pEntity, int teamonly )
 	if (*p == '"')
 	{
 		p++;
-		p[strlen(p)-1] = 0;
+		p[std::strlen(p)-1] = 0;
 	}
 
 // make sure the text has content
@@ -404,8 +404,8 @@ void Host_Say( edict_t *pEntity, int teamonly )
 	else
 		std::sprintf( text, "%c%s: ", 2, STRING( pEntity->v.netname ) );
 
-	j = sizeof(text) - 2 - strlen(text);  // -2 for /n and null terminator
-	if ( (int)strlen(p) > j )
+	j = sizeof(text) - 2 - std::strlen(text);  // -2 for /n and null terminator
+	if ( (int)std::strlen(p) > j )
 		p[j] = 0;
 
 	std::strcat( text, p );

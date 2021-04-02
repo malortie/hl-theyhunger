@@ -538,7 +538,7 @@ void COM_FileBase ( const char *in, char *out)
 {
 	int len, start, end;
 
-	len = strlen( in );
+	len = std::strlen( in );
 	
 	// scan backward for '.'
 	end = len - 1;

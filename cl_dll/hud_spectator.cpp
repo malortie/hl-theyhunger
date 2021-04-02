@@ -283,7 +283,7 @@ int UTIL_FindEntityInMap(char * name, float * origin, float * angle)
 			std::strcpy (keyname, token);
 
 			// another hack to fix keynames with trailing spaces
-			n = strlen(keyname);
+			n = std::strlen(keyname);
 			while (n && keyname[n-1] == ' ')
 			{
 				keyname[n-1] = 0;
@@ -667,7 +667,7 @@ int CHudSpectator::Draw(float flTime)
 		// draw the players name and health underneath
 		std::sprintf(string, "%s", g_PlayerInfoList[i+1].name );
 		
-		lx = strlen(string)*3; // 3 is avg. character length :)
+		lx = std::strlen(string)*3; // 3 is avg. character length :)
 
 		gEngfuncs.pfnDrawSetTextColor( color[0], color[1], color[2] );
 		DrawConsoleString( m_vPlayerPos[i][0]-lx,m_vPlayerPos[i][1], string);
@@ -1226,7 +1226,7 @@ void CHudSpectator::SetModes(int iNewMainMode, int iNewInsetMode)
 		char string[128];
 		std::sprintf(string, "#Spec_Mode%d", g_iUser1 );
 		std::sprintf(string, "%c%s", HUD_PRINTCENTER, CHudTextMessage::BufferedLocaliseTextString( string ));
-		gHUD.m_TextMessage.MsgFunc_TextMsg(NULL, strlen(string)+1, string );
+		gHUD.m_TextMessage.MsgFunc_TextMsg(NULL, std::strlen(string)+1, string );
 	}
 
 	gViewPort->UpdateSpectatorPanel();
@@ -1268,11 +1268,11 @@ bool CHudSpectator::ParseOverviewFile( )
 	m_OverviewData.layersHeights[0] = 0.0f;
 	std::strcpy( m_OverviewData.map, gEngfuncs.pfnGetLevelName() );
 
-	if ( strlen( m_OverviewData.map ) == 0 )
+	if ( std::strlen( m_OverviewData.map ) == 0 )
 		return false; // not active yet
 
 	std::strcpy(levelname, m_OverviewData.map + 5);
-	levelname[strlen(levelname)-4] = 0;
+	levelname[std::strlen(levelname)-4] = 0;
 	
 	std::sprintf(filename, "overviews/%s.txt", levelname );
 
