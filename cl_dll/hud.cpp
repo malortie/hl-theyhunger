@@ -669,7 +669,7 @@ void CHud::AddHudElem(CHudBase *phudelem)
 	if (!phudelem)
 		return;
 
-	pdl = (HUDLIST *)malloc(sizeof(HUDLIST));
+	pdl = (HUDLIST *)std::malloc(sizeof(HUDLIST));
 	if (!pdl)
 		return;
 
