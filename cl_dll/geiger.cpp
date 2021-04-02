@@ -159,16 +159,16 @@ int CHudGeiger::Draw (float flTime)
 			i = 2;
 		}
 
-		flvol = (flvol * ((rand() & 127)) / 255) + 0.25; // UTIL_RandomFloat(0.25, 0.5);
+		flvol = (flvol * ((std::rand() & 127)) / 255) + 0.25; // UTIL_RandomFloat(0.25, 0.5);
 
-		if ((rand() & 127) < pct || (rand() & 127) < pct)
+		if ((std::rand() & 127) < pct || (std::rand() & 127) < pct)
 		{
 			//S_StartDynamicSound (-1, 0, rgsfx[rand() % i], r_origin, flvol, 1.0, 0, 100);	
 			char sz[256];
 			
-			int j = rand() & 1;
+			int j = std::rand() & 1;
 			if (i > 2)
-				j += rand() & 1;
+				j += std::rand() & 1;
 
 			std::sprintf(sz, "player/geiger%d.wav", j + 1);
 			PlaySound(sz, flvol);
