@@ -154,7 +154,7 @@ public:
 		strcpy(buf, text);
 
 		int len = strlen(buf);
-		while (len && isspace(buf[--len]))
+		while (len && std::isspace(buf[--len]))
 		{
 			buf[len] = 0;
 		}

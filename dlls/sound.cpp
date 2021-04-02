@@ -1561,7 +1561,7 @@ void TEXTURETYPE_Init()
 	{
 		// skip whitespace
 		i = 0;
-		while(buffer[i] && isspace(buffer[i]))
+		while(buffer[i] && std::isspace(buffer[i]))
 			i++;
 		
 		if (!buffer[i])
@@ -1575,7 +1575,7 @@ void TEXTURETYPE_Init()
 		grgchTextureType[gcTextures] = toupper(buffer[i++]);
 
 		// skip whitespace
-		while(buffer[i] && isspace(buffer[i]))
+		while(buffer[i] && std::isspace(buffer[i]))
 			i++;
 		
 		if (!buffer[i])
@@ -1583,7 +1583,7 @@ void TEXTURETYPE_Init()
 
 		// get sentence name
 		j = i;
-		while (buffer[j] && !isspace(buffer[j]))
+		while (buffer[j] && !std::isspace(buffer[j]))
 			j++;
 
 		if (!buffer[j])

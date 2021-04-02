@@ -70,6 +70,7 @@ typedef int BOOL;
 #include <cmath>
 
 #include <algorithm> // For min/max
+#include <cctype>
 
 // Header file containing definition of globalvars_t and entvars_t
 typedef unsigned int func_t;					//
