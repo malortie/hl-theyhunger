@@ -1572,7 +1572,7 @@ void TEXTURETYPE_Init()
 			continue;
 
 		// get texture type
-		grgchTextureType[gcTextures] = toupper(buffer[i++]);
+		grgchTextureType[gcTextures] = std::toupper(buffer[i++]);
 
 		// skip whitespace
 		while(buffer[i] && std::isspace(buffer[i]))
