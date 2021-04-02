@@ -65,7 +65,7 @@ void COM_Log( char *pszFile, char *fmt, ...)
 	if (fp)
 	{
 		fprintf(fp, "%s", string);
-		fclose(fp);
+		std::fclose(fp);
 	}
 }
 

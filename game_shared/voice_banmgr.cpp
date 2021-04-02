@@ -67,7 +67,7 @@ bool CVoiceBanMgr::Init(char const *pGameDir)
 			}			
 		}
 
-		fclose(fp);
+		std::fclose(fp);
 	}
 
 	return true;
@@ -113,7 +113,7 @@ void CVoiceBanMgr::SaveState(char const *pGameDir)
 			}
 		}
 
-		fclose(fp);
+		std::fclose(fp);
 	}
 }
 

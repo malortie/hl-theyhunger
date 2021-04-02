@@ -1762,7 +1762,7 @@ void CTestHull :: BuildNodeGraph( void )
 
 		if ( file )
 		{// close the file
-			fclose ( file );
+			std::fclose ( file );
 		}
 
 		return;
@@ -1831,7 +1831,7 @@ void CTestHull :: BuildNodeGraph( void )
 
 					if ( file )
 					{// close the file
-						fclose ( file );
+						std::fclose ( file );
 					}
 					return;
 				}
@@ -1948,7 +1948,7 @@ void CTestHull :: BuildNodeGraph( void )
 		}
 		if ( file )
 		{// close the file
-			fclose ( file );
+			std::fclose ( file );
 		}
 
 		return;
@@ -2042,7 +2042,7 @@ void CTestHull :: BuildNodeGraph( void )
 
 	if ( file )
 	{
-		fclose ( file );
+		std::fclose ( file );
 	}
 
 	// We now have some graphing capabilities.
@@ -2548,7 +2548,7 @@ int CGraph :: FSaveGraph ( char *szMapName )
 		{
 			fwrite(m_pHashLinks, sizeof(short), m_nHashLinks, file);
 		}
-		fclose ( file );
+		std::fclose ( file );
 		return TRUE;
 	}
 }
