@@ -268,8 +268,8 @@ void CBaseAnimating :: SetSequenceBox( void )
 		
 		Vector xvector, yvector;
 		xvector.x = std::cos(yaw);
-		xvector.y = sin(yaw);
-		yvector.x = -sin(yaw);
+		xvector.y = std::sin(yaw);
+		yvector.x = -std::sin(yaw);
 		yvector.y = std::cos(yaw);
 		Vector bounds[2];
 

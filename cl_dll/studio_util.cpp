@@ -24,13 +24,13 @@ void AngleMatrix (const float *angles, float (*matrix)[4] )
 	float		sr, sp, sy, cr, cp, cy;
 	
 	angle = angles[YAW] * (M_PI*2 / 360);
-	sy = sin(angle);
+	sy = std::sin(angle);
 	cy = std::cos(angle);
 	angle = angles[PITCH] * (M_PI*2 / 360);
-	sp = sin(angle);
+	sp = std::sin(angle);
 	cp = std::cos(angle);
 	angle = angles[ROLL] * (M_PI*2 / 360);
-	sr = sin(angle);
+	sr = std::sin(angle);
 	cr = std::cos(angle);
 
 	// matrix = (YAW * PITCH) * ROLL
@@ -140,13 +140,13 @@ void AngleQuaternion( float *angles, vec4_t quaternion )
 
 	// FIXME: rescale the inputs to 1/2 angle
 	angle = angles[2] * 0.5;
-	sy = sin(angle);
+	sy = std::sin(angle);
 	cy = std::cos(angle);
 	angle = angles[1] * 0.5;
-	sp = sin(angle);
+	sp = std::sin(angle);
 	cp = std::cos(angle);
 	angle = angles[0] * 0.5;
-	sr = sin(angle);
+	sr = std::sin(angle);
 	cr = std::cos(angle);
 
 	quaternion[0] = sr*cp*cy-cr*sp*sy; // X
@@ -190,9 +190,9 @@ void QuaternionSlerp( vec4_t p, vec4_t q, float t, vec4_t qt )
 		if ((1.0 - cosom) > 0.000001)
 		{
 			omega = std::acos( cosom );
-			sinom = sin( omega );
-			sclp = sin( (1.0 - t)*omega) / sinom;
-			sclq = sin( t*omega ) / sinom;
+			sinom = std::sin( omega );
+			sclp = std::sin( (1.0 - t)*omega) / sinom;
+			sclq = std::sin( t*omega ) / sinom;
 		}
 		else
 		{
@@ -209,8 +209,8 @@ void QuaternionSlerp( vec4_t p, vec4_t q, float t, vec4_t qt )
 		qt[1] = q[0];
 		qt[2] = -q[3];
 		qt[3] = q[2];
-		sclp = sin( (1.0 - t) * (0.5 * M_PI));
-		sclq = sin( t * (0.5 * M_PI));
+		sclp = std::sin( (1.0 - t) * (0.5 * M_PI));
+		sclq = std::sin( t * (0.5 * M_PI));
 		for (i = 0; i < 3; i++)
 		{
 			qt[i] = sclp * p[i] + sclq * qt[i];

@@ -522,18 +522,18 @@ void CL_DLLEXPORT HUD_TempEntUpdate (
 				pTemp->x += pTemp->entity.baseline.origin[0] * frametime;
 				pTemp->y += pTemp->entity.baseline.origin[1] * frametime;
 
-				pTemp->entity.origin[0] = pTemp->x + sin( pTemp->entity.baseline.origin[2] + client_time * pTemp->entity.prevstate.frame ) * (10*pTemp->entity.curstate.framerate);
-				pTemp->entity.origin[1] = pTemp->y + sin( pTemp->entity.baseline.origin[2] + fastFreq + 0.7 ) * (8*pTemp->entity.curstate.framerate);
+				pTemp->entity.origin[0] = pTemp->x + std::sin( pTemp->entity.baseline.origin[2] + client_time * pTemp->entity.prevstate.frame ) * (10*pTemp->entity.curstate.framerate);
+				pTemp->entity.origin[1] = pTemp->y + std::sin( pTemp->entity.baseline.origin[2] + fastFreq + 0.7 ) * (8*pTemp->entity.curstate.framerate);
 				pTemp->entity.origin[2] += pTemp->entity.baseline.origin[2] * frametime;
 			}
 			else if ( pTemp->flags & FTENT_SPIRAL )
 			{
 				float s, c;
-				s = sin( pTemp->entity.baseline.origin[2] + fastFreq );
+				s = std::sin( pTemp->entity.baseline.origin[2] + fastFreq );
 				c = std::cos( pTemp->entity.baseline.origin[2] + fastFreq );
 
-				pTemp->entity.origin[0] += pTemp->entity.baseline.origin[0] * frametime + 8 * sin( client_time * 20 + (int)pTemp );
-				pTemp->entity.origin[1] += pTemp->entity.baseline.origin[1] * frametime + 4 * sin( client_time * 30 + (int)pTemp );
+				pTemp->entity.origin[0] += pTemp->entity.baseline.origin[0] * frametime + 8 * std::sin( client_time * 20 + (int)pTemp );
+				pTemp->entity.origin[1] += pTemp->entity.baseline.origin[1] * frametime + 4 * std::sin( client_time * 30 + (int)pTemp );
 				pTemp->entity.origin[2] += pTemp->entity.baseline.origin[2] * frametime;
 			}
 			
