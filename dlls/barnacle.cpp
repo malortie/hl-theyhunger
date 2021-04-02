@@ -178,7 +178,7 @@ void CBarnacle :: BarnacleThink ( void )
 			vecNewEnemyOrigin.y = pev->origin.y;
 
 			// guess as to where their neck is
-			vecNewEnemyOrigin.x -= 6 * cos(m_hEnemy->pev->angles.y * M_PI/180.0);	
+			vecNewEnemyOrigin.x -= 6 * std::cos(m_hEnemy->pev->angles.y * M_PI/180.0);	
 			vecNewEnemyOrigin.y -= 6 * sin(m_hEnemy->pev->angles.y * M_PI/180.0);
 
 			m_flAltitude -= BARNACLE_PULL_SPEED;

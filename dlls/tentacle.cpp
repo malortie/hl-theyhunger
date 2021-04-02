@@ -860,7 +860,7 @@ void CTentacle :: HandleAnimEvent( MonsterEvent_t *pEvent )
 	case 2:	// tap scrape
 	case 6: // light tap
 		{
-			Vector vecSrc = pev->origin + m_flTapRadius * Vector( cos( pev->angles.y * (M_PI / 180.0) ), sin( pev->angles.y * (M_PI / 180.0) ), 0.0 );
+			Vector vecSrc = pev->origin + m_flTapRadius * Vector( std::cos( pev->angles.y * (M_PI / 180.0) ), sin( pev->angles.y * (M_PI / 180.0) ), 0.0 );
 
 			vecSrc.z += MyHeight( );
 

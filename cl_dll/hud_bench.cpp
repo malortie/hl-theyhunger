@@ -901,7 +901,7 @@ void HUD_CreateBenchObjects( vec3_t origin )
 
 		// Get a far point for ray trace
 		farpoint = centerspot + ( BENCH_RADIUS + ofs_radius * sin( BENCH_SWEEP * offset + frac2 * 2 * M_PI ) ) * forward;
-		farpoint[2] += 10 * cos( BENCH_SWEEP * offset + frac2 * 2 * M_PI );
+		farpoint[2] += 10 * std::cos( BENCH_SWEEP * offset + frac2 * 2 * M_PI );
 
 		gEngfuncs.pEventAPI->EV_PlayerTrace( (float *)&centerspot, (float *)&farpoint, PM_NORMAL, -1, &tr );
 

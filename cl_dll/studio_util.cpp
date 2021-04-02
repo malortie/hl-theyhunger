@@ -25,13 +25,13 @@ void AngleMatrix (const float *angles, float (*matrix)[4] )
 	
 	angle = angles[YAW] * (M_PI*2 / 360);
 	sy = sin(angle);
-	cy = cos(angle);
+	cy = std::cos(angle);
 	angle = angles[PITCH] * (M_PI*2 / 360);
 	sp = sin(angle);
-	cp = cos(angle);
+	cp = std::cos(angle);
 	angle = angles[ROLL] * (M_PI*2 / 360);
 	sr = sin(angle);
-	cr = cos(angle);
+	cr = std::cos(angle);
 
 	// matrix = (YAW * PITCH) * ROLL
 	matrix[0][0] = cp*cy;
@@ -141,13 +141,13 @@ void AngleQuaternion( float *angles, vec4_t quaternion )
 	// FIXME: rescale the inputs to 1/2 angle
 	angle = angles[2] * 0.5;
 	sy = sin(angle);
-	cy = cos(angle);
+	cy = std::cos(angle);
 	angle = angles[1] * 0.5;
 	sp = sin(angle);
-	cp = cos(angle);
+	cp = std::cos(angle);
 	angle = angles[0] * 0.5;
 	sr = sin(angle);
-	cr = cos(angle);
+	cr = std::cos(angle);
 
 	quaternion[0] = sr*cp*cy-cr*sp*sy; // X
 	quaternion[1] = cr*sp*cy+sr*cp*sy; // Y
