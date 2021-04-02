@@ -640,7 +640,7 @@ BOOL CHAssassin :: CheckMeleeAttack1 ( float flDot, float flDist )
 
 		float flGravity = g_psv_gravity->value;
 
-		float time = sqrt( 160 / (0.5 * flGravity));
+		float time = std::sqrt( 160 / (0.5 * flGravity));
 		float speed = flGravity * time / 160;
 		m_vecJumpVelocity = (vecDest - pev->origin) * speed;
 

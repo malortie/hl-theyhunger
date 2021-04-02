@@ -419,7 +419,7 @@ void IN_ScaleMouse( float *x, float *y )
 	// Using special accleration values
 	if ( m_customaccel->value != 0 ) 
 	{ 
-		float raw_mouse_movement_distance = sqrt( mx * mx + my * my );
+		float raw_mouse_movement_distance = std::sqrt( mx * mx + my * my );
 		float acceleration_scale = m_customaccel_scale->value;
 		float accelerated_sensitivity_max = m_customaccel_max->value;
 		float accelerated_sensitivity_exponent = m_customaccel_exponent->value;

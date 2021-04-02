@@ -32,8 +32,6 @@
 
 vec3_t vec3_origin( 0, 0, 0 );
 
-double sqrt(double x);
-
 float Length(const float *v)
 {
 	int		i;
@@ -42,7 +40,7 @@ float Length(const float *v)
 	length = 0;
 	for (i=0 ; i< 3 ; i++)
 		length += v[i]*v[i];
-	length = sqrt (length);		// FIXME
+	length = std::sqrt (length);		// FIXME
 
 	return length;
 }
@@ -65,7 +63,7 @@ void VectorAngles( const float *forward, float *angles )
 		if (yaw < 0)
 			yaw += 360;
 
-		tmp = sqrt (forward[0]*forward[0] + forward[1]*forward[1]);
+		tmp = std::sqrt (forward[0]*forward[0] + forward[1]*forward[1]);
 		pitch = (atan2(forward[2], tmp) * 180 / M_PI);
 		if (pitch < 0)
 			pitch += 360;
@@ -81,7 +79,7 @@ float VectorNormalize (float *v)
 	float	length, ilength;
 
 	length = v[0]*v[0] + v[1]*v[1] + v[2]*v[2];
-	length = sqrt (length);		// FIXME
+	length = std::sqrt (length);		// FIXME
 
 	if (length)
 	{

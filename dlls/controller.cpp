@@ -564,7 +564,7 @@ Vector Intersect( Vector vecSrc, Vector vecDst, Vector vecMove, float flSpeed )
 	else
 	{
 		t = b * b - 4 * a * c;
-		t = sqrt( t ) / (2.0 * a);
+		t = std::sqrt( t ) / (2.0 * a);
 		float t1 = -b +t;
 		float t2 = -b -t;
 

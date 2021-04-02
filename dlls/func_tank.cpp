@@ -637,12 +637,12 @@ void CFuncTank::AdjustAnglesForBarrel( Vector &angles, float distance )
 		if ( m_barrelPos.y )
 		{
 			r2 = m_barrelPos.y * m_barrelPos.y;
-			angles.y += (180.0 / M_PI) * atan2( m_barrelPos.y, sqrt( d2 - r2 ) );
+			angles.y += (180.0 / M_PI) * atan2( m_barrelPos.y, std::sqrt( d2 - r2 ) );
 		}
 		if ( m_barrelPos.z )
 		{
 			r2 = m_barrelPos.z * m_barrelPos.z;
-			angles.x += (180.0 / M_PI) * atan2( -m_barrelPos.z, sqrt( d2 - r2 ) );
+			angles.x += (180.0 / M_PI) * atan2( -m_barrelPos.z, std::sqrt( d2 - r2 ) );
 		}
 	}
 }
