@@ -756,7 +756,7 @@ try
 			}
 
 			// token should already be the bound key, or the custom name
-			strncpy( cCustom, token, 32 );
+			std::strncpy( cCustom, token, 32 );
 			cCustom[31] = '\0';
 
 			// See if it's a custom button
@@ -772,7 +772,7 @@ try
 			{
 				// Get the mapname
 				pfile = gEngfuncs.COM_ParseFile(pfile, token);
-				strncpy( szMap, token, MAX_MAPNAME );
+				std::strncpy( szMap, token, MAX_MAPNAME );
 				szMap[MAX_MAPNAME-1] = '\0';
 
 				// Get the next token
@@ -812,12 +812,12 @@ try
 			}
 
 			// Get the button bound key
-			strncpy( cBoundKey, token, 32 );
+			std::strncpy( cBoundKey, token, 32 );
 			cText[31] = '\0';
 
 			// Get the button text
 			pfile = gEngfuncs.COM_ParseFile(pfile, token);
-			strncpy( cText, token, 32 );
+			std::strncpy( cText, token, 32 );
 			cText[31] = '\0';
 
 			// save off the last button text we've come across (for error reporting)
@@ -825,7 +825,7 @@ try
 
 			// Get the button command
 			pfile = gEngfuncs.COM_ParseFile(pfile, token);
-			strncpy( cCommand, token, cCommandLength );
+			std::strncpy( cCommand, token, cCommandLength );
 			cCommand[cCommandLength - 1] = '\0';
 
 			iButtonY = (BUTTON_SIZE_Y-1) * m_pCurrentCommandMenu->GetNumButtons();
@@ -1586,7 +1586,7 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 		// create player & health string
 		if ( player && name )
 		{
-			strncpy( bottomText, name, sizeof(bottomText) );
+			std::strncpy( bottomText, name, sizeof(bottomText) );
 			bottomText[ sizeof(bottomText) - 1 ] = 0;
 			pBottomText = bottomText;
 		}
@@ -1735,7 +1735,7 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow( int iTextToShow )
 		if (!m_szServerName || !m_szServerName[0])
 			std::strcpy( cTitle, "Half-Life" );
 		else
-			strncpy( cTitle, m_szServerName, sizeof(cTitle) );
+			std::strncpy( cTitle, m_szServerName, sizeof(cTitle) );
 		cTitle[sizeof(cTitle)-1] = 0;
 		cText = m_szMOTD;
 	}
@@ -1782,7 +1782,7 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow( int iTextToShow )
 
 		cText = pfile;
 
-		strncpy( cTitle, m_sMapName, MAX_TITLE_LENGTH );
+		std::strncpy( cTitle, m_sMapName, MAX_TITLE_LENGTH );
 		cTitle[MAX_TITLE_LENGTH-1] = 0;
 	}
 #ifdef _TFC
@@ -2367,7 +2367,7 @@ int TeamFortressViewport::MsgFunc_VGUIMenu(const char *pszName, int iSize, void 
 	// Map briefing includes the name of the map (because it's sent down before the client knows what map it is)
 	if (iMenu == MENU_MAPBRIEFING)
 	{
-		strncpy( m_sMapName, READ_STRING(), sizeof(m_sMapName) );
+		std::strncpy( m_sMapName, READ_STRING(), sizeof(m_sMapName) );
 		m_sMapName[ sizeof(m_sMapName) - 1 ] = '\0';
 	}
 
@@ -2425,7 +2425,7 @@ int TeamFortressViewport::MsgFunc_ServerName( const char *pszName, int iSize, vo
 {
 	BEGIN_READ( pbuf, iSize );
 
-	strncpy( m_szServerName, READ_STRING(), sizeof(m_szServerName) );
+	std::strncpy( m_szServerName, READ_STRING(), sizeof(m_szServerName) );
 	m_szServerName[sizeof(m_szServerName) - 1] = 0;
 
 	return 1;
@@ -2502,7 +2502,7 @@ int TeamFortressViewport::MsgFunc_TeamInfo( const char *pszName, int iSize, void
 	if ( cl > 0 && cl <= MAX_PLAYERS )
 	{  
 		// set the players team
-		strncpy( g_PlayerExtraInfo[cl].teamname, READ_STRING(), MAX_TEAM_NAME );
+		std::strncpy( g_PlayerExtraInfo[cl].teamname, READ_STRING(), MAX_TEAM_NAME );
 	}
 
 	// rebuild the list of teams

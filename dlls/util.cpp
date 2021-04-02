@@ -817,7 +817,7 @@ void UTIL_HudMessage( CBaseEntity *pEntity, const hudtextparms_t &textparms, con
 		else
 		{
 			char tmp[512];
-			strncpy( tmp, pMessage, 511 );
+			std::strncpy( tmp, pMessage, 511 );
 			tmp[511] = 0;
 			WRITE_STRING( tmp );
 		}

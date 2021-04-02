@@ -767,7 +767,7 @@ void CHudSpectator::DirectorMessage( int iSize, void *pbuf )
 								msg->holdtime	= READ_FLOAT();	// holdtime
 								msg->fxtime		= READ_FLOAT();	// fxtime;
 
-								strncpy( m_HUDMessageText[m_lastHudMessage], READ_STRING(), 128 );
+								std::strncpy( m_HUDMessageText[m_lastHudMessage], READ_STRING(), 128 );
 								m_HUDMessageText[m_lastHudMessage][127]=0;	// text 
 
 								msg->pMessage = m_HUDMessageText[m_lastHudMessage];

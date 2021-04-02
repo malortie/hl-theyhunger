@@ -464,7 +464,7 @@ void CHud :: VidInit( void )
 					std::sprintf(sz, "sprites/%s.spr", p->szSprite);
 					m_rghSprites[index] = SPR_Load(sz);
 					m_rgrcRects[index] = p->rc;
-					strncpy( &m_rgszSpriteNames[index * MAX_SPRITE_NAME_LENGTH], p->szName, MAX_SPRITE_NAME_LENGTH );
+					std::strncpy( &m_rgszSpriteNames[index * MAX_SPRITE_NAME_LENGTH], p->szName, MAX_SPRITE_NAME_LENGTH );
 
 					index++;
 				}
@@ -565,7 +565,7 @@ void COM_FileBase ( const char *in, char *out)
 	len = end - start + 1;
 
 	// Copy partial string
-	strncpy( out, &in[start], len );
+	std::strncpy( out, &in[start], len );
 	// Terminate it
 	out[len] = 0;
 }

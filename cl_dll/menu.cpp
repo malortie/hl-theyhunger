@@ -187,7 +187,7 @@ int CHudMenu :: Draw( float flTime )
 			{
 				sptr++;
 			}
-			strncpy( menubuf, ptr, std::min( ( sptr - ptr), (int)sizeof( menubuf ) ));
+			std::strncpy( menubuf, ptr, std::min( ( sptr - ptr), (int)sizeof( menubuf ) ));
 			menubuf[ std::min( ( sptr - ptr), (int)(sizeof( menubuf )-1) ) ] = '\0';
 			
 			if ( menu_ralign )
@@ -248,7 +248,7 @@ int CHudMenu :: MsgFunc_ShowMenu( const char *pszName, int iSize, void *pbuf )
 	{
 		if ( !m_fWaitingForMore ) // this is the start of a new menu
 		{
-			strncpy( g_szPrelocalisedMenuString, READ_STRING(), MAX_MENU_STRING );
+			std::strncpy( g_szPrelocalisedMenuString, READ_STRING(), MAX_MENU_STRING );
 		}
 		else
 		{  // append to the current menu string

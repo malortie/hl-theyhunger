@@ -136,11 +136,11 @@ int CHudSayText :: Draw( float flTime )
 					//char buf[MAX_PLAYER_NAME_LENGTH+32];
 
 					// draw the first x characters in the player color
-					strncpy( buf, g_szLineBuffer[i], std::min(g_iNameLengths[i], MAX_PLAYER_NAME_LENGTH+32) );
+					std::strncpy( buf, g_szLineBuffer[i], std::min(g_iNameLengths[i], MAX_PLAYER_NAME_LENGTH+32) );
 					buf[ std::min(g_iNameLengths[i], MAX_PLAYER_NAME_LENGTH+31) ] = 0;
 					gEngfuncs.pfnDrawSetTextColor( g_pflNameColors[i][0], g_pflNameColors[i][1], g_pflNameColors[i][2] );
 					int x = DrawConsoleString( LINE_START, y, buf + 1 ); // don't draw the control code at the start
-					strncpy( buf, g_szLineBuffer[i] + g_iNameLengths[i], std::strlen( g_szLineBuffer[i] ));
+					std::strncpy( buf, g_szLineBuffer[i] + g_iNameLengths[i], std::strlen( g_szLineBuffer[i] ));
 					buf[ std::strlen( g_szLineBuffer[i] + g_iNameLengths[i] ) - 1 ] = '\0';
 					// color is reset after each string draw
 					DrawConsoleString( x, y, buf ); 
@@ -217,7 +217,7 @@ void CHudSayText :: SayTextPrint( const char *pszBuf, int iBufSize, int clientIn
 		}
 	}
 
-	strncpy( g_szLineBuffer[i], pszBuf, std::max(iBufSize , MAX_CHARS_PER_LINE) );
+	std::strncpy( g_szLineBuffer[i], pszBuf, std::max(iBufSize , MAX_CHARS_PER_LINE) );
 
 	// make sure the text fits in one line
 	EnsureTextFitsInOneLineAndWrapIfHaveTo( i );

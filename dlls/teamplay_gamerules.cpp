@@ -43,7 +43,7 @@ CHalfLifeTeamplay :: CHalfLifeTeamplay()
 	m_szTeamList[0] = 0;
 
 	// Cache this because the team code doesn't want to deal with changing this in the middle of a game
-	strncpy( m_szTeamList, teamlist.string, TEAMPLAY_TEAMLISTLENGTH );
+	std::strncpy( m_szTeamList, teamlist.string, TEAMPLAY_TEAMLISTLENGTH );
 
 	edict_t *pWorld = INDEXENT(0);
 	if ( pWorld && pWorld->v.team )
@@ -53,7 +53,7 @@ CHalfLifeTeamplay :: CHalfLifeTeamplay()
 			const char *pTeamList = STRING(pWorld->v.team);
 			if ( pTeamList && std::strlen(pTeamList) )
 			{
-				strncpy( m_szTeamList, pTeamList, TEAMPLAY_TEAMLISTLENGTH );
+				std::strncpy( m_szTeamList, pTeamList, TEAMPLAY_TEAMLISTLENGTH );
 			}
 		}
 	}
@@ -181,7 +181,7 @@ const char *CHalfLifeTeamplay::SetDefaultPlayerTeam( CBasePlayer *pPlayer )
 {
 	// copy out the team name from the model
 	char *mdls = g_engfuncs.pfnInfoKeyValue( g_engfuncs.pfnGetInfoKeyBuffer( pPlayer->edict() ), "model" );
-	strncpy( pPlayer->m_szTeamName, mdls, TEAM_NAME_LENGTH );
+	std::strncpy( pPlayer->m_szTeamName, mdls, TEAM_NAME_LENGTH );
 
 	RecountTeams();
 
@@ -198,7 +198,7 @@ const char *CHalfLifeTeamplay::SetDefaultPlayerTeam( CBasePlayer *pPlayer )
 		{
 			pTeamName = TeamWithFewestPlayers();
 		}
-		strncpy( pPlayer->m_szTeamName, pTeamName, TEAM_NAME_LENGTH );
+		std::strncpy( pPlayer->m_szTeamName, pTeamName, TEAM_NAME_LENGTH );
 	}
 
 	return pPlayer->m_szTeamName;
@@ -286,7 +286,7 @@ void CHalfLifeTeamplay::ChangePlayerTeam( CBasePlayer *pPlayer, const char *pTea
 	}
 
 	// copy out the team name from the model
-	strncpy( pPlayer->m_szTeamName, pTeamName, TEAM_NAME_LENGTH );
+	std::strncpy( pPlayer->m_szTeamName, pTeamName, TEAM_NAME_LENGTH );
 
 	g_engfuncs.pfnSetClientKeyValue( clientIndex, g_engfuncs.pfnGetInfoKeyBuffer( pPlayer->edict() ), "model", pPlayer->m_szTeamName );
 	g_engfuncs.pfnSetClientKeyValue( clientIndex, g_engfuncs.pfnGetInfoKeyBuffer( pPlayer->edict() ), "team", pPlayer->m_szTeamName );
@@ -606,7 +606,7 @@ void CHalfLifeTeamplay::RecountTeams( bool bResendInfo )
 					tm = num_teams;
 					num_teams++;
 					team_scores[tm] = 0;
-					strncpy( team_names[tm], pTeamName, MAX_TEAMNAME_LENGTH );
+					std::strncpy( team_names[tm], pTeamName, MAX_TEAMNAME_LENGTH );
 				}
 			}
 

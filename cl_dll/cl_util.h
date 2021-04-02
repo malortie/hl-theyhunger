@@ -134,7 +134,7 @@ inline char *safe_strcpy( char *dst, const char *src, int len_dst)
 		return NULL; // this is bad
 	}
 
-	strncpy(dst,src,len_dst);
+	std::strncpy(dst,src,len_dst);
 	dst[ len_dst - 1 ] = '\0';
 
 	return dst;

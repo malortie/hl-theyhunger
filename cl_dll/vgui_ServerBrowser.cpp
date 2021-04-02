@@ -195,7 +195,7 @@ public:
 				val = gEngfuncs.pNetAPI->ValueForKey( info, "address" );
 				if ( val )
 				{
-					strncpy( sz, val, 31 );
+					std::strncpy( sz, val, 31 );
 					sz[ 31 ] = '\0';
 					// Server Name;
 					m_pLabel->setText( sz );
@@ -205,7 +205,7 @@ public:
 				val = gEngfuncs.pNetAPI->ValueForKey( info, "hostname" );
 				if ( val )
 				{
-					strncpy( sz, val, 31 );
+					std::strncpy( sz, val, 31 );
 					sz[ 31 ] = '\0';
 					// Server Map;
 					m_pLabel->setText( sz );
@@ -215,7 +215,7 @@ public:
 				val = gEngfuncs.pNetAPI->ValueForKey( info, "map" );
 				if ( val )
 				{
-					strncpy( sz, val, 31 );
+					std::strncpy( sz, val, 31 );
 					sz[ 31 ] = '\0';
 					// Server Name;
 					m_pLabel->setText( sz );
@@ -236,7 +236,7 @@ public:
 				val = gEngfuncs.pNetAPI->ValueForKey( info, "ping" );
 				if ( val )
 				{
-					strncpy( sz, val, 31 );
+					std::strncpy( sz, val, 31 );
 					sz[ 31 ] = '\0';
 					// Server Name;
 					m_pLabel->setText( sz );

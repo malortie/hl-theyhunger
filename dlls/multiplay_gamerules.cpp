@@ -1670,7 +1670,7 @@ void CHalfLifeMultiplay :: SendMOTDToClient( edict_t *client )
 		}
 		else
 		{
-			strncpy( chunk, pFileList, MAX_MOTD_CHUNK );
+			std::strncpy( chunk, pFileList, MAX_MOTD_CHUNK );
 			chunk[MAX_MOTD_CHUNK] = 0;		// strncpy doesn't always append the null terminator
 		}
 
