@@ -1299,7 +1299,7 @@ void SENTENCEG_Init()
 		if (!buffer[i])
 			continue;
 
-		if (buffer[i] == '/' || !isalpha(buffer[i]))
+		if (buffer[i] == '/' || !std::isalpha(buffer[i]))
 			continue;
 
 		// get sentence name
@@ -1568,7 +1568,7 @@ void TEXTURETYPE_Init()
 			continue;
 
 		// skip comment lines
-		if (buffer[i] == '/' || !isalpha(buffer[i]))
+		if (buffer[i] == '/' || !std::isalpha(buffer[i]))
 			continue;
 
 		// get texture type
