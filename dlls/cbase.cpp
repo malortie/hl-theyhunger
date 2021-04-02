@@ -636,10 +636,10 @@ void SetObjectCollisionBox( entvars_t *pev )
 		max = 0;
 		for (i=0 ; i<3 ; i++)
 		{
-			v = fabs( ((float *)pev->mins)[i]);
+			v = std::abs( ((float *)pev->mins)[i]);
 			if (v > max)
 				max = v;
-			v = fabs( ((float *)pev->maxs)[i]);
+			v = std::abs( ((float *)pev->maxs)[i]);
 			if (v > max)
 				max = v;
 		}

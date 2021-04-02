@@ -475,7 +475,7 @@ void CFuncTank :: Think( void )
 	pev->avelocity = g_vecZero;
 	TrackTarget();
 
-	if ( fabs(pev->avelocity.x) > 1 || fabs(pev->avelocity.y) > 1 )
+	if ( std::abs(pev->avelocity.x) > 1 || std::abs(pev->avelocity.y) > 1 )
 		StartRotSound();
 	else
 		StopRotSound();
@@ -596,7 +596,7 @@ void CFuncTank::TrackTarget( void )
 	if ( m_pController )
 		return;
 
-	if ( CanFire() && ( (fabs(distX) < m_pitchTolerance && fabs(distY) < m_yawTolerance) || (pev->spawnflags & SF_TANK_LINEOFSIGHT) ) )
+	if ( CanFire() && ( (std::abs(distX) < m_pitchTolerance && std::abs(distY) < m_yawTolerance) || (pev->spawnflags & SF_TANK_LINEOFSIGHT) ) )
 	{
 		BOOL fire = FALSE;
 		Vector forward;

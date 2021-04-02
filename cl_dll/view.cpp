@@ -222,7 +222,7 @@ float V_CalcRoll (vec3_t angles, vec3_t velocity, float rollangle, float rollspe
     
 	side = DotProduct (velocity, right);
     sign = side < 0 ? -1 : 1;
-    side = fabs( side );
+    side = std::abs( side );
     
 	value = rollangle;
     if (side < rollspeed)
@@ -298,7 +298,7 @@ void V_DriftPitch ( struct ref_params_s *pparams )
 			// to move the view will be centered automatically if they move more than
 			// v_centermove units. 
 
-			if ( fabs( pparams->cmd->forwardmove ) < cl_forwardspeed->value )
+			if ( std::abs( pparams->cmd->forwardmove ) < cl_forwardspeed->value )
 				pd.driftmove = 0;
 			else
 				pd.driftmove += pparams->frametime;
@@ -852,7 +852,7 @@ void V_SmoothInterpolateAngles( float * startAngle, float * endAngle, float * fi
 			d += 360.0f;
 		}
 
-		absd = fabs(d);
+		absd = std::abs(d);
 
 		if ( absd > 0.01f )
 		{
@@ -1079,7 +1079,7 @@ float MaxAngleBetweenAngles(  float * a1, float * a2 )
 			d += 360;
 		}
 
-		d = fabs(d);
+		d = std::abs(d);
 
 		if ( d > maxd )
 			maxd=d;

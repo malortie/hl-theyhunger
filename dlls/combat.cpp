@@ -739,7 +739,7 @@ void CGib :: BounceGibTouch ( CBaseEntity *pOther )
 		if ( m_material != matNone && RANDOM_LONG(0,2) == 0 )
 		{
 			float volume;
-			float zvel = fabs(pev->velocity.z);
+			float zvel = std::abs(pev->velocity.z);
 		
 			volume = 0.8 * min(1.0, ((float)zvel) / 450.0);
 
