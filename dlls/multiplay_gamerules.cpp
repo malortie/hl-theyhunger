@@ -1291,7 +1291,7 @@ int COM_TokenWaiting( char *buffer )
 	p = buffer;
 	while ( *p && *p!='\n')
 	{
-		if ( !std::isspace( *p ) || isalnum( *p ) )
+		if ( !std::isspace( *p ) || std::isalnum( *p ) )
 			return 1;
 
 		p++;

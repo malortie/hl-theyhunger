@@ -150,7 +150,7 @@ int KB_ConvertString( char *in, char **ppout )
 		if ( *p == '+' )
 		{
 			pEnd = binding;
-			while ( *p && ( isalnum( *p ) || ( pEnd == binding ) ) && ( ( pEnd - binding ) < 63 ) )
+			while ( *p && ( std::isalnum( *p ) || ( pEnd == binding ) ) && ( ( pEnd - binding ) < 63 ) )
 			{
 				*pEnd++ = *p++;
 			}
