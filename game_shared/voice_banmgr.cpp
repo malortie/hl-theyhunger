@@ -56,7 +56,7 @@ bool CVoiceBanMgr::Init(char const *pGameDir)
 		if(version == BANMGR_FILEVERSION)
 		{
 			std::fseek(fp, 0, SEEK_END);
-			int nIDs = (ftell(fp) - sizeof(version)) / 16;
+			int nIDs = (std::ftell(fp) - sizeof(version)) / 16;
 			std::fseek(fp, sizeof(version), SEEK_SET);
 
 			for(int i=0; i < nIDs; i++)
