@@ -64,7 +64,7 @@ void COM_Log( char *pszFile, char *fmt, ...)
 	fp = std::fopen( pfilename, "a+t");
 	if (fp)
 	{
-		fprintf(fp, "%s", string);
+		std::fprintf(fp, "%s", string);
 		std::fclose(fp);
 	}
 }

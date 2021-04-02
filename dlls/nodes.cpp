@@ -1168,9 +1168,9 @@ int CGraph :: LinkVisibleNodes ( CLink *pLinkPool, FILE *file, int *piBadNode )
 	}
 	else
 	{
-		fprintf ( file, "----------------------------------------------------------------------------\n" );
-		fprintf ( file, "LinkVisibleNodes - Initial Connections\n" );
-		fprintf ( file, "----------------------------------------------------------------------------\n" );
+		std::fprintf ( file, "----------------------------------------------------------------------------\n" );
+		std::fprintf ( file, "LinkVisibleNodes - Initial Connections\n" );
+		std::fprintf ( file, "----------------------------------------------------------------------------\n" );
 	}
 
 	cTotalLinks = 0;// start with no connections
@@ -1186,7 +1186,7 @@ int CGraph :: LinkVisibleNodes ( CLink *pLinkPool, FILE *file, int *piBadNode )
 
 		if ( file )
 		{
-			fprintf ( file, "Node #%4d:\n\n", i );
+			std::fprintf ( file, "Node #%4d:\n\n", i );
 		}
 
 		for ( z = 0 ; z < MAX_NODE_INITIAL_LINKS ; z++ )
@@ -1274,14 +1274,14 @@ int CGraph :: LinkVisibleNodes ( CLink *pLinkPool, FILE *file, int *piBadNode )
 
 			if ( file )
 			{
-				fprintf ( file, "%4d", j );
+				std::fprintf ( file, "%4d", j );
 
 				if ( !FNullEnt( pLinkPool[ cTotalLinks ].m_pLinkEnt ) )
 				{// record info about the ent in the way, if any.
-					fprintf ( file, "  Entity on connection: %s, name: %s  Model: %s", STRING( VARS( pTraceEnt )->classname ), STRING ( VARS( pTraceEnt )->targetname ), STRING ( VARS(tr.pHit)->model ) );
+					std::fprintf ( file, "  Entity on connection: %s, name: %s  Model: %s", STRING( VARS( pTraceEnt )->classname ), STRING ( VARS( pTraceEnt )->targetname ), STRING ( VARS(tr.pHit)->model ) );
 				}
 				
-				fprintf ( file, "\n" );
+				std::fprintf ( file, "\n" );
 			}
 
 			pLinkPool [ cTotalLinks ].m_iDestNode = j;
@@ -1293,7 +1293,7 @@ int CGraph :: LinkVisibleNodes ( CLink *pLinkPool, FILE *file, int *piBadNode )
 			if ( cLinksThisNode == MAX_NODE_INITIAL_LINKS )
 			{
 				ALERT ( at_aiconsole, "**LinkVisibleNodes:\nNode %d has NodeLinks > MAX_NODE_INITIAL_LINKS", i );
-				fprintf ( file, "** NODE %d HAS NodeLinks > MAX_NODE_INITIAL_LINKS **\n", i );
+				std::fprintf ( file, "** NODE %d HAS NodeLinks > MAX_NODE_INITIAL_LINKS **\n", i );
 				*piBadNode = i;
 				return	FALSE;
 			}
@@ -1306,7 +1306,7 @@ int CGraph :: LinkVisibleNodes ( CLink *pLinkPool, FILE *file, int *piBadNode )
 
 			if ( cLinksThisNode == 0 )
 			{
-				fprintf ( file, "**NO INITIAL LINKS**\n" );
+				std::fprintf ( file, "**NO INITIAL LINKS**\n" );
 			}
 
 			// record the connection info in the link pool
@@ -1323,12 +1323,12 @@ int CGraph :: LinkVisibleNodes ( CLink *pLinkPool, FILE *file, int *piBadNode )
 
 		if ( file )
 		{
-			fprintf ( file, "----------------------------------------------------------------------------\n" );
+			std::fprintf ( file, "----------------------------------------------------------------------------\n" );
 		}
 	}
 
-	fprintf ( file, "\n%4d Total Initial Connections - %4d Maximum connections for a single node.\n", cTotalLinks, cMaxInitialLinks );
-	fprintf ( file, "----------------------------------------------------------------------------\n\n\n" );
+	std::fprintf ( file, "\n%4d Total Initial Connections - %4d Maximum connections for a single node.\n", cTotalLinks, cMaxInitialLinks );
+	std::fprintf ( file, "----------------------------------------------------------------------------\n\n\n" );
 
 	return cTotalLinks;
 }
@@ -1357,9 +1357,9 @@ int	CGraph :: RejectInlineLinks ( CLink *pLinkPool, FILE *file )
 
 	if ( file )
 	{
-		fprintf ( file, "----------------------------------------------------------------------------\n" );
-		fprintf ( file, "InLine Rejection:\n" );
-		fprintf ( file, "----------------------------------------------------------------------------\n" );
+		std::fprintf ( file, "----------------------------------------------------------------------------\n" );
+		std::fprintf ( file, "InLine Rejection:\n" );
+		std::fprintf ( file, "----------------------------------------------------------------------------\n" );
 	}
 
 	cRejectedLinks = 0;
@@ -1370,7 +1370,7 @@ int	CGraph :: RejectInlineLinks ( CLink *pLinkPool, FILE *file )
 
 		if ( file )
 		{
-			fprintf ( file, "Node %3d:\n", i );
+			std::fprintf ( file, "Node %3d:\n", i );
 		}
 
 		for ( j = 0 ; j < pSrcNode->m_cNumLinks ; j++ )
@@ -1405,7 +1405,7 @@ int	CGraph :: RejectInlineLinks ( CLink *pLinkPool, FILE *file )
 					{
 						if ( file )
 						{
-							fprintf ( file, "REJECTED NODE %3d through Node %3d, Dot = %8f\n", pLinkPool[ pSrcNode->m_iFirstLink + j ].m_iDestNode, pLinkPool[ pSrcNode->m_iFirstLink + k ].m_iDestNode, DotProduct ( vec2DirToCheckNode, vec2DirToTestNode ) );
+							std::fprintf ( file, "REJECTED NODE %3d through Node %3d, Dot = %8f\n", pLinkPool[ pSrcNode->m_iFirstLink + j ].m_iDestNode, pLinkPool[ pSrcNode->m_iFirstLink + k ].m_iDestNode, DotProduct ( vec2DirToCheckNode, vec2DirToTestNode ) );
 						}
 
 						pLinkPool[ pSrcNode->m_iFirstLink + j ] = pLinkPool[ pSrcNode->m_iFirstLink + ( pSrcNode->m_cNumLinks - 1 ) ];
@@ -1422,7 +1422,7 @@ int	CGraph :: RejectInlineLinks ( CLink *pLinkPool, FILE *file )
 
 		if ( file )
 		{
-			fprintf ( file, "----------------------------------------------------------------------------\n\n" );
+			std::fprintf ( file, "----------------------------------------------------------------------------\n\n" );
 		}
 	}
 
@@ -1676,8 +1676,8 @@ void CTestHull :: BuildNodeGraph( void )
 		return;
 	}
 
-	fprintf( file, "Node Graph Report for map:  %s.bsp\n", STRING(gpGlobals->mapname) );
-	fprintf ( file, "%d Total Nodes\n\n", WorldGraph.m_cNodes );
+	std::fprintf( file, "Node Graph Report for map:  %s.bsp\n", STRING(gpGlobals->mapname) );
+	std::fprintf ( file, "%d Total Nodes\n\n", WorldGraph.m_cNodes );
 
 	for ( i = 0 ; i < WorldGraph.m_cNodes ; i++ )
 	{// print all node numbers and their locations to the file.
@@ -1685,14 +1685,14 @@ void CTestHull :: BuildNodeGraph( void )
 		WorldGraph.m_pNodes[ i ].m_iFirstLink = 0;
 		memset(WorldGraph.m_pNodes[ i ].m_pNextBestNode, 0, sizeof(WorldGraph.m_pNodes[ i ].m_pNextBestNode));
 
-		fprintf ( file, "Node#         %4d\n", i );
-		fprintf ( file, "Location      %4d,%4d,%4d\n",(int)WorldGraph.m_pNodes[ i ].m_vecOrigin.x, (int)WorldGraph.m_pNodes[ i ].m_vecOrigin.y, (int)WorldGraph.m_pNodes[ i ].m_vecOrigin.z );
-		fprintf ( file, "HintType:     %4d\n", WorldGraph.m_pNodes[ i ].m_sHintType );
-		fprintf ( file, "HintActivity: %4d\n", WorldGraph.m_pNodes[ i ].m_sHintActivity );
-		fprintf ( file, "HintYaw:      %4f\n", WorldGraph.m_pNodes[ i ].m_flHintYaw );
-		fprintf ( file, "-------------------------------------------------------------------------------\n" );
+		std::fprintf ( file, "Node#         %4d\n", i );
+		std::fprintf ( file, "Location      %4d,%4d,%4d\n",(int)WorldGraph.m_pNodes[ i ].m_vecOrigin.x, (int)WorldGraph.m_pNodes[ i ].m_vecOrigin.y, (int)WorldGraph.m_pNodes[ i ].m_vecOrigin.z );
+		std::fprintf ( file, "HintType:     %4d\n", WorldGraph.m_pNodes[ i ].m_sHintType );
+		std::fprintf ( file, "HintActivity: %4d\n", WorldGraph.m_pNodes[ i ].m_sHintActivity );
+		std::fprintf ( file, "HintYaw:      %4f\n", WorldGraph.m_pNodes[ i ].m_flHintYaw );
+		std::fprintf ( file, "-------------------------------------------------------------------------------\n" );
 	}
-	fprintf ( file, "\n\n" );
+	std::fprintf ( file, "\n\n" );
 
 
 	// Automatically recognize WATER nodes and drop the LAND nodes to the floor.
@@ -1770,15 +1770,15 @@ void CTestHull :: BuildNodeGraph( void )
 
 // send the walkhull to all of this node's connections now. We'll do this here since
 // so much of it relies on being able to control the test hull.
-	fprintf ( file, "----------------------------------------------------------------------------\n" );
-	fprintf ( file, "Walk Rejection:\n");	
+	std::fprintf ( file, "----------------------------------------------------------------------------\n" );
+	std::fprintf ( file, "Walk Rejection:\n");	
 
 	for ( i = 0 ; i < WorldGraph.m_cNodes ; i++ )
 	{
 		pSrcNode = &WorldGraph.m_pNodes[ i ];
 
-		fprintf ( file, "-------------------------------------------------------------------------------\n");
-		fprintf ( file, "Node %4d:\n\n", i );
+		std::fprintf ( file, "-------------------------------------------------------------------------------\n");
+		std::fprintf ( file, "Node %4d:\n\n", i );
 		
 		for ( j = 0 ; j < pSrcNode->m_cNumLinks ; j++ )
 		{
@@ -1890,17 +1890,17 @@ void CTestHull :: BuildNodeGraph( void )
 						switch ( hull )
 						{
 						case NODE_SMALL_HULL:	// if this hull can't fit, nothing can, so drop the connection
-							fprintf ( file, "NODE_SMALL_HULL step %d\n", step );
+							std::fprintf ( file, "NODE_SMALL_HULL step %d\n", step );
 							pTempPool[ pSrcNode->m_iFirstLink + j ].m_afLinkInfo &= ~(bits_LINK_SMALL_HULL | bits_LINK_HUMAN_HULL | bits_LINK_LARGE_HULL);
 							fSkipRemainingHulls = TRUE;// don't bother checking larger hulls
 							break;
 						case NODE_HUMAN_HULL:
-							fprintf ( file, "NODE_HUMAN_HULL step %d\n", step );
+							std::fprintf ( file, "NODE_HUMAN_HULL step %d\n", step );
 							pTempPool[ pSrcNode->m_iFirstLink + j ].m_afLinkInfo &= ~(bits_LINK_HUMAN_HULL | bits_LINK_LARGE_HULL);
 							fSkipRemainingHulls = TRUE;// don't bother checking larger hulls
 							break;
 						case NODE_LARGE_HULL:
-							fprintf ( file, "NODE_LARGE_HULL step %d\n", step );
+							std::fprintf ( file, "NODE_LARGE_HULL step %d\n", step );
 							pTempPool[ pSrcNode->m_iFirstLink + j ].m_afLinkInfo &= ~bits_LINK_LARGE_HULL;
 							break;
 						}
@@ -1921,9 +1921,9 @@ void CTestHull :: BuildNodeGraph( void )
 
 			if (pTempPool[ pSrcNode->m_iFirstLink + j ].m_afLinkInfo == 0)
 			{
-				fprintf ( file, "Rejected Node %3d - Unreachable by ", pTempPool [ pSrcNode->m_iFirstLink + j ].m_iDestNode );
+				std::fprintf ( file, "Rejected Node %3d - Unreachable by ", pTempPool [ pSrcNode->m_iFirstLink + j ].m_iDestNode );
 				pTempPool[ pSrcNode->m_iFirstLink + j ] = pTempPool [ pSrcNode->m_iFirstLink + ( pSrcNode->m_cNumLinks - 1 ) ];
-				fprintf ( file, "Any Hull\n" );
+				std::fprintf ( file, "Any Hull\n" );
 				
 				pSrcNode->m_cNumLinks--;
 				cPoolLinks--;// we just removed a link, so decrement the total number of links in the pool.
@@ -1932,7 +1932,7 @@ void CTestHull :: BuildNodeGraph( void )
 
 		}
 	}
-	fprintf ( file, "-------------------------------------------------------------------------------\n\n\n");
+	std::fprintf ( file, "-------------------------------------------------------------------------------\n\n\n");
 
 	cPoolLinks -= WorldGraph.RejectInlineLinks ( pTempPool, file );
 
@@ -1982,8 +1982,8 @@ void CTestHull :: BuildNodeGraph( void )
 
 	fPairsValid = TRUE; // assume that the connection pairs are all valid to start
 
-	fprintf ( file, "\n\n-------------------------------------------------------------------------------\n");
-	fprintf ( file, "Link Pairings:\n");
+	std::fprintf ( file, "\n\n-------------------------------------------------------------------------------\n");
+	std::fprintf ( file, "Link Pairings:\n");
 
 // link integrity check. The idea here is that if Node A links to Node B, node B should
 // link to node A. If not, we have a situation that prevents us from using a basic 
@@ -1997,7 +1997,7 @@ void CTestHull :: BuildNodeGraph( void )
 			if (iLink < 0)
 			{
 				fPairsValid = FALSE;// unmatched link pair.
-				fprintf ( file, "WARNING: Node %3d does not connect back to Node %3d\n", WorldGraph.INodeLink(i, j), i);
+				std::fprintf ( file, "WARNING: Node %3d does not connect back to Node %3d\n", WorldGraph.INodeLink(i, j), i);
 			}
 		}
 	}
@@ -2006,15 +2006,15 @@ void CTestHull :: BuildNodeGraph( void )
 	// (in the find nearest line function)
 	if ( fPairsValid )
 	{
-		fprintf ( file, "\nAll Connections are Paired!\n");
+		std::fprintf ( file, "\nAll Connections are Paired!\n");
 	}
 
-	fprintf ( file, "-------------------------------------------------------------------------------\n");
-	fprintf ( file, "\n\n-------------------------------------------------------------------------------\n");
-	fprintf ( file, "Total Number of Connections in Pool: %d\n", cPoolLinks );
-	fprintf ( file, "-------------------------------------------------------------------------------\n");
-	fprintf ( file, "Connection Pool: %d bytes\n", sizeof ( CLink ) * cPoolLinks );
-	fprintf ( file, "-------------------------------------------------------------------------------\n");
+	std::fprintf ( file, "-------------------------------------------------------------------------------\n");
+	std::fprintf ( file, "\n\n-------------------------------------------------------------------------------\n");
+	std::fprintf ( file, "Total Number of Connections in Pool: %d\n", cPoolLinks );
+	std::fprintf ( file, "-------------------------------------------------------------------------------\n");
+	std::fprintf ( file, "Connection Pool: %d bytes\n", sizeof ( CLink ) * cPoolLinks );
+	std::fprintf ( file, "-------------------------------------------------------------------------------\n");
 
 
 	ALERT ( at_aiconsole, "%d Nodes, %d Connections\n", WorldGraph.m_cNodes, cPoolLinks );
