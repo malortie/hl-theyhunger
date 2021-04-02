@@ -567,7 +567,7 @@ void CHalfLifeTeamplay::RecountTeams( bool bResendInfo )
 	// make a copy because strtok is destructive
 	std::strcpy( teamlist, m_szTeamList );
 	pName = teamlist;
-	pName = strtok( pName, ";" );
+	pName = std::strtok( pName, ";" );
 	while ( pName != NULL && *pName )
 	{
 		if ( GetTeamIndex( pName ) < 0 )
@@ -575,7 +575,7 @@ void CHalfLifeTeamplay::RecountTeams( bool bResendInfo )
 			std::strcpy( team_names[num_teams], pName );
 			num_teams++;
 		}
-		pName = strtok( NULL, ";" );
+		pName = std::strtok( NULL, ";" );
 	}
 
 	if ( num_teams < 2 )
