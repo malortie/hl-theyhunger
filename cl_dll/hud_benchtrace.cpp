@@ -197,7 +197,7 @@ void Trace_StartTrace( int *results, int *finished, const char *server )
 {
 #ifdef _WIN32
 	tp.p_nresults = results;
-	strcpy( tp.server, server );
+	std::strcpy( tp.server, server );
 
 	*results = -1;
 

@@ -1372,14 +1372,14 @@ void CChangeLevel :: KeyValue( KeyValueData *pkvd )
 	{
 		if (strlen(pkvd->szValue) >= cchMapNameMost)
 			ALERT( at_error, "Map name '%s' too long (32 chars)\n", pkvd->szValue );
-		strcpy(m_szMapName, pkvd->szValue);
+		std::strcpy(m_szMapName, pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "landmark"))
 	{
 		if (strlen(pkvd->szValue) >= cchMapNameMost)
 			ALERT( at_error, "Landmark name '%s' too long (32 chars)\n", pkvd->szValue );
-		strcpy(m_szLandmarkName, pkvd->szValue);
+		std::strcpy(m_szLandmarkName, pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "changetarget"))
@@ -1503,7 +1503,7 @@ void CChangeLevel :: ChangeLevelNow( CBaseEntity *pActivator )
 		}
 	}
 	// This object will get removed in the call to CHANGE_LEVEL, copy the params into "safe" memory
-	strcpy(st_szNextMap, m_szMapName);
+	std::strcpy(st_szNextMap, m_szMapName);
 
 	m_hActivator = pActivator;
 	SUB_UseTargets( pActivator, USE_TOGGLE, 0 );
@@ -1513,7 +1513,7 @@ void CChangeLevel :: ChangeLevelNow( CBaseEntity *pActivator )
 	pentLandmark = FindLandmark( m_szLandmarkName );
 	if ( !FNullEnt( pentLandmark ) )
 	{
-		strcpy(st_szNextSpot, m_szLandmarkName);
+		std::strcpy(st_szNextSpot, m_szLandmarkName);
 		gpGlobals->vecLandmarkOffset = VARS(pentLandmark)->origin;
 	}
 //	ALERT( at_console, "Level touches %d levels\n", ChangeList( levels, 16 ) );
@@ -1547,8 +1547,8 @@ int CChangeLevel::AddTransitionToList( LEVELLIST *pLevelList, int listCount, con
 		if ( pLevelList[i].pentLandmark == pentLandmark && std::strcmp( pLevelList[i].mapName, pMapName ) == 0 )
 			return 0;
 	}
-	strcpy( pLevelList[listCount].mapName, pMapName );
-	strcpy( pLevelList[listCount].landmarkName, pLandmarkName );
+	std::strcpy( pLevelList[listCount].mapName, pMapName );
+	std::strcpy( pLevelList[listCount].landmarkName, pLandmarkName );
 	pLevelList[listCount].pentLandmark = pentLandmark;
 	pLevelList[listCount].vecLandmarkOrigin = VARS(pentLandmark)->origin;
 
@@ -1722,12 +1722,12 @@ void NextLevel( void )
 	{
 		gpGlobals->mapname = ALLOC_STRING("start");
 		pChange = GetClassPtr( (CChangeLevel *)NULL );
-		strcpy(pChange->m_szMapName, "start");
+		std::strcpy(pChange->m_szMapName, "start");
 	}
 	else
 		pChange = GetClassPtr( (CChangeLevel *)VARS(pent));
 	
-	strcpy(st_szNextMap, pChange->m_szMapName);
+	std::strcpy(st_szNextMap, pChange->m_szMapName);
 	g_fGameOver = TRUE;
 	
 	if (pChange->pev->nextthink < gpGlobals->time)

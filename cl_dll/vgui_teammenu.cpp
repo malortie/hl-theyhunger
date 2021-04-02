@@ -194,7 +194,7 @@ void CTeamMenuPanel::Update( void )
 					SetActiveInfo( i );
 
 				char szPlayerList[ (MAX_PLAYER_NAME_LENGTH + 3) * 31 ];  // name + ", "
-				strcpy(szPlayerList, "\n");
+				std::strcpy(szPlayerList, "\n");
 				// Update the Team Info
 				// Now count the number of teammembers of this class
 				int iTotal = 0;
@@ -279,18 +279,18 @@ void CTeamMenuPanel::Update( void )
 			char *ch;
 
 			// Update the level name
-			strcpy( sz, level );
+			std::strcpy( sz, level );
 			ch = std::strchr( sz, '/' );
 			if (!ch)
 				ch = std::strchr( sz, '\\' );
-			strcpy( szTitle, ch+1 );
+			std::strcpy( szTitle, ch+1 );
 			ch = std::strchr( szTitle, '.' );
 			*ch = '\0';
 			m_pMapTitle->setText( "%s", szTitle );
 			*ch = '.';
 
 			// Update the map briefing
-			strcpy( sz, level );
+			std::strcpy( sz, level );
 			ch = std::strchr( sz, '.' );
 			*ch = '\0';
 			std::strcat( sz, ".txt" );

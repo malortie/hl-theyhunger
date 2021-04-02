@@ -1066,7 +1066,7 @@ int USENTENCEG_PickSequential(int isentenceg, char *szfound, int ipick, int fres
 	if (ipick >= count)
 		ipick = count-1;
 
-	strcpy(szfound, "!");
+	std::strcpy(szfound, "!");
 	std::strcat(szfound, szgroupname);
 	std::sprintf(sznum, "%d", ipick);
 	std::strcat(szfound, sznum);
@@ -1128,7 +1128,7 @@ int USENTENCEG_Pick(int isentenceg, char *szfound)
 			USENTENCEG_InitLRU(plru, count);
 		else
 		{
-			strcpy(szfound, "!");
+			std::strcpy(szfound, "!");
 			std::strcat(szfound, szgroupname);
 			std::sprintf(sznum, "%d", ipick);
 			std::strcat(szfound, sznum);
@@ -1252,7 +1252,7 @@ void SENTENCEG_Stop(edict_t *entity, int isentenceg, int ipick)
 	if (isentenceg < 0 || ipick < 0)
 		return;
 	
-	strcpy(buffer, "!");
+	std::strcpy(buffer, "!");
 	std::strcat(buffer, rgsentenceg[isentenceg].szgroupname);
 	std::sprintf(sznum, "%d", ipick);
 	std::strcat(buffer, sznum);
@@ -1323,7 +1323,7 @@ void SENTENCEG_Init()
 		if ( strlen( pString ) >= CBSENTENCENAME_MAX )
 			ALERT( at_warning, "Sentence %s longer than %d letters\n", pString, CBSENTENCENAME_MAX-1 );
 
-		strcpy( gszallsentencenames[gcallsentences++], pString );
+		std::strcpy( gszallsentencenames[gcallsentences++], pString );
 
 		j--;
 		if (j <= i)
@@ -1354,10 +1354,10 @@ void SENTENCEG_Init()
 				break;
 			}
 
-			strcpy(rgsentenceg[isentencegs].szgroupname, &(buffer[i]));
+			std::strcpy(rgsentenceg[isentencegs].szgroupname, &(buffer[i]));
 			rgsentenceg[isentencegs].count = 1;
 
-			strcpy(szgroup, &(buffer[i]));
+			std::strcpy(szgroup, &(buffer[i]));
 
 			continue;
 		}
@@ -1399,7 +1399,7 @@ int SENTENCEG_Lookup(const char *sample, char *sentencenum)
 		{
 			if (sentencenum)
 			{
-				strcpy(sentencenum, "!");
+				std::strcpy(sentencenum, "!");
 				std::sprintf(sznum, "%d", i);
 				std::strcat(sentencenum, sznum);
 			}
@@ -1592,7 +1592,7 @@ void TEXTURETYPE_Init()
 		// null-terminate name and save in sentences array
 		j = std::min (j, CBTEXTURENAMEMAX-1+i);
 		buffer[j] = 0;
-		strcpy(&(grgszTextureName[gcTextures++][0]), &(buffer[i]));
+		std::strcpy(&(grgszTextureName[gcTextures++][0]), &(buffer[i]));
 	}
 
 	g_engfuncs.pfnFreeFile( pMemFile );
@@ -1674,7 +1674,7 @@ float TEXTURETYPE_PlaySound(TraceResult *ptr,  Vector vecSrc, Vector vecEnd, int
 			if (*pTextureName == '{' || *pTextureName == '!' || *pTextureName == '~' || *pTextureName == ' ')
 				pTextureName++;
 			// '}}'
-			strcpy(szbuffer, pTextureName);
+			std::strcpy(szbuffer, pTextureName);
 			szbuffer[CBTEXTURENAMEMAX - 1] = 0;
 				
 			// ALERT ( at_console, "texture hit: %s\n", szbuffer);

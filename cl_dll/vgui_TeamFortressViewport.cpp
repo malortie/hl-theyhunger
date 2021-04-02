@@ -672,12 +672,12 @@ void TeamFortressViewport::Initialize( void )
 	g_iPlayerClass = 0;
 	g_iTeamNumber = 0;
 
-	strcpy(m_sMapName, "");
-	strcpy(m_szServerName, "");
+	std::strcpy(m_sMapName, "");
+	std::strcpy(m_szServerName, "");
 	for (int i = 0; i < 5; i++)
 	{
 		m_iValidClasses[i] = 0;
-		strcpy(m_sTeamNames[i], "");
+		std::strcpy(m_sTeamNames[i], "");
 	}
 
 	App::getInstance()->setCursorOveride( App::getInstance()->getScheme()->getCursor(Scheme::scu_none) );
@@ -821,7 +821,7 @@ try
 			cText[31] = '\0';
 
 			// save off the last button text we've come across (for error reporting)
-			strcpy( szLastButtonText, cText );
+			std::strcpy( szLastButtonText, cText );
 
 			// Get the button command
 			pfile = gEngfuncs.COM_ParseFile(pfile, token);
@@ -840,7 +840,7 @@ try
 
 				if ( token[0] == '{' )
 				{
-					strcpy( cCommand, token );
+					std::strcpy( cCommand, token );
 				}
 				else
 				{
@@ -1618,7 +1618,7 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 		{
 			char tempString[128];
 			std::sprintf(tempString, "#Spec_Auto %s", helpString2);
-			strcpy( helpString2, tempString );
+			std::strcpy( helpString2, tempString );
 		}
 
 		m_pSpectatorPanel->m_BottomMainLabel->setText( "%s", pBottomText );
@@ -1733,7 +1733,7 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow( int iTextToShow )
 	if ( iTextToShow == SHOW_MOTD )
 	{
 		if (!m_szServerName || !m_szServerName[0])
-			strcpy( cTitle, "Half-Life" );
+			std::strcpy( cTitle, "Half-Life" );
 		else
 			strncpy( cTitle, m_szServerName, sizeof(cTitle) );
 		cTitle[sizeof(cTitle)-1] = 0;
@@ -1744,7 +1744,7 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow( int iTextToShow )
 		// Get the current mapname, and open it's map briefing text
 		if (m_sMapName && m_sMapName[0])
 		{
-			strcpy( sz, "maps/");
+			std::strcpy( sz, "maps/");
 			std::strcat( sz, m_sMapName );
 			std::strcat( sz, ".txt" );
 		}
@@ -1754,13 +1754,13 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow( int iTextToShow )
 			if (!level)
 				return NULL;
 
-			strcpy( sz, level );
+			std::strcpy( sz, level );
 			char *ch = std::strchr( sz, '.' );
 			*ch = '\0';
 			std::strcat( sz, ".txt" );
 
 			// pull out the map name
-			strcpy( m_sMapName, level );
+			std::strcpy( m_sMapName, level );
 			ch = std::strchr( m_sMapName, '.' );
 			if ( ch )
 			{

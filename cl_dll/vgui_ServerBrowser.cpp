@@ -406,7 +406,7 @@ public:
 	LabelSortInputHandler( ServerBrowserTablePanel *pBrowser, char *name )
 	{
 		m_pBrowser = pBrowser;
-		strcpy( m_szSortKey, name );
+		std::strcpy( m_szSortKey, name );
 	}
 
 	virtual void cursorMoved(int x,int y,Panel* panel) {};
@@ -443,7 +443,7 @@ public:
 	{
 		m_pBrowser = NULL;
 
-		strcpy( m_szSortKey, sortkey );
+		std::strcpy( m_szSortKey, sortkey );
 
 		int label_bg_r = 120,
 			label_bg_g = 75,

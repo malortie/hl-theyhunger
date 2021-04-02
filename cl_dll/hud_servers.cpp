@@ -193,7 +193,7 @@ void CHudServers::ServerResponse( struct net_response_s *response )
 			browser->remote_address = response->remote_address;
 			browser->info = new char[ len ];
 			browser->ping = (int)( 1000.0 * response->ping );
-			strcpy( browser->info, szresponse );
+			std::strcpy( browser->info, szresponse );
 
 			NET_API->SetValueForKey( browser->info, "address", gEngfuncs.pNetAPI->AdrToString( &response->remote_address ), len );
 			NET_API->SetValueForKey( browser->info, "ping", sz, len );
@@ -637,7 +637,7 @@ void CHudServers::SortServers( const char *fieldname )
 	if ( !m_pServers )
 		return;
 
-	strcpy( g_fieldname, fieldname );
+	std::strcpy( g_fieldname, fieldname );
 
 	int i;
 	int c = 0;
@@ -765,14 +765,14 @@ int CHudServers::LoadMasterAddresses( int maxservers, int *count, netadr_t *padr
 	int			nDefaultPort;
 
 	// Assume default master and master file
-	strcpy( szMaster, VALVE_MASTER_ADDRESS );    // IP:PORT string
-	strcpy( szMasterFile, MASTER_PARSE_FILE );
+	std::strcpy( szMaster, VALVE_MASTER_ADDRESS );    // IP:PORT string
+	std::strcpy( szMasterFile, MASTER_PARSE_FILE );
 
 	// See if there is a command line override
 	i = gEngfuncs.CheckParm( "-comm", &pstart );
 	if ( i && pstart )
 	{
-		strcpy (szMasterFile, pstart );
+		std::strcpy (szMasterFile, pstart );
 	}
 
 	// Read them in from proper file

@@ -151,7 +151,7 @@ public:
 	{
 		// strip any non-alnum characters from the end
 		char buf[512];
-		strcpy(buf, text);
+		std::strcpy(buf, text);
 
 		int len = strlen(buf);
 		while (len && std::isspace(buf[--len]))

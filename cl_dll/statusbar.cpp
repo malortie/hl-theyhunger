@@ -150,7 +150,7 @@ void CHudStatusBar :: ParseStatusString( int line_num )
 							}
 							else
 							{
-								strcpy( szRepString, "******" );
+								std::strcpy( szRepString, "******" );
 							}
 
 							break;

@@ -258,12 +258,12 @@ int CHudMenu :: MsgFunc_ShowMenu( const char *pszName, int iSize, void *pbuf )
 
 		if ( !NeedMore )
 		{  // we have the whole string, so we can localise it now
-			strcpy( g_szMenuString, gHUD.m_TextMessage.BufferedLocaliseTextString( g_szPrelocalisedMenuString ) );
+			std::strcpy( g_szMenuString, gHUD.m_TextMessage.BufferedLocaliseTextString( g_szPrelocalisedMenuString ) );
 
 			// Swap in characters
 			if ( KB_ConvertString( g_szMenuString, &temp ) )
 			{
-				strcpy( g_szMenuString, temp );
+				std::strcpy( g_szMenuString, temp );
 				std::free( temp );
 			}
 		}

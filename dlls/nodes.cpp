@@ -2330,7 +2330,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 	std::strcat( szDirName, "/graphs" );
 	CreateDirectory( szDirName, NULL );
 
-	strcpy ( szFilename, "maps/graphs/" );
+	std::strcpy ( szFilename, "maps/graphs/" );
 	std::strcat ( szFilename, szMapName );
 	std::strcat( szFilename, ".nod" );
 
@@ -2627,11 +2627,11 @@ int CGraph :: CheckNODFile ( char *szMapName )
 	char		szGraphFilename[MAX_PATH];
 	
 
-	strcpy ( szBspFilename, "maps/" );
+	std::strcpy ( szBspFilename, "maps/" );
 	std::strcat ( szBspFilename, szMapName );
 	std::strcat ( szBspFilename, ".bsp" );
 
-	strcpy ( szGraphFilename, "maps/graphs/" );
+	std::strcpy ( szGraphFilename, "maps/graphs/" );
 	std::strcat ( szGraphFilename, szMapName );
 	std::strcat ( szGraphFilename, ".nod" );
 	

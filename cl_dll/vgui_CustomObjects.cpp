@@ -133,7 +133,7 @@ void CommandButton::RecalculateText( void )
 	{
 		if ( m_cBoundKey == (char)255 )
 		{
-			strcpy( szBuf, m_sMainText );
+			std::strcpy( szBuf, m_sMainText );
 		}
 		else
 		{

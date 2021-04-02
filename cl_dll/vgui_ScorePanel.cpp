@@ -692,7 +692,7 @@ void ScorePanel::FillGrid()
 			}
 
 			// Fill out with the correct data
-			strcpy(sz, "");
+			std::strcpy(sz, "");
 			if ( m_iIsATeam[row] )
 			{
 				char sz2[128];
@@ -709,7 +709,7 @@ void ScorePanel::FillGrid()
 						std::sprintf( sz2, gViewPort->GetTeamName(team_info->teamnumber) );
 					}
 
-					strcpy(sz, sz2);
+					std::strcpy(sz, sz2);
 
 					// Append the number of players
 					if ( m_iIsATeam[row] == TEAM_YES )
@@ -803,7 +803,7 @@ void ScorePanel::FillGrid()
 					}
 					else
 					{
-						strcpy(sz, "");
+						std::strcpy(sz, "");
 					}
 					break;
 

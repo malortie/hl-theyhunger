@@ -1384,7 +1384,7 @@ void UTIL_StringToVector( float *pVector, const char *pString )
 	char *pstr, *pfront, tempString[128];
 	int	j;
 
-	strcpy( tempString, pString );
+	std::strcpy( tempString, pString );
 	pstr = pfront = tempString;
 
 	for ( j = 0; j < 3; j++ )			// lifted from pr_edict.c
@@ -1415,7 +1415,7 @@ void UTIL_StringToIntArray( int *pVector, int count, const char *pString )
 	char *pstr, *pfront, tempString[128];
 	int	j;
 
-	strcpy( tempString, pString );
+	std::strcpy( tempString, pString );
 	pstr = pfront = tempString;
 
 	for ( j = 0; j < count; j++ )			// lifted from pr_edict.c

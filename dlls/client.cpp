@@ -1696,7 +1696,7 @@ void UpdateClientData ( const edict_t *ent, int sendweapons, struct clientdata_s
 	cd->flSwimTime		= pev->flSwimTime;
 	cd->waterjumptime	= pev->teleport_time;
 
-	strcpy( cd->physinfo, ENGINE_GETPHYSINFO( ent ) );
+	std::strcpy( cd->physinfo, ENGINE_GETPHYSINFO( ent ) );
 
 	cd->maxspeed		= pev->maxspeed;
 	cd->fov				= pev->fov;
