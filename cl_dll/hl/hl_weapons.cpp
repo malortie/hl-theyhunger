@@ -81,7 +81,7 @@ void AlertMessage( ALERT_TYPE atype, char *szFmt, ... )
 	static char	string[1024];
 	
 	va_start (argptr, szFmt);
-	vsprintf (string, szFmt,argptr);
+	std::vsprintf (string, szFmt,argptr);
 	va_end (argptr);
 
 	gEngfuncs.Con_Printf( "cl:  " );
