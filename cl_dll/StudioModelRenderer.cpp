@@ -934,11 +934,11 @@ void CStudioModelRenderer::StudioSetupBones ( void )
 
 		for ( i = 0; i < m_pStudioHeader->numbones; i++ )
 		{
-			if ( !strcmp( pbones[i].name, "Bip01 Spine" ) )
+			if ( !std::strcmp( pbones[i].name, "Bip01 Spine" ) )
 			{
 				copy = 0;
 			}
-			else if ( !strcmp( pbones[ pbones[i].parent ].name, "Bip01 Pelvis" ) )
+			else if ( !std::strcmp( pbones[ pbones[i].parent ].name, "Bip01 Pelvis" ) )
 			{
 				copy = 1;
 			}

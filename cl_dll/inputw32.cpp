@@ -738,7 +738,7 @@ void Joy_AdvancedUpdate_f (void)
 	}
 	else
 	{
-		if ( strcmp ( joy_name->string, "joystick") != 0 )
+		if ( std::strcmp ( joy_name->string, "joystick") != 0 )
 		{
 			// notify user of advanced controller
 			gEngfuncs.Con_Printf ("\n%s configured\n\n", joy_name->string);

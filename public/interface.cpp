@@ -59,7 +59,7 @@ EXPORT_FUNCTION IBaseInterface *CreateInterface( const char *pName, int *pReturn
 	
 	for(pCur=InterfaceReg::s_pInterfaceRegs; pCur; pCur=pCur->m_pNext)
 	{
-		if(strcmp(pCur->m_pName, pName) == 0)
+		if(std::strcmp(pCur->m_pName, pName) == 0)
 		{
 			if ( pReturnCode )
 			{

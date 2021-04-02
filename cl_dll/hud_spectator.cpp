@@ -304,15 +304,15 @@ int UTIL_FindEntityInMap(char * name, float * origin, float * angle)
 				return 0;
 			}
 
-			if (!strcmp(keyname,"classname"))
+			if (!std::strcmp(keyname,"classname"))
 			{
-				if (!strcmp(token, name ))
+				if (!std::strcmp(token, name ))
 				{
 					found = 1;	// thats our entity
 				}
 			};
 
-			if( !strcmp( keyname, "angle" ) )
+			if( !std::strcmp( keyname, "angle" ) )
 			{
 				float y = std::atof( token );
 				
@@ -335,12 +335,12 @@ int UTIL_FindEntityInMap(char * name, float * origin, float * angle)
 				angle[2] =  0.0f;
 			}
 
-			if( !strcmp( keyname, "angles" ) )
+			if( !std::strcmp( keyname, "angles" ) )
 			{
 				UTIL_StringToVector(angle, token);
 			}
 			
-			if (!strcmp(keyname,"origin"))
+			if (!std::strcmp(keyname,"origin"))
 			{
 				UTIL_StringToVector(origin, token);
 
@@ -1934,7 +1934,7 @@ int CHudSpectator::ToggleInset(bool allowOff)
 void CHudSpectator::Reset()
 {
 	// Reset HUD
-	if ( strcmp( m_OverviewData.map, gEngfuncs.pfnGetLevelName() ) )
+	if ( std::strcmp( m_OverviewData.map, gEngfuncs.pfnGetLevelName() ) )
 	{
 		// update level overview if level changed
 		ParseOverviewFile();

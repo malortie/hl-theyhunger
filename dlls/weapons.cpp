@@ -66,9 +66,9 @@ int MaxAmmoCarry( int iszName )
 {
 	for ( int i = 0;  i < MAX_WEAPONS; i++ )
 	{
-		if ( CBasePlayerItem::ItemInfoArray[i].pszAmmo1 && !strcmp( STRING(iszName), CBasePlayerItem::ItemInfoArray[i].pszAmmo1 ) )
+		if ( CBasePlayerItem::ItemInfoArray[i].pszAmmo1 && !std::strcmp( STRING(iszName), CBasePlayerItem::ItemInfoArray[i].pszAmmo1 ) )
 			return CBasePlayerItem::ItemInfoArray[i].iMaxAmmo1;
-		if ( CBasePlayerItem::ItemInfoArray[i].pszAmmo2 && !strcmp( STRING(iszName), CBasePlayerItem::ItemInfoArray[i].pszAmmo2 ) )
+		if ( CBasePlayerItem::ItemInfoArray[i].pszAmmo2 && !std::strcmp( STRING(iszName), CBasePlayerItem::ItemInfoArray[i].pszAmmo2 ) )
 			return CBasePlayerItem::ItemInfoArray[i].iMaxAmmo2;
 	}
 

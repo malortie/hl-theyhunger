@@ -229,7 +229,7 @@ void CHalfLifeTeamplay::InitHUD( CBasePlayer *pPlayer )
 	char *mdls = g_engfuncs.pfnInfoKeyValue( g_engfuncs.pfnGetInfoKeyBuffer( pPlayer->edict() ), "model" );
 	// update the current player of the team he is joining
 	char text[1024];
-	if ( !strcmp( mdls, pPlayer->m_szTeamName ) )
+	if ( !std::strcmp( mdls, pPlayer->m_szTeamName ) )
 	{
 		std::sprintf( text, "* you are on team \'%s\'\n", pPlayer->m_szTeamName );
 	}

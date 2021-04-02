@@ -1828,7 +1828,7 @@ unsigned short CSaveRestoreBuffer :: TokenHash( const char *pszToken )
 		if ( index >= m_pdata->tokenCount )
 			index -= m_pdata->tokenCount;
 
-		if ( !m_pdata->pTokens[index] || strcmp( pszToken, m_pdata->pTokens[index] ) == 0 )
+		if ( !m_pdata->pTokens[index] || std::strcmp( pszToken, m_pdata->pTokens[index] ) == 0 )
 		{
 			m_pdata->pTokens[index] = (char *)pszToken;
 			return index;

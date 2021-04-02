@@ -760,7 +760,7 @@ try
 			cCustom[31] = '\0';
 
 			// See if it's a custom button
-			if (!strcmp(cCustom, "CUSTOM") )
+			if (!std::strcmp(cCustom, "CUSTOM") )
 			{
 				iCustom = true;
 
@@ -768,7 +768,7 @@ try
 				pfile = gEngfuncs.COM_ParseFile(pfile, token);
 			}
 			// See if it's a map
-			else if (!strcmp(cCustom, "MAP") )
+			else if (!std::strcmp(cCustom, "MAP") )
 			{
 				// Get the mapname
 				pfile = gEngfuncs.COM_ParseFile(pfile, token);
@@ -984,7 +984,7 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 	CCommandMenu  *pMenu = NULL;
 
 	// ChangeTeam
-	if ( !strcmp( pButtonName, "!CHANGETEAM" ) )
+	if ( !std::strcmp( pButtonName, "!CHANGETEAM" ) )
 	{
 		// ChangeTeam Submenu
 		pButton = new CommandButton(pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
@@ -1015,7 +1015,7 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 		pMenu->AddButton( m_pTeamButtons[5] ); 
 	}
 	// ChangeClass
-	else if ( !strcmp( pButtonName, "!CHANGECLASS" ) )
+	else if ( !std::strcmp( pButtonName, "!CHANGECLASS" ) )
 	{
 		// Create the Change class menu
 		pButton = new ClassButton(-1, pButtonText, 0, BUTTON_SIZE_Y, CMENU_SIZE_X, BUTTON_SIZE_Y, false);
@@ -2250,7 +2250,7 @@ int	TeamFortressViewport::KeyInput( int down, int keynum, const char *pszCurrent
 		}
 
 		// Grab jump key on Team Menu as autoassign
-		if ( pszCurrentBinding && down && !strcmp(pszCurrentBinding, "+jump") )
+		if ( pszCurrentBinding && down && !std::strcmp(pszCurrentBinding, "+jump") )
 		{
 			if (iMenuID == MENU_TEAM)
 			{

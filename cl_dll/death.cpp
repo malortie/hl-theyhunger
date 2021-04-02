@@ -232,7 +232,7 @@ int CHudDeathNotice :: MsgFunc_DeathMsg( const char *pszName, int iSize, void *p
 		if ( killer == victim || killer == 0 )
 			rgDeathNoticeList[i].iSuicide = TRUE;
 
-		if ( !strcmp( killedwith, "d_teammate" ) )
+		if ( !std::strcmp( killedwith, "d_teammate" ) )
 			rgDeathNoticeList[i].iTeamKill = TRUE;
 	}
 
@@ -258,7 +258,7 @@ int CHudDeathNotice :: MsgFunc_DeathMsg( const char *pszName, int iSize, void *p
 		{
 			ConsolePrint( rgDeathNoticeList[i].szVictim );
 
-			if ( !strcmp( killedwith, "d_world" ) )
+			if ( !std::strcmp( killedwith, "d_world" ) )
 			{
 				ConsolePrint( " died" );
 			}
@@ -280,14 +280,14 @@ int CHudDeathNotice :: MsgFunc_DeathMsg( const char *pszName, int iSize, void *p
 			ConsolePrint( rgDeathNoticeList[i].szVictim );
 		}
 
-		if ( killedwith && *killedwith && (*killedwith > 13 ) && strcmp( killedwith, "d_world" ) && !rgDeathNoticeList[i].iTeamKill )
+		if ( killedwith && *killedwith && (*killedwith > 13 ) && std::strcmp( killedwith, "d_world" ) && !rgDeathNoticeList[i].iTeamKill )
 		{
 			ConsolePrint( " with " );
 
 			// replace the code names with the 'real' names
-			if ( !strcmp( killedwith+2, "egon" ) )
+			if ( !std::strcmp( killedwith+2, "egon" ) )
 				strcpy( killedwith, "d_gluon gun" );
-			if ( !strcmp( killedwith+2, "gauss" ) )
+			if ( !std::strcmp( killedwith+2, "gauss" ) )
 				strcpy( killedwith, "d_tau cannon" );
 
 			ConsolePrint( killedwith+2 ); // skip over the "d_" part

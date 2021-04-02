@@ -1544,7 +1544,7 @@ int CChangeLevel::AddTransitionToList( LEVELLIST *pLevelList, int listCount, con
 
 	for ( i = 0; i < listCount; i++ )
 	{
-		if ( pLevelList[i].pentLandmark == pentLandmark && strcmp( pLevelList[i].mapName, pMapName ) == 0 )
+		if ( pLevelList[i].pentLandmark == pentLandmark && std::strcmp( pLevelList[i].mapName, pMapName ) == 0 )
 			return 0;
 	}
 	strcpy( pLevelList[listCount].mapName, pMapName );

@@ -457,7 +457,7 @@ void CHudMessage::MessageAdd( const char *pName, float time )
 				if ( m_pMessages[j] )
 				{
 					// is this message already in the list
-					if ( !strcmp( tempMessage->pMessage, m_pMessages[j]->pMessage ) )
+					if ( !std::strcmp( tempMessage->pMessage, m_pMessages[j]->pMessage ) )
 					{
 						return;
 					}

@@ -1155,7 +1155,7 @@ int SENTENCEG_GetIndex(const char *szgroupname)
 	i = 0;
 	while (rgsentenceg[i].count)
 	{
-		if (!strcmp(szgroupname, rgsentenceg[i].szgroupname))
+		if (!std::strcmp(szgroupname, rgsentenceg[i].szgroupname))
 			return i;
 	i++;
 	}
@@ -1343,7 +1343,7 @@ void SENTENCEG_Init()
 		// if new name doesn't match previous group name, 
 		// make a new group.
 
-		if (strcmp(szgroup, &(buffer[i])))
+		if (std::strcmp(szgroup, &(buffer[i])))
 		{
 			// name doesn't match with prev name,
 			// copy name into group, init count to 1

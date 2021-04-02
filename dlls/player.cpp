@@ -1791,7 +1791,7 @@ void CBasePlayer::UpdateStatusBar()
 
 	BOOL bForceResend = FALSE;
 
-	if ( strcmp( sbuf0, m_SbarString0 ) )
+	if ( std::strcmp( sbuf0, m_SbarString0 ) )
 	{
 		MESSAGE_BEGIN( MSG_ONE, gmsgStatusText, NULL, pev );
 			WRITE_BYTE( 0 );
@@ -1804,7 +1804,7 @@ void CBasePlayer::UpdateStatusBar()
 		bForceResend = TRUE;
 	}
 
-	if ( strcmp( sbuf1, m_SbarString1 ) )
+	if ( std::strcmp( sbuf1, m_SbarString1 ) )
 	{
 		MESSAGE_BEGIN( MSG_ONE, gmsgStatusText, NULL, pev );
 			WRITE_BYTE( 1 );
@@ -4532,7 +4532,7 @@ void CBasePlayer::DropPlayerItem ( char *pszItemName )
 			if ( pszItemName )
 			{
 				// try to match by name. 
-				if ( !strcmp( pszItemName, STRING( pWeapon->pev->classname ) ) )
+				if ( !std::strcmp( pszItemName, STRING( pWeapon->pev->classname ) ) )
 				{
 					// match! 
 					break;
@@ -4631,7 +4631,7 @@ BOOL CBasePlayer::HasNamedPlayerItem( const char *pszItemName )
 		
 		while (pItem)
 		{
-			if ( !strcmp( pszItemName, STRING( pItem->pev->classname ) ) )
+			if ( !std::strcmp( pszItemName, STRING( pItem->pev->classname ) ) )
 			{
 				return TRUE;
 			}

@@ -724,9 +724,9 @@ void CHalfLifeMultiplay::DeathNotice( CBasePlayer *pVictim, entvars_t *pKiller, 
 	MESSAGE_END();
 
 	// replace the code names with the 'real' names
-	if ( !strcmp( killer_weapon_name, "egon" ) )
+	if ( !std::strcmp( killer_weapon_name, "egon" ) )
 		killer_weapon_name = gluon;
-	else if ( !strcmp( killer_weapon_name, "gauss" ) )
+	else if ( !std::strcmp( killer_weapon_name, "gauss" ) )
 		killer_weapon_name = tau;
 
 	if ( pVictim->pev == pKiller )  
