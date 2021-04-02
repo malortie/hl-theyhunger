@@ -252,7 +252,7 @@ int CHudMenu :: MsgFunc_ShowMenu( const char *pszName, int iSize, void *pbuf )
 		}
 		else
 		{  // append to the current menu string
-			strncat( g_szPrelocalisedMenuString, READ_STRING(), MAX_MENU_STRING - std::strlen(g_szPrelocalisedMenuString) );
+			std::strncat( g_szPrelocalisedMenuString, READ_STRING(), MAX_MENU_STRING - std::strlen(g_szPrelocalisedMenuString) );
 		}
 		g_szPrelocalisedMenuString[MAX_MENU_STRING-1] = 0;  // ensure null termination (strncat/strncpy does not)
 
