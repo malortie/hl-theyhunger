@@ -1569,7 +1569,7 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 		std::sprintf(helpString2,"#Spec_Mode%d", g_iUser1 );
 
 		if ( gEngfuncs.IsSpectateOnly() )
-			strcat(helpString2, " - HLTV");
+			std::strcat(helpString2, " - HLTV");
 
 		// check if we're locked onto a target, show the player's name
 		if ( (g_iUser2 > 0) && (g_iUser2 <= gEngfuncs.GetMaxClients()) && (g_iUser1 != OBS_ROAMING) )
@@ -1745,8 +1745,8 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow( int iTextToShow )
 		if (m_sMapName && m_sMapName[0])
 		{
 			strcpy( sz, "maps/");
-			strcat( sz, m_sMapName );
-			strcat( sz, ".txt" );
+			std::strcat( sz, m_sMapName );
+			std::strcat( sz, ".txt" );
 		}
 		else
 		{
@@ -1757,7 +1757,7 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow( int iTextToShow )
 			strcpy( sz, level );
 			char *ch = strchr( sz, '.' );
 			*ch = '\0';
-			strcat( sz, ".txt" );
+			std::strcat( sz, ".txt" );
 
 			// pull out the map name
 			strcpy( m_sMapName, level );

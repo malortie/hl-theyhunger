@@ -293,7 +293,7 @@ void CTeamMenuPanel::Update( void )
 			strcpy( sz, level );
 			ch = strchr( sz, '.' );
 			*ch = '\0';
-			strcat( sz, ".txt" );
+			std::strcat( sz, ".txt" );
 			char *pfile = (char*)gEngfuncs.COM_LoadFile( sz, 5, NULL );
 			if (pfile)
 			{

@@ -408,8 +408,8 @@ void Host_Say( edict_t *pEntity, int teamonly )
 	if ( (int)strlen(p) > j )
 		p[j] = 0;
 
-	strcat( text, p );
-	strcat( text, "\n" );
+	std::strcat( text, p );
+	std::strcat( text, "\n" );
 
 
 	player->m_flNextChatTime = gpGlobals->time + CHAT_INTERVAL;

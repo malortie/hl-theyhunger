@@ -1653,14 +1653,14 @@ void CTestHull :: BuildNodeGraph( void )
 
 	// make sure directories have been made
 	GET_GAME_DIR( szNrpFilename );
-	strcat( szNrpFilename, "/maps" );
+	std::strcat( szNrpFilename, "/maps" );
 	CreateDirectory( szNrpFilename, NULL );
-	strcat( szNrpFilename, "/graphs" );
+	std::strcat( szNrpFilename, "/graphs" );
 	CreateDirectory( szNrpFilename, NULL );
 
-	strcat( szNrpFilename, "/" );
-	strcat( szNrpFilename, STRING( gpGlobals->mapname ) );
-	strcat( szNrpFilename, ".nrp" );
+	std::strcat( szNrpFilename, "/" );
+	std::strcat( szNrpFilename, STRING( gpGlobals->mapname ) );
+	std::strcat( szNrpFilename, ".nrp" );
 
 	file = std::fopen ( szNrpFilename, "w+" );
 
@@ -2325,14 +2325,14 @@ int CGraph :: FLoadGraph ( char *szMapName )
 	// make sure the directories have been made
 	char	szDirName[MAX_PATH];
 	GET_GAME_DIR( szDirName );
-	strcat( szDirName, "/maps" );
+	std::strcat( szDirName, "/maps" );
 	CreateDirectory( szDirName, NULL );
-	strcat( szDirName, "/graphs" );
+	std::strcat( szDirName, "/graphs" );
 	CreateDirectory( szDirName, NULL );
 
 	strcpy ( szFilename, "maps/graphs/" );
-	strcat ( szFilename, szMapName );
-	strcat( szFilename, ".nod" );
+	std::strcat ( szFilename, szMapName );
+	std::strcat( szFilename, ".nod" );
 
 	pMemFile = aMemFile = LOAD_FILE_FOR_ME(szFilename, &length);
 
@@ -2503,14 +2503,14 @@ int CGraph :: FSaveGraph ( char *szMapName )
 
 	// make sure directories have been made
 	GET_GAME_DIR( szFilename );
-	strcat( szFilename, "/maps" );
+	std::strcat( szFilename, "/maps" );
 	CreateDirectory( szFilename, NULL );
-	strcat( szFilename, "/graphs" );
+	std::strcat( szFilename, "/graphs" );
 	CreateDirectory( szFilename, NULL );
 
-	strcat( szFilename, "/" );
-	strcat( szFilename, szMapName );
-	strcat( szFilename, ".nod" );
+	std::strcat( szFilename, "/" );
+	std::strcat( szFilename, szMapName );
+	std::strcat( szFilename, ".nod" );
 
 	file = std::fopen ( szFilename, "wb" );
 
@@ -2628,12 +2628,12 @@ int CGraph :: CheckNODFile ( char *szMapName )
 	
 
 	strcpy ( szBspFilename, "maps/" );
-	strcat ( szBspFilename, szMapName );
-	strcat ( szBspFilename, ".bsp" );
+	std::strcat ( szBspFilename, szMapName );
+	std::strcat ( szBspFilename, ".bsp" );
 
 	strcpy ( szGraphFilename, "maps/graphs/" );
-	strcat ( szGraphFilename, szMapName );
-	strcat ( szGraphFilename, ".nod" );
+	std::strcat ( szGraphFilename, szMapName );
+	std::strcat ( szGraphFilename, ".nod" );
 	
 	retValue = TRUE;
 

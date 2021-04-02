@@ -1494,13 +1494,13 @@ void ExtractCommandString( char *s, char *szCommand )
 		}
 		*o = 0;
 
-		strcat( szCommand, pkey );
+		std::strcat( szCommand, pkey );
 		if ( strlen( value ) > 0 )
 		{
-			strcat( szCommand, " " );
-			strcat( szCommand, value );
+			std::strcat( szCommand, " " );
+			std::strcat( szCommand, value );
 		}
-		strcat( szCommand, "\n" );
+		std::strcat( szCommand, "\n" );
 
 		if (!*s)
 			return;
