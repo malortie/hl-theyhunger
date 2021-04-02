@@ -280,18 +280,18 @@ void CTeamMenuPanel::Update( void )
 
 			// Update the level name
 			strcpy( sz, level );
-			ch = strchr( sz, '/' );
+			ch = std::strchr( sz, '/' );
 			if (!ch)
-				ch = strchr( sz, '\\' );
+				ch = std::strchr( sz, '\\' );
 			strcpy( szTitle, ch+1 );
-			ch = strchr( szTitle, '.' );
+			ch = std::strchr( szTitle, '.' );
 			*ch = '\0';
 			m_pMapTitle->setText( "%s", szTitle );
 			*ch = '.';
 
 			// Update the map briefing
 			strcpy( sz, level );
-			ch = strchr( sz, '.' );
+			ch = std::strchr( sz, '.' );
 			*ch = '\0';
 			std::strcat( sz, ".txt" );
 			char *pfile = (char*)gEngfuncs.COM_LoadFile( sz, 5, NULL );

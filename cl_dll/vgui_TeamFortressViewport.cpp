@@ -1755,19 +1755,19 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow( int iTextToShow )
 				return NULL;
 
 			strcpy( sz, level );
-			char *ch = strchr( sz, '.' );
+			char *ch = std::strchr( sz, '.' );
 			*ch = '\0';
 			std::strcat( sz, ".txt" );
 
 			// pull out the map name
 			strcpy( m_sMapName, level );
-			ch = strchr( m_sMapName, '.' );
+			ch = std::strchr( m_sMapName, '.' );
 			if ( ch )
 			{
 				*ch = 0;
 			}
 
-			ch = strchr( m_sMapName, '/' );
+			ch = std::strchr( m_sMapName, '/' );
 			if ( ch )
 			{
 				// move the string back over the '/'
