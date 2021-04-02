@@ -102,14 +102,14 @@ void CVoiceBanMgr::SaveState(char const *pGameDir)
 	if(fp)
 	{
 		int version = BANMGR_FILEVERSION;
-		fwrite(&version, 1, sizeof(version), fp);
+		std::fwrite(&version, 1, sizeof(version), fp);
 
 		for(int i=0; i < 256; i++)
 		{
 			BannedPlayer *pListHead = &m_PlayerHash[i];
 			for(BannedPlayer *pCur=pListHead->m_pNext; pCur != pListHead; pCur=pCur->m_pNext)
 			{
-				fwrite(pCur->m_PlayerID, 1, 16, fp);
+				std::fwrite(pCur->m_PlayerID, 1, 16, fp);
 			}
 		}
 

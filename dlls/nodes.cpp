@@ -2524,29 +2524,29 @@ int CGraph :: FSaveGraph ( char *szMapName )
 	else
 	{
 	// write the version
-		fwrite ( &iVersion, sizeof ( int ), 1, file );
+		std::fwrite ( &iVersion, sizeof ( int ), 1, file );
 
 	// write the CGraph class
-		fwrite ( this, sizeof ( CGraph ), 1, file );
+		std::fwrite ( this, sizeof ( CGraph ), 1, file );
 
 	// write the nodes
-		fwrite ( m_pNodes, sizeof ( CNode ), m_cNodes, file );
+		std::fwrite ( m_pNodes, sizeof ( CNode ), m_cNodes, file );
 
 	// write the links
-		fwrite ( m_pLinkPool, sizeof ( CLink ), m_cLinks, file );
+		std::fwrite ( m_pLinkPool, sizeof ( CLink ), m_cLinks, file );
 
-		fwrite ( m_di, sizeof(DIST_INFO), m_cNodes, file );
+		std::fwrite ( m_di, sizeof(DIST_INFO), m_cNodes, file );
 
 		// Write the route info.
 		//
 		if ( m_pRouteInfo && m_nRouteInfo )
 		{
-			fwrite ( m_pRouteInfo, sizeof( char ), m_nRouteInfo, file );
+			std::fwrite ( m_pRouteInfo, sizeof( char ), m_nRouteInfo, file );
 		}
 
 		if (m_pHashLinks && m_nHashLinks)
 		{
-			fwrite(m_pHashLinks, sizeof(short), m_nHashLinks, file);
+			std::fwrite(m_pHashLinks, sizeof(short), m_nHashLinks, file);
 		}
 		std::fclose ( file );
 		return TRUE;
