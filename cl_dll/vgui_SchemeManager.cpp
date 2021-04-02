@@ -296,11 +296,11 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 		}
 		else if ( !stricmp(paramName, "FontSize") )
 		{
-			pScheme->fontSize = atoi( paramValue );
+			pScheme->fontSize = std::atoi( paramValue );
 		}
 		else if ( !stricmp(paramName, "FontWeight") )
 		{
-			pScheme->fontWeight = atoi( paramValue );
+			pScheme->fontWeight = std::atoi( paramValue );
 		}
 		else if ( !stricmp(paramName, "FgColor") )
 		{

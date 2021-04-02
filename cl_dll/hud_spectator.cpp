@@ -87,9 +87,9 @@ void SpectatorMode(void)
 
 	// SetModes() will decide if command is executed on server or local
 	if ( gEngfuncs.Cmd_Argc() == 2 )
-		gHUD.m_Spectator.SetModes( atoi( gEngfuncs.Cmd_Argv(1) ), -1 );
+		gHUD.m_Spectator.SetModes( std::atoi( gEngfuncs.Cmd_Argv(1) ), -1 );
 	else if ( gEngfuncs.Cmd_Argc() == 3 )
-		gHUD.m_Spectator.SetModes( atoi( gEngfuncs.Cmd_Argv(1) ), atoi( gEngfuncs.Cmd_Argv(2) )  );	
+		gHUD.m_Spectator.SetModes( std::atoi( gEngfuncs.Cmd_Argv(1) ), std::atoi( gEngfuncs.Cmd_Argv(2) )  );	
 }
 
 void SpectatorSpray(void)
@@ -142,7 +142,7 @@ void SpectatorMenu( void )
 		return;
 	}
 	
-	gViewPort->m_pSpectatorPanel->ShowMenu( atoi( gEngfuncs.Cmd_Argv(1))!=0  );
+	gViewPort->m_pSpectatorPanel->ShowMenu( std::atoi( gEngfuncs.Cmd_Argv(1))!=0  );
 }
 
 void ToggleScores( void )
@@ -1323,7 +1323,7 @@ bool CHudSpectator::ParseOverviewFile( )
 				else if ( !stricmp( token, "rotated" ) )
 				{
 					pfile = gEngfuncs.COM_ParseFile(pfile,token); 
-					m_OverviewData.rotated = atoi( token );
+					m_OverviewData.rotated = std::atoi( token );
 				}
 				else if ( !stricmp( token, "inset" ) )
 				{

@@ -199,8 +199,8 @@ bool CVoiceGameMgr::ClientCommand(CBasePlayer *pPlayer, const char *cmd)
 	}
 	else if(stricmp(cmd, "VModEnable") == 0 && CMD_ARGC() >= 2)
 	{
-		VoiceServerDebug( "CVoiceGameMgr::ClientCommand: VModEnable (%d)\n", !!atoi(CMD_ARGV(1)) );
-		g_PlayerModEnable[playerClientIndex] = !!atoi(CMD_ARGV(1));
+		VoiceServerDebug( "CVoiceGameMgr::ClientCommand: VModEnable (%d)\n", !!std::atoi(CMD_ARGV(1)) );
+		g_PlayerModEnable[playerClientIndex] = !!std::atoi(CMD_ARGV(1));
 		g_bWantModEnable[playerClientIndex] = false;
 		//UpdateMasks();		
 		return true;

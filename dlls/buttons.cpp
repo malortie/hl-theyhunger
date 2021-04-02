@@ -73,9 +73,9 @@ void CEnvGlobal::KeyValue( KeyValueData *pkvd )
 	if ( FStrEq(pkvd->szKeyName, "globalstate") )		// State name
 		m_globalstate = ALLOC_STRING( pkvd->szValue );
 	else if ( FStrEq(pkvd->szKeyName, "triggermode") )
-		m_triggermode = atoi( pkvd->szValue );
+		m_triggermode = std::atoi( pkvd->szValue );
 	else if ( FStrEq(pkvd->szKeyName, "initialstate") )
-		m_initialstate = atoi( pkvd->szValue );
+		m_initialstate = std::atoi( pkvd->szValue );
 	else 
 		CPointEntity::KeyValue( pkvd );
 }
@@ -384,7 +384,7 @@ void CBaseButton::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "sounds"))
 	{
-		m_sounds = atoi(pkvd->szValue);
+		m_sounds = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else 
@@ -969,7 +969,7 @@ void CMomentaryRotButton::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "sounds"))
 	{
-		m_sounds = atoi(pkvd->szValue);
+		m_sounds = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else

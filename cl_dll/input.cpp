@@ -297,7 +297,7 @@ void KeyDown (kbutton_t *b)
 
 	c = gEngfuncs.Cmd_Argv(1);
 	if (c[0])
-		k = atoi(c);
+		k = std::atoi(c);
 	else
 		k = -1;		// typed manually at the console for continuous down
 
@@ -331,7 +331,7 @@ void KeyUp (kbutton_t *b)
 	
 	c = gEngfuncs.Cmd_Argv(1);
 	if (c[0])
-		k = atoi(c);
+		k = std::atoi(c);
 	else
 	{ // typed manually at the console, assume for unsticking, so clear all
 		b->down[0] = b->down[1] = 0;
@@ -508,7 +508,7 @@ void IN_Cancel(void)
 
 void IN_Impulse (void)
 {
-	in_impulse = atoi( gEngfuncs.Cmd_Argv(1) );
+	in_impulse = std::atoi( gEngfuncs.Cmd_Argv(1) );
 }
 
 void IN_ScoreDown(void)

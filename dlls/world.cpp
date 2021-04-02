@@ -681,7 +681,7 @@ void CWorld :: KeyValue( KeyValueData *pkvd )
 	}
 	else if ( FStrEq(pkvd->szKeyName, "sounds") )
 	{
-		gpGlobals->cdAudioTrack = atoi(pkvd->szValue);
+		gpGlobals->cdAudioTrack = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if ( FStrEq(pkvd->szKeyName, "WaveHeight") )
@@ -705,7 +705,7 @@ void CWorld :: KeyValue( KeyValueData *pkvd )
 	{
 		// UNDONE: This is a gross hack!!! The CVAR is NOT sent over the client/sever link
 		// but it will work for single player
-		int flag = atoi(pkvd->szValue);
+		int flag = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 		if ( flag )
 			pev->spawnflags |= SF_WORLD_DARK;
@@ -713,13 +713,13 @@ void CWorld :: KeyValue( KeyValueData *pkvd )
 	else if ( FStrEq(pkvd->szKeyName, "newunit") )
 	{
 		// Single player only.  Clear save directory if set
-		if ( atoi(pkvd->szValue) )
+		if ( std::atoi(pkvd->szValue) )
 			CVAR_SET_FLOAT( "sv_newunit", 1 );
 		pkvd->fHandled = TRUE;
 	}
 	else if ( FStrEq(pkvd->szKeyName, "gametitle") )
 	{
-		if ( atoi(pkvd->szValue) )
+		if ( std::atoi(pkvd->szValue) )
 			pev->spawnflags |= SF_WORLD_TITLE;
 
 		pkvd->fHandled = TRUE;
@@ -731,7 +731,7 @@ void CWorld :: KeyValue( KeyValueData *pkvd )
 	}
 	else if ( FStrEq(pkvd->szKeyName, "defaultteam") )
 	{
-		if ( atoi(pkvd->szValue) )
+		if ( std::atoi(pkvd->szValue) )
 		{
 			pev->spawnflags |= SF_WORLD_FORCETEAM;
 		}

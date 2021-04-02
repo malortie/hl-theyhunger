@@ -664,7 +664,7 @@ void CFuncTrain :: KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "sounds"))
 	{
-		m_sounds = atoi(pkvd->szValue);
+		m_sounds = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else
@@ -973,12 +973,12 @@ void CFuncTrackTrain :: KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "sounds"))
 	{
-		m_sounds = atoi(pkvd->szValue);
+		m_sounds = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "volume"))
 	{
-		m_flVolume = (float) (atoi(pkvd->szValue));
+		m_flVolume = (float) (std::atoi(pkvd->szValue));
 		m_flVolume *= 0.1;
 		pkvd->fHandled = TRUE;
 	}

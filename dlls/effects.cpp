@@ -123,17 +123,17 @@ void CBubbling::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "density"))
 	{
-		m_density = atoi(pkvd->szValue);
+		m_density = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "frequency"))
 	{
-		m_frequency = atoi(pkvd->szValue);
+		m_frequency = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "current"))
 	{
-		pev->speed = atoi(pkvd->szValue);
+		pev->speed = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else
@@ -537,17 +537,17 @@ void CLightning::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "BoltWidth"))
 	{
-		m_boltWidth = atoi(pkvd->szValue);
+		m_boltWidth = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "NoiseAmplitude"))
 	{
-		m_noiseAmplitude = atoi(pkvd->szValue);
+		m_noiseAmplitude = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "TextureScroll"))
 	{
-		m_speed = atoi(pkvd->szValue);
+		m_speed = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "StrikeTime"))
@@ -562,7 +562,7 @@ void CLightning::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "framestart"))
 	{
-		m_frameStart = atoi(pkvd->szValue);
+		m_frameStart = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "Radius"))
@@ -1008,12 +1008,12 @@ void CLaser::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "NoiseAmplitude"))
 	{
-		SetNoise( atoi(pkvd->szValue) );
+		SetNoise( std::atoi(pkvd->szValue) );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "TextureScroll"))
 	{
-		SetScrollRate( atoi(pkvd->szValue) );
+		SetScrollRate( std::atoi(pkvd->szValue) );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "texture"))
@@ -1028,7 +1028,7 @@ void CLaser::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "framestart"))
 	{
-		pev->frame = atoi(pkvd->szValue);
+		pev->frame = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "damage"))
@@ -1400,7 +1400,7 @@ void CGibShooter::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "m_iGibs"))
 	{
-		m_iGibs = m_iGibCapacity = atoi(pkvd->szValue);
+		m_iGibs = m_iGibCapacity = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "m_flVelocity"))
@@ -1542,7 +1542,7 @@ void CEnvShooter :: KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "shootsounds"))
 	{
-		int iNoise = atoi(pkvd->szValue);
+		int iNoise = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 		switch( iNoise )
 		{
@@ -1758,7 +1758,7 @@ void CBlood::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "color"))
 	{
-		int color = atoi(pkvd->szValue);
+		int color = std::atoi(pkvd->szValue);
 		switch( color )
 		{
 		case 1:
@@ -2051,7 +2051,7 @@ void CMessage::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "messageattenuation"))
 	{
-		pev->impulse = atoi(pkvd->szValue);
+		pev->impulse = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else

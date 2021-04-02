@@ -290,17 +290,17 @@ void CFuncTank :: KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "bullet"))
 	{
-		m_bulletType = (TANKBULLET)atoi(pkvd->szValue);
+		m_bulletType = (TANKBULLET)std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if ( FStrEq(pkvd->szKeyName, "bullet_damage" )) 
 	{
-		m_iBulletDamage = atoi(pkvd->szValue);
+		m_iBulletDamage = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "firespread"))
 	{
-		m_spread = atoi(pkvd->szValue);
+		m_spread = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "minRange"))
@@ -930,7 +930,7 @@ void CFuncTankMortar::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "iMagnitude"))
 	{
-		pev->impulse = atoi( pkvd->szValue );
+		pev->impulse = std::atoi( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else

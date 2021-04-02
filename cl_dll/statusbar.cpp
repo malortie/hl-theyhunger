@@ -97,7 +97,7 @@ void CHudStatusBar :: ParseStatusString( int line_num )
 		if ( ((src - src_start) >= MAX_STATUSTEXT_LENGTH) || ((dst - dst_start) >= MAX_STATUSTEXT_LENGTH) )
 			break;
 
-		int index = atoi( src );
+		int index = std::atoi( src );
 		// should we draw this line?
 		if ( (index >= 0 && index < MAX_STATUSBAR_VALUES) && (m_iStatusValues[index] != 0) )
 		{  // parse this line and append result to the status bar
@@ -129,7 +129,7 @@ void CHudStatusBar :: ParseStatusString( int line_num )
 					}
 
 					// move over descriptor, then get and move over the index
-					index = atoi( ++src ); 
+					index = std::atoi( ++src ); 
 					while ( *src >= '0' && *src <= '9' )
 						src++;
 

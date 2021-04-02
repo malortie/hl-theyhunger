@@ -781,7 +781,7 @@ try
 			else if ( !strncmp(cCustom, "TEAM", 4) ) // TEAM1, TEAM2, TEAM3, TEAM4
 			{
 				// make it a team only button
-				iTeamOnly = atoi( cCustom + 4 );
+				iTeamOnly = std::atoi( cCustom + 4 );
 				
 				// Get the next token
 				pfile = gEngfuncs.COM_ParseFile(pfile, token);

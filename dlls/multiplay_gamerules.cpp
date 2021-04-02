@@ -1365,14 +1365,14 @@ int ReloadMapCycleFile( char *filename, mapcycle_t *cycle )
 					s = g_engfuncs.pfnInfoKeyValue( szBuffer, "minplayers" );
 					if ( s && s[0] )
 					{
-						item->minplayers = atoi( s );
+						item->minplayers = std::atoi( s );
 						item->minplayers = std::max( item->minplayers, 0 );
 						item->minplayers = std::min( item->minplayers, gpGlobals->maxClients );
 					}
 					s = g_engfuncs.pfnInfoKeyValue( szBuffer, "maxplayers" );
 					if ( s && s[0] )
 					{
-						item->maxplayers = atoi( s );
+						item->maxplayers = std::atoi( s );
 						item->maxplayers = std::max( item->maxplayers, 0 );
 						item->maxplayers = std::min( item->maxplayers, gpGlobals->maxClients );
 					}

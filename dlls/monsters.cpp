@@ -2978,7 +2978,7 @@ void CBaseMonster :: KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "TriggerCondition") )
 	{
-		m_iTriggerCondition = atoi( pkvd->szValue );
+		m_iTriggerCondition = std::atoi( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else

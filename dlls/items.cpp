@@ -45,7 +45,7 @@ void CWorldItem::KeyValue(KeyValueData *pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "type"))
 	{
-		m_iType = atoi(pkvd->szValue);
+		m_iType = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else

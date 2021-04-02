@@ -4686,7 +4686,7 @@ void CDeadHEV::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "pose"))
 	{
-		m_iPose = atoi(pkvd->szValue);
+		m_iPose = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else 

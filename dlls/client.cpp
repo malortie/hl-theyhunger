@@ -539,7 +539,7 @@ void ClientCommand( edict_t *pEntity )
 	{
 		if ( g_flWeaponCheat && CMD_ARGC() > 1)
 		{
-			GetClassPtr((CBasePlayer *)pev)->m_iFOV = atoi( CMD_ARGV(1) );
+			GetClassPtr((CBasePlayer *)pev)->m_iFOV = std::atoi( CMD_ARGV(1) );
 		}
 		else
 		{
@@ -581,7 +581,7 @@ void ClientCommand( edict_t *pEntity )
 		CBasePlayer * pPlayer = GetClassPtr((CBasePlayer *)pev);
 
 		if ( pPlayer->IsObserver() )
-			pPlayer->Observer_SetMode( atoi( CMD_ARGV(1) ) );
+			pPlayer->Observer_SetMode( std::atoi( CMD_ARGV(1) ) );
 	}
 	else if ( FStrEq(pcmd, "closemenus" ) )
 	{
@@ -592,7 +592,7 @@ void ClientCommand( edict_t *pEntity )
 		CBasePlayer * pPlayer = GetClassPtr((CBasePlayer *)pev);
 
 		if ( pPlayer->IsObserver() )
-			pPlayer->Observer_FindNextPlayer( atoi( CMD_ARGV(1) )?true:false );
+			pPlayer->Observer_FindNextPlayer( std::atoi( CMD_ARGV(1) )?true:false );
 	}
 	else if ( g_pGameRules->ClientCommand( GetClassPtr((CBasePlayer *)pev), pcmd ) )
 	{

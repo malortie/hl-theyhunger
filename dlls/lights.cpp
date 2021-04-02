@@ -60,7 +60,7 @@ void CLight :: KeyValue( KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "style"))
 	{
-		m_iStyle = atoi(pkvd->szValue);
+		m_iStyle = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "pitch"))

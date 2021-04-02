@@ -1420,7 +1420,7 @@ void UTIL_StringToIntArray( int *pVector, int count, const char *pString )
 
 	for ( j = 0; j < count; j++ )			// lifted from pr_edict.c
 	{
-		pVector[j] = atoi( pfront );
+		pVector[j] = std::atoi( pfront );
 
 		while ( *pstr && *pstr != ' ' )
 			pstr++;
@@ -2008,7 +2008,7 @@ void EntvarsKeyvalue( entvars_t *pev, KeyValueData *pkvd )
 				break;
 
 			case FIELD_INTEGER:
-				(*(int *)((char *)pev + pField->fieldOffset)) = atoi( pkvd->szValue );
+				(*(int *)((char *)pev + pField->fieldOffset)) = std::atoi( pkvd->szValue );
 				break;
 
 			case FIELD_POSITION_VECTOR:

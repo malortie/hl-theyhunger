@@ -220,19 +220,19 @@ void CBaseTurret::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "orientation"))
 	{
-		m_iOrientation = atoi(pkvd->szValue);
+		m_iOrientation = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 
 	}
 	else if (FStrEq(pkvd->szKeyName, "searchspeed"))
 	{
-		m_iSearchSpeed = atoi(pkvd->szValue);
+		m_iSearchSpeed = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 
 	}
 	else if (FStrEq(pkvd->szKeyName, "turnrate"))
 	{
-		m_iBaseTurnRate = atoi(pkvd->szValue);
+		m_iBaseTurnRate = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "style") ||

@@ -141,7 +141,7 @@ void CAutoTrigger::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "triggerstate"))
 	{
-		int type = atoi( pkvd->szValue );
+		int type = std::atoi( pkvd->szValue );
 		switch( type )
 		{
 		case 0:
@@ -216,7 +216,7 @@ void CTriggerRelay::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "triggerstate"))
 	{
-		int type = atoi( pkvd->szValue );
+		int type = std::atoi( pkvd->szValue );
 		switch( type )
 		{
 		case 0:
@@ -574,7 +574,7 @@ void CBaseTrigger :: KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "damagetype"))
 	{
-		m_bitsDamageInflict = atoi(pkvd->szValue);
+		m_bitsDamageInflict = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else

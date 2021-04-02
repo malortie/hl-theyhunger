@@ -836,7 +836,7 @@ int CHudServers::LoadMasterAddresses( int maxservers, int *count, netadr_t *padr
 			if (strlen(m_szToken) <= 0)
 				break;
 
-			nPort = atoi ( m_szToken );
+			nPort = std::atoi ( m_szToken );
 			if ( !nPort )
 				nPort = nDefaultPort;
 

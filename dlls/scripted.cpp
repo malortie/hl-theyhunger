@@ -74,7 +74,7 @@ void CCineMonster :: KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "m_fMoveTo"))
 	{
-		m_fMoveTo = atoi( pkvd->szValue );
+		m_fMoveTo = std::atoi( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "m_flRepeat"))
@@ -89,7 +89,7 @@ void CCineMonster :: KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "m_iFinishSchedule"))
 	{
-		m_iFinishSchedule = atoi( pkvd->szValue );
+		m_iFinishSchedule = std::atoi( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else
@@ -1003,7 +1003,7 @@ void CScriptedSentence :: KeyValue( KeyValueData *pkvd )
 	}
 	else if(FStrEq(pkvd->szKeyName, "attenuation"))
 	{
-		pev->impulse = atoi( pkvd->szValue );
+		pev->impulse = std::atoi( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else if(FStrEq(pkvd->szKeyName, "volume"))

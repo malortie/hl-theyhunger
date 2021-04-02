@@ -338,7 +338,7 @@ void CFuncRotating :: KeyValue( KeyValueData* pkvd)
 	}
 	else if (FStrEq(pkvd->szKeyName, "sounds"))
 	{
-		m_sounds = atoi(pkvd->szValue);
+		m_sounds = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else 

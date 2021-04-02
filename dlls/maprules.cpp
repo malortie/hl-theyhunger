@@ -160,7 +160,7 @@ void CGameScore::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "points"))
 	{
-		SetPoints( atoi(pkvd->szValue) );
+		SetPoints( std::atoi(pkvd->szValue) );
 		pkvd->fHandled = TRUE;
 	}
 	else
@@ -254,7 +254,7 @@ void CGameText::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "channel"))
 	{
-		m_textParms.channel = atoi( pkvd->szValue );
+		m_textParms.channel = std::atoi( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "x"))
@@ -269,7 +269,7 @@ void CGameText::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "effect"))
 	{
-		m_textParms.effect = atoi( pkvd->szValue );
+		m_textParms.effect = std::atoi( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "color"))
@@ -373,12 +373,12 @@ void CGameTeamMaster::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "teamindex"))
 	{
-		m_teamIndex = atoi( pkvd->szValue );
+		m_teamIndex = std::atoi( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "triggerstate"))
 	{
-		int type = atoi( pkvd->szValue );
+		int type = std::atoi( pkvd->szValue );
 		switch( type )
 		{
 		case 0:
@@ -802,7 +802,7 @@ void CGamePlayerEquip::KeyValue( KeyValueData *pkvd )
 				UTIL_StripToken( pkvd->szKeyName, tmp );
 
 				m_weaponNames[i] = ALLOC_STRING(tmp);
-				m_weaponCount[i] = atoi(pkvd->szValue);
+				m_weaponCount[i] = std::atoi(pkvd->szValue);
 				m_weaponCount[i] = std::max(1,m_weaponCount[i]);
 				pkvd->fHandled = TRUE;
 				break;

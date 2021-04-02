@@ -76,7 +76,7 @@ void CBreakable::KeyValue( KeyValueData* pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "material"))
 	{
-		int i = atoi( pkvd->szValue);
+		int i = std::atoi( pkvd->szValue);
 
 		// 0:glass, 1:metal, 2:flesh, 3:wood
 
@@ -103,14 +103,14 @@ void CBreakable::KeyValue( KeyValueData* pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "spawnobject") )
 	{
-		int object = atoi( pkvd->szValue );
+		int object = std::atoi( pkvd->szValue );
 		if ( object > 0 && object < ARRAYSIZE(pSpawnObjects) )
 			m_iszSpawnObject = MAKE_STRING( pSpawnObjects[object] );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "explodemagnitude") )
 	{
-		ExplosionSetMagnitude( atoi( pkvd->szValue ) );
+		ExplosionSetMagnitude( std::atoi( pkvd->szValue ) );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "lip") )
@@ -858,7 +858,7 @@ void CPushable :: KeyValue( KeyValueData *pkvd )
 {
 	if ( FStrEq(pkvd->szKeyName, "size") )
 	{
-		int bbox = atoi(pkvd->szValue);
+		int bbox = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 
 		switch( bbox )

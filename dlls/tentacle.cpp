@@ -337,7 +337,7 @@ void CTentacle::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "sound"))
 	{
-		m_iTapSound = atoi(pkvd->szValue);
+		m_iTapSound = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 
 	}
