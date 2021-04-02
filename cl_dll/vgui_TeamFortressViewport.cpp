@@ -778,7 +778,7 @@ try
 				// Get the next token
 				pfile = gEngfuncs.COM_ParseFile(pfile, token);
 			}
-			else if ( !strncmp(cCustom, "TEAM", 4) ) // TEAM1, TEAM2, TEAM3, TEAM4
+			else if ( !std::strncmp(cCustom, "TEAM", 4) ) // TEAM1, TEAM2, TEAM3, TEAM4
 			{
 				// make it a team only button
 				iTeamOnly = std::atoi( cCustom + 4 );
@@ -786,7 +786,7 @@ try
 				// Get the next token
 				pfile = gEngfuncs.COM_ParseFile(pfile, token);
 			}
-			else if ( !strncmp(cCustom, "TOGGLE", 6) ) 
+			else if ( !std::strncmp(cCustom, "TOGGLE", 6) ) 
 			{
 				iToggle = true;
 				// Get the next token

@@ -710,11 +710,11 @@ void CHalfLifeMultiplay::DeathNotice( CBasePlayer *pVictim, entvars_t *pKiller, 
 	}
 
 	// strip the monster_* or weapon_* from the inflictor's classname
-	if ( strncmp( killer_weapon_name, "weapon_", 7 ) == 0 )
+	if ( std::strncmp( killer_weapon_name, "weapon_", 7 ) == 0 )
 		killer_weapon_name += 7;
-	else if ( strncmp( killer_weapon_name, "monster_", 8 ) == 0 )
+	else if ( std::strncmp( killer_weapon_name, "monster_", 8 ) == 0 )
 		killer_weapon_name += 8;
-	else if ( strncmp( killer_weapon_name, "func_", 5 ) == 0 )
+	else if ( std::strncmp( killer_weapon_name, "func_", 5 ) == 0 )
 		killer_weapon_name += 5;
 
 	MESSAGE_BEGIN( MSG_ALL, gmsgDeathMsg );

@@ -1012,7 +1012,7 @@ void CFuncTankControls :: Think( void )
 	do 
 	{
 		pTarget = FIND_ENTITY_BY_TARGETNAME( pTarget, STRING(pev->target) );
-	} while ( !FNullEnt(pTarget) && strncmp( STRING(pTarget->v.classname), "func_tank", 9 ) );
+	} while ( !FNullEnt(pTarget) && std::strncmp( STRING(pTarget->v.classname), "func_tank", 9 ) );
 
 	if ( FNullEnt( pTarget ) )
 	{

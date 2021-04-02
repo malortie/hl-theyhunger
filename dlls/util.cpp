@@ -2541,7 +2541,7 @@ int	CRestore::BufferCheckZString( const char *string )
 	int len = std::strlen( string );
 	if ( len <= maxLen )
 	{
-		if ( !strncmp( string, m_pdata->pCurrentData, len ) )
+		if ( !std::strncmp( string, m_pdata->pCurrentData, len ) )
 			return 1;
 	}
 	return 0;
