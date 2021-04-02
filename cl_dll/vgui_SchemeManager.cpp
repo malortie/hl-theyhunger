@@ -145,7 +145,7 @@ static byte *LoadFileByResolution( const char *filePrefix, int xRes, const char 
 static void ParseRGBAFromString( byte colorArray[4], const char *colorVector )
 {
 	int r, g, b, a;
-	sscanf( colorVector, "%d %d %d %d", &r, &g, &b, &a );
+	std::sscanf( colorVector, "%d %d %d %d", &r, &g, &b, &a );
 	colorArray[0] = r;
 	colorArray[1] = g;
 	colorArray[2] = b;

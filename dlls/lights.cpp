@@ -151,7 +151,7 @@ void CEnvLight::KeyValue( KeyValueData* pkvd )
 	{
 		int r, g, b, v, j;
 		char szColor[64];
-		j = sscanf( pkvd->szValue, "%d %d %d %d\n", &r, &g, &b, &v );
+		j = std::sscanf( pkvd->szValue, "%d %d %d %d\n", &r, &g, &b, &v );
 		if (j == 1)
 		{
 			g = b = r;

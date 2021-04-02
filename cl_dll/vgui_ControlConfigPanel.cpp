@@ -193,7 +193,7 @@ void ControlConfigPanel::AddCVarFromInputStream(InputStream* is)
 		{
 			break;
 		}
-		if(sscanf(buf,"\"%[^\"]\" \"%[^\"]\"",cvar,desc)==2)
+		if(std::sscanf(buf,"\"%[^\"]\" \"%[^\"]\"",cvar,desc)==2)
 		{
 			AddCVar(cvar,desc);
 		}
