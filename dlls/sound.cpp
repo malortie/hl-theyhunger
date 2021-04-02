@@ -1328,11 +1328,11 @@ void SENTENCEG_Init()
 		j--;
 		if (j <= i)
 			continue;
-		if (!isdigit(buffer[j]))
+		if (!std::isdigit(buffer[j]))
 			continue;
 
 		// cut out suffix numbers
-		while (j > i && isdigit(buffer[j]))
+		while (j > i && std::isdigit(buffer[j]))
 			j--;
 
 		if (j <= i)
