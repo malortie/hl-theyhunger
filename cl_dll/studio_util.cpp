@@ -189,7 +189,7 @@ void QuaternionSlerp( vec4_t p, vec4_t q, float t, vec4_t qt )
 	{
 		if ((1.0 - cosom) > 0.000001)
 		{
-			omega = acos( cosom );
+			omega = std::acos( cosom );
 			sinom = sin( omega );
 			sclp = sin( (1.0 - t)*omega) / sinom;
 			sclq = sin( t*omega ) / sinom;
