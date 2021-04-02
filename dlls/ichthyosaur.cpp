@@ -1016,7 +1016,7 @@ void CIchthyosaur::Swim( )
 	}
 	pev->angles.y += turn;
 	pev->angles.z -= turn;
-	pev->angles.y = fmod((pev->angles.y + 360.0), 360.0);
+	pev->angles.y = std::fmod((pev->angles.y + 360.0), 360.0);
 
 	static float yaw_adj;
 

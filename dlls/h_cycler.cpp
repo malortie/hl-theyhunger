@@ -296,7 +296,7 @@ void CCyclerSprite::Animate( float frames )
 { 
 	pev->frame += frames;
 	if ( m_maxFrame > 0 )
-		pev->frame = fmod( pev->frame, m_maxFrame );
+		pev->frame = std::fmod( pev->frame, m_maxFrame );
 }
 
 

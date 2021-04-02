@@ -1165,7 +1165,7 @@ void CGlow::Think( void )
 void CGlow::Animate( float frames )
 { 
 	if ( m_maxFrame > 0 )
-		pev->frame = fmod( pev->frame + frames, m_maxFrame );
+		pev->frame = std::fmod( pev->frame + frames, m_maxFrame );
 }
 
 
@@ -1301,7 +1301,7 @@ void CSprite::Animate( float frames )
 		else
 		{
 			if ( m_maxFrame > 0 )
-				pev->frame = fmod( pev->frame, m_maxFrame );
+				pev->frame = std::fmod( pev->frame, m_maxFrame );
 		}
 	}
 }

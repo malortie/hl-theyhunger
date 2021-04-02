@@ -599,7 +599,7 @@ void CVoiceStatus::UpdateBanButton(int iClient)
 		return;
 
 	// Figure out if it's blinking or not.
-	bool bBlink   = fmod(m_BlinkTimer, SCOREBOARD_BLINK_FREQUENCY*2) < SCOREBOARD_BLINK_FREQUENCY;
+	bool bBlink   = std::fmod(m_BlinkTimer, SCOREBOARD_BLINK_FREQUENCY*2) < SCOREBOARD_BLINK_FREQUENCY;
 	bool bTalking = !!m_VoicePlayers[iClient];
 	bool bBanned  = m_BanMgr.GetPlayerBan(playerID);
 	bool bNeverSpoken = !m_VoiceEnabledPlayers[iClient];
