@@ -667,7 +667,7 @@ void CHudServers::SortServers( const char *fieldname )
 	size_t nCount = c;
 	size_t nSize  = sizeof( server_t * );
 
-	qsort(
+	std::qsort(
 		pSortArray,
 		(size_t)nCount,
 		(size_t)nSize,
