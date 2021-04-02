@@ -1949,7 +1949,7 @@ void CStudioModelRenderer::StudioCalcAttachments( void )
 	if ( m_pStudioHeader->numattachments > 4 )
 	{
 		gEngfuncs.Con_DPrintf( "Too many attachments on %s\n", m_pCurrentEntity->model->name );
-		exit( -1 );
+		std::exit( -1 );
 	}
 
 	// calculate attachment points
