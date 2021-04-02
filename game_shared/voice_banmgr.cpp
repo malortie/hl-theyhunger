@@ -188,7 +188,7 @@ CVoiceBanMgr::BannedPlayer* CVoiceBanMgr::AddBannedPlayer(char const playerID[16
 		return NULL;
 
 	int index = HashPlayerID(playerID);
-	memcpy(pNew->m_PlayerID, playerID, 16);
+	std::memcpy(pNew->m_PlayerID, playerID, 16);
 	pNew->m_pNext = &m_PlayerHash[index];
 	pNew->m_pPrev = m_PlayerHash[index].m_pPrev;
 	pNew->m_pPrev->m_pNext = pNew->m_pNext->m_pPrev = pNew;

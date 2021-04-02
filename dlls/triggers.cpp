@@ -414,13 +414,13 @@ CMultiManager *CMultiManager::Clone( void )
 	CMultiManager *pMulti = GetClassPtr( (CMultiManager *)NULL );
 
 	edict_t *pEdict = pMulti->pev->pContainingEntity;
-	memcpy( pMulti->pev, pev, sizeof(*pev) );
+	std::memcpy( pMulti->pev, pev, sizeof(*pev) );
 	pMulti->pev->pContainingEntity = pEdict;
 
 	pMulti->pev->spawnflags |= SF_MULTIMAN_CLONE;
 	pMulti->m_cTargets = m_cTargets;
-	memcpy( pMulti->m_iTargetName, m_iTargetName, sizeof( m_iTargetName ) );
-	memcpy( pMulti->m_flTargetDelay, m_flTargetDelay, sizeof( m_flTargetDelay ) );
+	std::memcpy( pMulti->m_iTargetName, m_iTargetName, sizeof( m_iTargetName ) );
+	std::memcpy( pMulti->m_flTargetDelay, m_flTargetDelay, sizeof( m_flTargetDelay ) );
 
 	return pMulti;
 }

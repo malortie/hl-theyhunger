@@ -241,11 +241,11 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 				}
 				if ( !hasArmedFgColor )
 				{
-					memcpy( pScheme->armedFgColor, pScheme->fgColor, sizeof(pScheme->armedFgColor) );
+					std::memcpy( pScheme->armedFgColor, pScheme->fgColor, sizeof(pScheme->armedFgColor) );
 				}
 				if ( !hasMouseDownFgColor )
 				{
-					memcpy( pScheme->mousedownFgColor, pScheme->armedFgColor, sizeof(pScheme->mousedownFgColor) );
+					std::memcpy( pScheme->mousedownFgColor, pScheme->armedFgColor, sizeof(pScheme->mousedownFgColor) );
 				}
 
 				// background color (normal -> armed -> mouse down)
@@ -255,11 +255,11 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 				}
 				if ( !hasArmedBgColor )
 				{
-					memcpy( pScheme->armedBgColor, pScheme->bgColor, sizeof(pScheme->armedBgColor) );
+					std::memcpy( pScheme->armedBgColor, pScheme->bgColor, sizeof(pScheme->armedBgColor) );
 				}
 				if ( !hasMouseDownBgColor )
 				{
-					memcpy( pScheme->mousedownBgColor, pScheme->armedBgColor, sizeof(pScheme->mousedownBgColor) );
+					std::memcpy( pScheme->mousedownBgColor, pScheme->armedBgColor, sizeof(pScheme->mousedownBgColor) );
 				}
 
 				// font size
@@ -366,7 +366,7 @@ buildDefaultFont:
 	m_pSchemeList = new CScheme[ m_iNumSchemes ];
 
 	// copy in the data
-	memcpy( m_pSchemeList, tmpSchemes, sizeof(CScheme) * m_iNumSchemes );
+	std::memcpy( m_pSchemeList, tmpSchemes, sizeof(CScheme) * m_iNumSchemes );
 
 	// create the fonts
 	for ( int i = 0; i < m_iNumSchemes; i++ )

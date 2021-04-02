@@ -244,8 +244,8 @@ void CHudHealth::CalcDamageDirection(vec3_t vecFrom)
 	}
 
 
-	memcpy(vecOrigin, gHUD.m_vecOrigin, sizeof(vec3_t));
-	memcpy(vecAngles, gHUD.m_vecAngles, sizeof(vec3_t));
+	std::memcpy(vecOrigin, gHUD.m_vecOrigin, sizeof(vec3_t));
+	std::memcpy(vecAngles, gHUD.m_vecAngles, sizeof(vec3_t));
 
 
 	VectorSubtract (vecFrom, vecOrigin, vecFrom);

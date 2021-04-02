@@ -2199,7 +2199,7 @@ void CSave :: BufferData( const char *pdata, int size )
 		return;
 	}
 
-	memcpy( m_pdata->pCurrentData, pdata, size );
+	std::memcpy( m_pdata->pCurrentData, pdata, size );
 	m_pdata->pCurrentData += size;
 	m_pdata->size += size;
 }
@@ -2499,7 +2499,7 @@ void CRestore::BufferReadBytes( char *pOutput, int size )
 	}
 
 	if ( pOutput )
-		memcpy( pOutput, m_pdata->pCurrentData, size );
+		std::memcpy( pOutput, m_pdata->pCurrentData, size );
 	m_pdata->pCurrentData += size;
 	m_pdata->size += size;
 }

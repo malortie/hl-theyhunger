@@ -247,5 +247,5 @@ MatrixCopy
 */
 void MatrixCopy( float in[3][4], float out[3][4] )
 {
-	memcpy( out, in, sizeof( float ) * 3 * 4 );
+	std::memcpy( out, in, sizeof( float ) * 3 * 4 );
 }

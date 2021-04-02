@@ -106,7 +106,7 @@ extern "C" {
 		return FALSE;
 	}
 	
-	memcpy( pFunctionTable, &gFunctionTable, sizeof( DLL_FUNCTIONS ) );
+	std::memcpy( pFunctionTable, &gFunctionTable, sizeof( DLL_FUNCTIONS ) );
 	return TRUE;
 }
 
@@ -119,7 +119,7 @@ int GetEntityAPI2( DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion )
 		return FALSE;
 	}
 	
-	memcpy( pFunctionTable, &gFunctionTable, sizeof( DLL_FUNCTIONS ) );
+	std::memcpy( pFunctionTable, &gFunctionTable, sizeof( DLL_FUNCTIONS ) );
 	return TRUE;
 }
 

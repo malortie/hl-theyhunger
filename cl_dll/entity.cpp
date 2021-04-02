@@ -129,8 +129,8 @@ void CL_DLLEXPORT HUD_ProcessPlayerState( struct entity_state_s *dst, const stru
 	dst->framerate				= src->framerate;
 	dst->body					= src->body;
 
-	memcpy( &dst->controller[0], &src->controller[0], 4 * sizeof( byte ) );
-	memcpy( &dst->blending[0], &src->blending[0], 2 * sizeof( byte ) );
+	std::memcpy( &dst->controller[0], &src->controller[0], 4 * sizeof( byte ) );
+	std::memcpy( &dst->blending[0], &src->blending[0], 2 * sizeof( byte ) );
 
 	VectorCopy( src->basevelocity, dst->basevelocity );
 
@@ -223,7 +223,7 @@ void CL_DLLEXPORT HUD_TxferPredictionData ( struct entity_state_s *ps, const str
 	VectorCopy( ppcd->vuser3, pcd->vuser3 );
 	VectorCopy( ppcd->vuser4, pcd->vuser4 );
 
-	memcpy( wd, pwd, 32 * sizeof( weapon_data_t ) );
+	std::memcpy( wd, pwd, 32 * sizeof( weapon_data_t ) );
 }
 
 #if defined( BEAM_TEST )

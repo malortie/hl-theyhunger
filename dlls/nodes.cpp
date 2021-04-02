@@ -1256,7 +1256,7 @@ int CGraph :: LinkVisibleNodes ( CLink *pLinkPool, FILE *file, int *piBadNode )
 					pLinkPool [ cTotalLinks ].m_pLinkEnt = VARS( tr.pHit );
 
 					// record the modelname, so that we can save/load node trees
-					memcpy( pLinkPool [ cTotalLinks ].m_szLinkEntModelname, STRING( VARS(tr.pHit)->model ), 4 );
+					std::memcpy( pLinkPool [ cTotalLinks ].m_szLinkEntModelname, STRING( VARS(tr.pHit)->model ), 4 );
 
 					// set the flag for this ent that indicates that it is attached to the world graph
 					// if this ent is removed from the world, it must also be removed from the connections
@@ -2346,7 +2346,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 		//
 		length -= sizeof(int);
 		if (length < 0) goto ShortFile;
-		memcpy(&iVersion, pMemFile, sizeof(int));
+		std::memcpy(&iVersion, pMemFile, sizeof(int));
 		pMemFile += sizeof(int);
 
 		if ( iVersion != GRAPH_VERSION )
@@ -2361,7 +2361,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 		//
 		length -= sizeof(CGraph);
 		if (length < 0) goto ShortFile;
-		memcpy(this, pMemFile, sizeof(CGraph));
+		std::memcpy(this, pMemFile, sizeof(CGraph));
 		pMemFile += sizeof(CGraph);
 
 		// Set the pointers to zero, just in case we run out of memory.
@@ -2387,7 +2387,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 		//
 		length -= sizeof(CNode) * m_cNodes;
 		if (length < 0) goto ShortFile;
-		memcpy(m_pNodes, pMemFile, sizeof(CNode)*m_cNodes);
+		std::memcpy(m_pNodes, pMemFile, sizeof(CNode)*m_cNodes);
 		pMemFile += sizeof(CNode) * m_cNodes;
 
 		
@@ -2405,7 +2405,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 		//
 		length -= sizeof(CLink)*m_cLinks;
 		if (length < 0) goto ShortFile;
-		memcpy(m_pLinkPool, pMemFile, sizeof(CLink)*m_cLinks);
+		std::memcpy(m_pLinkPool, pMemFile, sizeof(CLink)*m_cLinks);
 		pMemFile += sizeof(CLink)*m_cLinks;
 
 		// Malloc for the sorting info.
@@ -2421,7 +2421,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 		//
 		length -= sizeof(DIST_INFO)*m_cNodes;
 		if (length < 0) goto ShortFile;
-		memcpy(m_di, pMemFile, sizeof(DIST_INFO)*m_cNodes);
+		std::memcpy(m_di, pMemFile, sizeof(DIST_INFO)*m_cNodes);
 		pMemFile += sizeof(DIST_INFO)*m_cNodes;
 
 		// Malloc for the routing info.
@@ -2443,7 +2443,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 		//
 		length -= sizeof(char)*m_nRouteInfo;
 		if (length < 0) goto ShortFile;
-		memcpy(m_pRouteInfo, pMemFile, sizeof(char)*m_nRouteInfo);
+		std::memcpy(m_pRouteInfo, pMemFile, sizeof(char)*m_nRouteInfo);
 		pMemFile += sizeof(char)*m_nRouteInfo;
 		m_fRoutingComplete = TRUE;;
 
@@ -2460,7 +2460,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 		//
 		length -= sizeof(short)*m_nHashLinks;
 		if (length < 0) goto ShortFile;
-		memcpy(m_pHashLinks, pMemFile, sizeof(short)*m_nHashLinks);
+		std::memcpy(m_pHashLinks, pMemFile, sizeof(short)*m_nHashLinks);
 		pMemFile += sizeof(short)*m_nHashLinks;
 
 		// Set the graph present flag, clear the pointers set flag
@@ -2576,7 +2576,7 @@ int CGraph :: FSetGraphPointers ( void )
 			// will be NULL when reloaded, and will ignored by this function.
 
 			// m_szLinkEntModelname is not necessarily NULL terminated (so we can store it in a more alignment-friendly 4 bytes)
-			memcpy( name, m_pLinkPool[ i ].m_szLinkEntModelname, 4 );
+			std::memcpy( name, m_pLinkPool[ i ].m_szLinkEntModelname, 4 );
 			name[4] = 0;
 			pentLinkEnt =  FIND_ENTITY_BY_STRING( NULL, "model", name );
 
@@ -3305,10 +3305,10 @@ void CGraph :: ComputeStaticRoutingTables( void )
 						else
 						{
 							char *Tmp = (char *)calloc(sizeof(char), (m_nRouteInfo + nRoute));
-							memcpy(Tmp, m_pRouteInfo, m_nRouteInfo);
+							std::memcpy(Tmp, m_pRouteInfo, m_nRouteInfo);
 							std::free(m_pRouteInfo);
 							m_pRouteInfo = Tmp;
-							memcpy(m_pRouteInfo + m_nRouteInfo, pRoute, nRoute);
+							std::memcpy(m_pRouteInfo + m_nRouteInfo, pRoute, nRoute);
 							m_pNodes[ iFrom ].m_pNextBestNode[iHull][iCap] = m_nRouteInfo;
 							m_nRouteInfo += nRoute;
 							nTotalCompressedSize += CompressedSize;
@@ -3318,7 +3318,7 @@ void CGraph :: ComputeStaticRoutingTables( void )
 					{
 						m_nRouteInfo = nRoute;
 						m_pRouteInfo = (char *)calloc(sizeof(char), nRoute);
-						memcpy(m_pRouteInfo, pRoute, nRoute);
+						std::memcpy(m_pRouteInfo, pRoute, nRoute);
 						m_pNodes[ iFrom ].m_pNextBestNode[iHull][iCap] = 0;
 						nTotalCompressedSize += CompressedSize;
 					}

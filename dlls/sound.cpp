@@ -1520,7 +1520,7 @@ static char *memfgets( byte *pMemFile, int fileSize, int &filePos, char *pBuffer
 		// We read in size bytes
 		int size = i - filePos;
 		// copy it out
-		memcpy( pBuffer, pMemFile + filePos, sizeof(byte)*size );
+		std::memcpy( pBuffer, pMemFile + filePos, sizeof(byte)*size );
 		
 		// If the buffer isn't full, terminate (this is always true)
 		if ( size < bufferSize )

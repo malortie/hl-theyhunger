@@ -1171,13 +1171,13 @@ int AddToFullPack( struct entity_state_s *state, int e, edict_t *ent, edict_t *h
 	// Round animtime to nearest millisecond
 	state->animtime   = (int)(1000.0 * ent->v.animtime ) / 1000.0;
 
-	memcpy( state->origin, ent->v.origin, 3 * sizeof( float ) );
-	memcpy( state->angles, ent->v.angles, 3 * sizeof( float ) );
-	memcpy( state->mins, ent->v.mins, 3 * sizeof( float ) );
-	memcpy( state->maxs, ent->v.maxs, 3 * sizeof( float ) );
+	std::memcpy( state->origin, ent->v.origin, 3 * sizeof( float ) );
+	std::memcpy( state->angles, ent->v.angles, 3 * sizeof( float ) );
+	std::memcpy( state->mins, ent->v.mins, 3 * sizeof( float ) );
+	std::memcpy( state->maxs, ent->v.maxs, 3 * sizeof( float ) );
 
-	memcpy( state->startpos, ent->v.startpos, 3 * sizeof( float ) );
-	memcpy( state->endpos, ent->v.endpos, 3 * sizeof( float ) );
+	std::memcpy( state->startpos, ent->v.startpos, 3 * sizeof( float ) );
+	std::memcpy( state->endpos, ent->v.endpos, 3 * sizeof( float ) );
 
 	state->impacttime = ent->v.impacttime;
 	state->starttime = ent->v.starttime;
@@ -1254,7 +1254,7 @@ int AddToFullPack( struct entity_state_s *state, int e, edict_t *ent, edict_t *h
 	// Special stuff for players only
 	if ( player )
 	{
-		memcpy( state->basevelocity, ent->v.basevelocity, 3 * sizeof( float ) );
+		std::memcpy( state->basevelocity, ent->v.basevelocity, 3 * sizeof( float ) );
 
 		state->weaponmodel  = MODEL_INDEX( STRING( ent->v.weaponmodel ) );
 		state->gaitsequence = ent->v.gaitsequence;

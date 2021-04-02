@@ -945,8 +945,8 @@ void CStudioModelRenderer::StudioSetupBones ( void )
 				
 			if ( copy )
 			{
-				memcpy( pos[i], pos2[i], sizeof( pos[i] ) );
-				memcpy( q[i], q2[i], sizeof( q[i] ) );
+				std::memcpy( pos[i], pos2[i], sizeof( pos[i] ) );
+				std::memcpy( q[i], q2[i], sizeof( q[i] ) );
 			}
 		}
 	}
@@ -1231,7 +1231,7 @@ int CStudioModelRenderer::StudioDrawModel( int flags )
 		{
 			cl_entity_t *ent = gEngfuncs.GetEntityByIndex( m_pCurrentEntity->index );
 
-			memcpy( ent->attachment, m_pCurrentEntity->attachment, sizeof( vec3_t ) * 4 );
+			std::memcpy( ent->attachment, m_pCurrentEntity->attachment, sizeof( vec3_t ) * 4 );
 		}
 	}
 
@@ -1761,7 +1761,7 @@ int CStudioModelRenderer::StudioDrawPlayer( int flags, entity_state_t *pplayer )
 		{
 			cl_entity_t *ent = gEngfuncs.GetEntityByIndex( m_pCurrentEntity->index );
 
-			memcpy( ent->attachment, m_pCurrentEntity->attachment, sizeof( vec3_t ) * 4 );
+			std::memcpy( ent->attachment, m_pCurrentEntity->attachment, sizeof( vec3_t ) * 4 );
 		}
 	}
 
