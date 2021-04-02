@@ -41,6 +41,7 @@
 #define NOSERVICE
 #define NOMCX
 #define NOIME
+#define NOMINMAX
 #include "winsani_in.h"
 #include "windows.h"
 #include "winsani_out.h"
@@ -67,6 +68,8 @@ typedef int BOOL;
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
+
+#include <algorithm> // For min/max
 
 // Header file containing definition of globalvars_t and entvars_t
 typedef unsigned int func_t;					//
