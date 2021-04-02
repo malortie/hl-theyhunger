@@ -207,7 +207,7 @@ void CHudSayText :: SayTextPrint( const char *pszBuf, int iBufSize, int clientIn
 
 		if ( pName )
 		{
-			const char *nameInString = strstr( pszBuf, pName );
+			const char *nameInString = std::strstr( pszBuf, pName );
 
 			if ( nameInString )
 			{

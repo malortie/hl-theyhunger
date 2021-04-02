@@ -634,7 +634,7 @@ void Bench_CheckEntity( int type, struct cl_entity_s *ent, const char *modelname
 		VectorAdd( v, ent->origin, g_aimorg );
 	}
 
-	if ( Bench_InStage( THIRD_STAGE ) && strstr( modelname, "ppdemodot" ) )
+	if ( Bench_InStage( THIRD_STAGE ) && std::strstr( modelname, "ppdemodot" ) )
 	{
 		Bench_SetDotAdded( 1 );
 		VectorCopy( ent->origin, g_dotorg );

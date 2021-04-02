@@ -550,7 +550,7 @@ void ClientCommand( edict_t *pEntity )
 	{
 		GetClassPtr((CBasePlayer *)pev)->SelectItem((char *)CMD_ARGV(1));
 	}
-	else if (((pstr = strstr(pcmd, "weapon_")) != NULL)  && (pstr == pcmd))
+	else if (((pstr = std::strstr(pcmd, "weapon_")) != NULL)  && (pstr == pcmd))
 	{
 		GetClassPtr((CBasePlayer *)pev)->SelectItem(pcmd);
 	}
