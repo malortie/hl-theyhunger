@@ -2127,7 +2127,7 @@ void CStack :: Push( int value )
 {
 	if ( m_level >= MAX_STACK_NODES )
 	{
-		printf("Error!\n");
+		std::printf("Error!\n");
 		return;
 	}
 	m_stack[m_level] = value;
@@ -2185,7 +2185,7 @@ void CQueue :: Insert ( int iValue, float fPriority )
 
 	if ( Full() )
 	{
-		printf ( "Queue is full!\n" );
+		std::printf ( "Queue is full!\n" );
 		return;
 	}
 
@@ -2232,7 +2232,7 @@ void CQueuePriority :: Insert( int iValue, float fPriority )
 
 	if ( Full() )
 	{
-		printf ( "Queue is full!\n" );
+		std::printf ( "Queue is full!\n" );
 		return;
 	}
 
