@@ -18,8 +18,8 @@ extern "C"
 #include "in_defs.h"
 #include "view.h"
 #include "bench.h"
-#include <string.h>
-#include <ctype.h>
+#include <cstring>
+#include <cctype>
 #include "Exports.h"
 
 #include "vgui_TeamFortressViewport.h"

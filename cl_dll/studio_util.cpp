@@ -5,7 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#include <memory.h>
+#include <memory>
 #include "hud.h"
 #include "cl_util.h"
 #include "const.h"

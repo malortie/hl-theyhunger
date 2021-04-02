@@ -5,7 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#include <assert.h>
+#include <cassert>
 #include "vgui_grid.h"
 
 

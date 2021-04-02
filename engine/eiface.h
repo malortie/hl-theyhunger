@@ -23,7 +23,7 @@
 #define INTERFACE_VERSION		140
 #endif // !HLDEMO_BUILD
 
-#include <stdio.h>
+#include <cstdio>
 #include "custom.h"
 #include "cvardef.h"
 #include "Sequence.h"

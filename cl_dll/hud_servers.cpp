@@ -11,7 +11,7 @@
 #include "hud_servers_priv.h"
 #include "hud_servers.h"
 #include "net_api.h"
-#include <string.h>
+#include <cstring>
 #ifdef _WIN32
 #include "winsani_in.h"
 #include <winsock.h>

@@ -5,8 +5,8 @@
 // $NoKeywords: $
 //=============================================================================
 
-#include <string.h>
-#include <stdio.h>
+#include <cstring>
+#include <cstdio>
 #include "voice_banmgr.h"
 
 

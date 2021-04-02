@@ -30,7 +30,7 @@
 #include "event_args.h"
 #include "in_defs.h"
 
-#include <string.h>
+#include <cstring>
 
 #include "r_studioint.h"
 #include "com_model.h"

@@ -16,11 +16,11 @@
 //  hud_update.cpp
 //
 
-#include <math.h>
+#include <cmath>
 #include "hud.h"
 #include "cl_util.h"
-#include <stdlib.h>
-#include <memory.h>
+#include <cstdlib>
+#include <memory>
 
 int CL_ButtonBits( int );
 void CL_ResetButtonBits( int bits );

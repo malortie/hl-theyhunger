@@ -16,7 +16,7 @@
 #include "cl_util.h"
 #include "demo.h"
 #include "demo_api.h"
-#include <memory.h>
+#include <memory>
 #include "Exports.h"
 
 int g_demosniper = 0;

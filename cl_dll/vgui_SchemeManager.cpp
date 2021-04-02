@@ -20,7 +20,7 @@
 #include "vgui_SchemeManager.h"
 #include "cvardef.h"
 
-#include <string.h>
+#include <cstring>
 
 
 cvar_t *g_CV_BitmapFonts;

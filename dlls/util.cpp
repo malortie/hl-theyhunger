@@ -24,7 +24,7 @@
 #include "util.h"
 #include "cbase.h"
 #include "saverestore.h"
-#include <time.h>
+#include <ctime>
 #include "shake.h"
 #include "decals.h"
 #include "player.h"

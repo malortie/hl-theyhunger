@@ -23,8 +23,8 @@
 #include "parsemsg.h"
 #include "pm_shared.h"
 
-#include <string.h>
-#include <stdio.h>
+#include <cstring>
+#include <cstdio>
 
 #include "ammohistory.h"
 #include "vgui_TeamFortressViewport.h"

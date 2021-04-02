@@ -18,14 +18,14 @@
 // implementation of CHudHealth class
 //
 
-#include "stdio.h"
-#include "stdlib.h"
-#include "math.h"
+#include <cstdio>
+#include <cstdlib>
+#include <cmath>
 
 #include "hud.h"
 #include "cl_util.h"
 #include "parsemsg.h"
-#include <string.h>
+#include <cstring>
 
 
 DECLARE_MESSAGE(m_Health, Health )

@@ -5,8 +5,8 @@
 // $NoKeywords: $
 //=============================================================================
 
-#include <stdarg.h>
-#include <stdio.h>
+#include <cstdarg>
+#include <cstdio>
 #include "vgui_checkbutton2.h"
 #include "vgui_loadtga.h"
 

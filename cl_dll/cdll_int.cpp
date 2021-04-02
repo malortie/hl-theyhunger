@@ -30,7 +30,7 @@ extern "C"
 #include "pm_shared.h"
 }
 
-#include <string.h>
+#include <cstring>
 #include "hud_servers.h"
 #include "vgui_int.h"
 #include "interface.h"

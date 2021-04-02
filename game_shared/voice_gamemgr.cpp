@@ -7,8 +7,8 @@
 
 #include "archtypes.h"     // DAL
 #include "voice_gamemgr.h"
-#include <string.h>
-#include <assert.h>
+#include <cstring>
+#include <cassert>
 #include "extdll.h"
 #include "util.h"
 #include "cbase.h"
