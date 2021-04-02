@@ -316,7 +316,7 @@ void CGlobalState :: EntityAdd( string_t globalname, string_t mapName, GLOBALEST
 {
 	ASSERT( !Find(globalname) );
 
-	globalentity_t *pNewEntity = (globalentity_t *)calloc( sizeof( globalentity_t ), 1 );
+	globalentity_t *pNewEntity = (globalentity_t *)std::calloc( sizeof( globalentity_t ), 1 );
 	ASSERT( pNewEntity != NULL );
 	pNewEntity->pNext = m_pList;
 	m_pList = pNewEntity;

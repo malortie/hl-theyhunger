@@ -119,7 +119,7 @@ void CGraph :: InitGraph( void)
 int CGraph :: AllocNodes ( void )
 {
 //  malloc all of the nodes
-	WorldGraph.m_pNodes = (CNode *)calloc ( sizeof ( CNode ), MAX_NODES );
+	WorldGraph.m_pNodes = (CNode *)std::calloc ( sizeof ( CNode ), MAX_NODES );
 
 // could not malloc space for all the nodes!
 	if ( !WorldGraph.m_pNodes )
@@ -1643,7 +1643,7 @@ void CTestHull :: BuildNodeGraph( void )
 	pev->nextthink = gpGlobals->time;
 
 // 	malloc a swollen temporary connection pool that we trim down after we know exactly how many connections there are.
-	pTempPool = (CLink *)calloc ( sizeof ( CLink ) , ( WorldGraph.m_cNodes * MAX_NODE_INITIAL_LINKS ) );
+	pTempPool = (CLink *)std::calloc ( sizeof ( CLink ) , ( WorldGraph.m_cNodes * MAX_NODE_INITIAL_LINKS ) );
 	if ( !pTempPool )
 	{
 		ALERT ( at_aiconsole, "**Could not malloc TempPool!\n" );
@@ -1937,7 +1937,7 @@ void CTestHull :: BuildNodeGraph( void )
 	cPoolLinks -= WorldGraph.RejectInlineLinks ( pTempPool, file );
 
 // now malloc a pool just large enough to hold the links that are actually used
-	WorldGraph.m_pLinkPool = (CLink *) calloc ( sizeof ( CLink ), cPoolLinks );
+	WorldGraph.m_pLinkPool = (CLink *) std::calloc ( sizeof ( CLink ), cPoolLinks );
 
 	if ( !WorldGraph.m_pLinkPool )
 	{// couldn't make the link pool!
@@ -2375,7 +2375,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 
 		// Malloc for the nodes
 		//
-		m_pNodes = ( CNode * )calloc ( sizeof ( CNode ), m_cNodes );
+		m_pNodes = ( CNode * )std::calloc ( sizeof ( CNode ), m_cNodes );
 
 		if ( !m_pNodes )
 		{
@@ -2393,7 +2393,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 		
 		// Malloc for the link pool
 		//
-		m_pLinkPool = ( CLink * )calloc ( sizeof ( CLink ), m_cLinks );
+		m_pLinkPool = ( CLink * )std::calloc ( sizeof ( CLink ), m_cLinks );
 
 		if ( !m_pLinkPool )
 		{
@@ -2410,7 +2410,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 
 		// Malloc for the sorting info.
 		//
-		m_di = (DIST_INFO *)calloc( sizeof(DIST_INFO), m_cNodes );
+		m_di = (DIST_INFO *)std::calloc( sizeof(DIST_INFO), m_cNodes );
 		if ( !m_di )
 		{
 			ALERT ( at_aiconsole, "***ERROR**\nCouldn't malloc %d entries sorting nodes!\n", m_cNodes );
@@ -2427,7 +2427,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 		// Malloc for the routing info.
 		//
 		m_fRoutingComplete = FALSE;
-		m_pRouteInfo = (char *)calloc( sizeof(char), m_nRouteInfo );
+		m_pRouteInfo = (char *)std::calloc( sizeof(char), m_nRouteInfo );
 		if ( !m_pRouteInfo )
 		{
 			ALERT ( at_aiconsole, "***ERROR**\nCounldn't malloc %d route bytes!\n", m_nRouteInfo );
@@ -2449,7 +2449,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 
 		// malloc for the hash links
 		//
-		m_pHashLinks = (short *)calloc(sizeof(short), m_nHashLinks);
+		m_pHashLinks = (short *)std::calloc(sizeof(short), m_nHashLinks);
 		if (!m_pHashLinks)
 		{
 			ALERT ( at_aiconsole, "***ERROR**\nCounldn't malloc %d hash link bytes!\n", m_nHashLinks );
@@ -2860,7 +2860,7 @@ void CGraph::BuildLinkLookups(void)
 	m_nHashLinks = 3*m_cLinks/2 + 3;
 
 	HashChoosePrimes(m_nHashLinks);
-	m_pHashLinks = (short *)calloc(sizeof(short), m_nHashLinks);
+	m_pHashLinks = (short *)std::calloc(sizeof(short), m_nHashLinks);
 	if (!m_pHashLinks)
 	{
 		ALERT(at_aiconsole, "Couldn't allocated Link Lookup Table.\n");
@@ -2897,7 +2897,7 @@ void CGraph::BuildRegionTables(void)
 
 	// Go ahead and setup for range searching the nodes for FindNearestNodes
 	//
-	m_di = (DIST_INFO *)calloc(sizeof(DIST_INFO), m_cNodes);
+	m_di = (DIST_INFO *)std::calloc(sizeof(DIST_INFO), m_cNodes);
 	if (!m_di)
 	{
 		ALERT(at_aiconsole, "Couldn't allocated node ordering array.\n");
@@ -3304,7 +3304,7 @@ void CGraph :: ComputeStaticRoutingTables( void )
 						}
 						else
 						{
-							char *Tmp = (char *)calloc(sizeof(char), (m_nRouteInfo + nRoute));
+							char *Tmp = (char *)std::calloc(sizeof(char), (m_nRouteInfo + nRoute));
 							std::memcpy(Tmp, m_pRouteInfo, m_nRouteInfo);
 							std::free(m_pRouteInfo);
 							m_pRouteInfo = Tmp;
@@ -3317,7 +3317,7 @@ void CGraph :: ComputeStaticRoutingTables( void )
 					else
 					{
 						m_nRouteInfo = nRoute;
-						m_pRouteInfo = (char *)calloc(sizeof(char), nRoute);
+						m_pRouteInfo = (char *)std::calloc(sizeof(char), nRoute);
 						std::memcpy(m_pRouteInfo, pRoute, nRoute);
 						m_pNodes[ iFrom ].m_pNextBestNode[iHull][iCap] = 0;
 						nTotalCompressedSize += CompressedSize;
