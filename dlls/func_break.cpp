@@ -884,7 +884,7 @@ void CPushable :: KeyValue( KeyValueData *pkvd )
 	}
 	else if ( FStrEq(pkvd->szKeyName, "buoyancy") )
 	{
-		pev->skin = atof(pkvd->szValue);
+		pev->skin = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else

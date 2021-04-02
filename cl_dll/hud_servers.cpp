@@ -588,8 +588,8 @@ int CompareField( CHudServers::server_t *p1, CHudServers::server_t *p2, const ch
 	sz1 = NET_API->ValueForKey( p1->info, fieldname );
 	sz2 = NET_API->ValueForKey( p2->info, fieldname );
 
-	fv1 = atof( sz1 );
-	fv2 = atof( sz2 );
+	fv1 = std::atof( sz1 );
+	fv2 = std::atof( sz2 );
 
 	if ( fv1 && fv2 )
 	{

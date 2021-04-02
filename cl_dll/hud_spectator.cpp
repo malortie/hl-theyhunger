@@ -215,7 +215,7 @@ void UTIL_StringToVector( float * pVector, const char *pString )
 	
 	for ( j = 0; j < 3; j++ )		
 	{
-		pVector[j] = atof( pfront );
+		pVector[j] = std::atof( pfront );
 		
 		while ( *pstr && *pstr != ' ' )
 			pstr++;
@@ -314,7 +314,7 @@ int UTIL_FindEntityInMap(char * name, float * origin, float * angle)
 
 			if( !strcmp( keyname, "angle" ) )
 			{
-				float y = atof( token );
+				float y = std::atof( token );
 				
 				if (y >= 0)
 				{
@@ -1309,16 +1309,16 @@ bool CHudSpectator::ParseOverviewFile( )
 				if ( !stricmp( token, "zoom" ) )
 				{
 					pfile = gEngfuncs.COM_ParseFile(pfile,token);
-					m_OverviewData.zoom = atof( token );
+					m_OverviewData.zoom = std::atof( token );
 				} 
 				else if ( !stricmp( token, "origin" ) )
 				{
 					pfile = gEngfuncs.COM_ParseFile(pfile, token); 
-					m_OverviewData.origin[0] = atof( token );
+					m_OverviewData.origin[0] = std::atof( token );
 					pfile = gEngfuncs.COM_ParseFile(pfile,token); 
-					m_OverviewData.origin[1] = atof( token );
+					m_OverviewData.origin[1] = std::atof( token );
 					pfile = gEngfuncs.COM_ParseFile(pfile, token); 
-					m_OverviewData.origin[2] = atof( token );
+					m_OverviewData.origin[2] = std::atof( token );
 				}
 				else if ( !stricmp( token, "rotated" ) )
 				{
@@ -1328,13 +1328,13 @@ bool CHudSpectator::ParseOverviewFile( )
 				else if ( !stricmp( token, "inset" ) )
 				{
 					pfile = gEngfuncs.COM_ParseFile(pfile,token); 
-					m_OverviewData.insetWindowX = atof( token );
+					m_OverviewData.insetWindowX = std::atof( token );
 					pfile = gEngfuncs.COM_ParseFile(pfile,token); 
-					m_OverviewData.insetWindowY = atof( token );
+					m_OverviewData.insetWindowY = std::atof( token );
 					pfile = gEngfuncs.COM_ParseFile(pfile,token); 
-					m_OverviewData.insetWindowWidth = atof( token );
+					m_OverviewData.insetWindowWidth = std::atof( token );
 					pfile = gEngfuncs.COM_ParseFile(pfile,token); 
-					m_OverviewData.insetWindowHeight = atof( token );
+					m_OverviewData.insetWindowHeight = std::atof( token );
 
 				}
 				else
@@ -1380,7 +1380,7 @@ bool CHudSpectator::ParseOverviewFile( )
 				else if ( !stricmp( token, "height" ) )
 				{
 					pfile = gEngfuncs.COM_ParseFile(pfile,token); 
-					height = atof(token);
+					height = std::atof(token);
 					m_OverviewData.layersHeights[ m_OverviewData.layers ] = height;
 				}
 				else

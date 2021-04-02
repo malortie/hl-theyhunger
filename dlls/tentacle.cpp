@@ -332,7 +332,7 @@ void CTentacle::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "sweeparc"))
 	{
-		m_flMaxYaw = atof(pkvd->szValue) / 2.0;
+		m_flMaxYaw = std::atof(pkvd->szValue) / 2.0;
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "sound"))

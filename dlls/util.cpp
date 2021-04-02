@@ -1389,7 +1389,7 @@ void UTIL_StringToVector( float *pVector, const char *pString )
 
 	for ( j = 0; j < 3; j++ )			// lifted from pr_edict.c
 	{
-		pVector[j] = atof( pfront );
+		pVector[j] = std::atof( pfront );
 
 		while ( *pstr && *pstr != ' ' )
 			pstr++;
@@ -2004,7 +2004,7 @@ void EntvarsKeyvalue( entvars_t *pev, KeyValueData *pkvd )
 
 			case FIELD_TIME:
 			case FIELD_FLOAT:
-				(*(float *)((char *)pev + pField->fieldOffset)) = atof( pkvd->szValue );
+				(*(float *)((char *)pev + pField->fieldOffset)) = std::atof( pkvd->szValue );
 				break;
 
 			case FIELD_INTEGER:

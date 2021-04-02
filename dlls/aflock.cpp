@@ -140,7 +140,7 @@ void CFlockingFlyerFlock :: KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "flFlockRadius"))
 	{
-		m_flFlockRadius = atof(pkvd->szValue);
+		m_flFlockRadius = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 }

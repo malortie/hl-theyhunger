@@ -4794,22 +4794,22 @@ void CRevertSaved :: KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "duration"))
 	{
-		SetDuration( atof(pkvd->szValue) );
+		SetDuration( std::atof(pkvd->szValue) );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "holdtime"))
 	{
-		SetHoldTime( atof(pkvd->szValue) );
+		SetHoldTime( std::atof(pkvd->szValue) );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "messagetime"))
 	{
-		SetMessageTime( atof(pkvd->szValue) );
+		SetMessageTime( std::atof(pkvd->szValue) );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "loadtime"))
 	{
-		SetLoadTime( atof(pkvd->szValue) );
+		SetLoadTime( std::atof(pkvd->szValue) );
 		pkvd->fHandled = TRUE;
 	}
 	else 

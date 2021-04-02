@@ -197,47 +197,47 @@ void CBaseDoor::KeyValue( KeyValueData *pkvd )
 
 	if (FStrEq(pkvd->szKeyName, "skin"))//skin is used for content type
 	{
-		pev->skin = atof(pkvd->szValue);
+		pev->skin = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "movesnd"))
 	{
-		m_bMoveSnd = atof(pkvd->szValue);
+		m_bMoveSnd = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "stopsnd"))
 	{
-		m_bStopSnd = atof(pkvd->szValue);
+		m_bStopSnd = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "healthvalue"))
 	{
-		m_bHealthValue = atof(pkvd->szValue);
+		m_bHealthValue = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "locked_sound"))
 	{
-		m_bLockedSound = atof(pkvd->szValue);
+		m_bLockedSound = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "locked_sentence"))
 	{
-		m_bLockedSentence = atof(pkvd->szValue);
+		m_bLockedSentence = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "unlocked_sound"))
 	{
-		m_bUnlockedSound = atof(pkvd->szValue);
+		m_bUnlockedSound = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "unlocked_sentence"))
 	{
-		m_bUnlockedSentence = atof(pkvd->szValue);
+		m_bUnlockedSentence = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "WaveHeight"))
 	{
-		pev->scale = atof(pkvd->szValue) * (1.0/8.0);
+		pev->scale = std::atof(pkvd->szValue) * (1.0/8.0);
 		pkvd->fHandled = TRUE;
 	}
 	else
@@ -995,7 +995,7 @@ void CMomentaryDoor::KeyValue( KeyValueData *pkvd )
 
 	if (FStrEq(pkvd->szKeyName, "movesnd"))
 	{
-		m_bMoveSnd = atof(pkvd->szValue);
+		m_bMoveSnd = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "stopsnd"))

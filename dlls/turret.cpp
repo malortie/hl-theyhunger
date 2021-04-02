@@ -215,7 +215,7 @@ void CBaseTurret::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "maxsleep"))
 	{
-		m_flMaxWait = atof(pkvd->szValue);
+		m_flMaxWait = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "orientation"))

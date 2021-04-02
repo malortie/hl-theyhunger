@@ -69,12 +69,12 @@ void CInfoBM::KeyValue( KeyValueData* pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "radius"))
 	{
-		pev->scale = atof(pkvd->szValue);
+		pev->scale = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "reachdelay"))
 	{
-		pev->speed = atof(pkvd->szValue);
+		pev->speed = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "reachtarget"))

@@ -91,7 +91,7 @@ void CFrictionModifier :: KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "modifier"))
 	{
-		m_frictionFraction = atof(pkvd->szValue) / 100.0;
+		m_frictionFraction = std::atof(pkvd->szValue) / 100.0;
 		pkvd->fHandled = TRUE;
 	}
 	else
@@ -321,7 +321,7 @@ void CMultiManager :: KeyValue( KeyValueData *pkvd )
 
 	if (FStrEq(pkvd->szKeyName, "wait"))
 	{
-		m_flWait = atof(pkvd->szValue);
+		m_flWait = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else // add this field to the target list
@@ -333,7 +333,7 @@ void CMultiManager :: KeyValue( KeyValueData *pkvd )
 
 			UTIL_StripToken( pkvd->szKeyName, tmp );
 			m_iTargetName [ m_cTargets ] = ALLOC_STRING( tmp );
-			m_flTargetDelay [ m_cTargets ] = atof (pkvd->szValue);
+			m_flTargetDelay [ m_cTargets ] = std::atof (pkvd->szValue);
 			m_cTargets++;
 			pkvd->fHandled = TRUE;
 		}
@@ -564,12 +564,12 @@ void CBaseTrigger :: KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "damage"))
 	{
-		pev->dmg = atof(pkvd->szValue);
+		pev->dmg = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "count"))
 	{
-		m_cTriggersLeft = (int) atof(pkvd->szValue);
+		m_cTriggersLeft = (int) std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "damagetype"))
@@ -752,7 +752,7 @@ void CTargetCDAudio :: KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "radius"))
 	{
-		pev->scale = atof(pkvd->szValue);
+		pev->scale = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else
@@ -1389,7 +1389,7 @@ void CChangeLevel :: KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "changedelay"))
 	{
-		m_changeTargetDelay = atof( pkvd->szValue );
+		m_changeTargetDelay = std::atof( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else
@@ -2212,7 +2212,7 @@ void CTriggerCamera :: KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "wait"))
 	{
-		m_flWait = atof(pkvd->szValue);
+		m_flWait = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "moveto"))
@@ -2222,12 +2222,12 @@ void CTriggerCamera :: KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "acceleration"))
 	{
-		m_acceleration = atof( pkvd->szValue );
+		m_acceleration = std::atof( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "deceleration"))
 	{
-		m_deceleration = atof( pkvd->szValue );
+		m_deceleration = std::atof( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else

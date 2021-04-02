@@ -364,22 +364,22 @@ void CBaseButton::KeyValue( KeyValueData *pkvd )
 	}	
 	else if (FStrEq(pkvd->szKeyName, "locked_sound"))
 	{
-		m_bLockedSound = atof(pkvd->szValue);
+		m_bLockedSound = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "locked_sentence"))
 	{
-		m_bLockedSentence = atof(pkvd->szValue);
+		m_bLockedSentence = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "unlocked_sound"))
 	{
-		m_bUnlockedSound = atof(pkvd->szValue);
+		m_bUnlockedSound = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "unlocked_sentence"))
 	{
-		m_bUnlockedSentence = atof(pkvd->szValue);
+		m_bUnlockedSentence = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "sounds"))
@@ -964,7 +964,7 @@ void CMomentaryRotButton::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "returnspeed"))
 	{
-		m_returnSpeed = atof(pkvd->szValue);
+		m_returnSpeed = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "sounds"))
@@ -1194,7 +1194,7 @@ void CEnvSpark::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "MaxDelay"))
 	{
-		m_flDelay = atof(pkvd->szValue);
+		m_flDelay = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;	
 	}
 	else if (	FStrEq(pkvd->szKeyName, "style") ||

@@ -79,12 +79,12 @@ void CCineMonster :: KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "m_flRepeat"))
 	{
-		m_flRepeat = atof( pkvd->szValue );
+		m_flRepeat = std::atof( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "m_flRadius"))
 	{
-		m_flRadius = atof( pkvd->szValue );
+		m_flRadius = std::atof( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "m_iFinishSchedule"))
@@ -988,17 +988,17 @@ void CScriptedSentence :: KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "duration"))
 	{
-		m_flDuration = atof( pkvd->szValue );
+		m_flDuration = std::atof( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "radius"))
 	{
-		m_flRadius = atof( pkvd->szValue );
+		m_flRadius = std::atof( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "refire"))
 	{
-		m_flRepeat = atof( pkvd->szValue );
+		m_flRepeat = std::atof( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else if(FStrEq(pkvd->szKeyName, "attenuation"))
@@ -1008,7 +1008,7 @@ void CScriptedSentence :: KeyValue( KeyValueData *pkvd )
 	}
 	else if(FStrEq(pkvd->szKeyName, "volume"))
 	{
-		m_flVolume = atof( pkvd->szValue ) * 0.1;
+		m_flVolume = std::atof( pkvd->szValue ) * 0.1;
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "listener"))

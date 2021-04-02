@@ -834,12 +834,12 @@ void CEnvSound :: KeyValue( KeyValueData *pkvd )
 	
 	if (FStrEq(pkvd->szKeyName, "radius"))
 	{
-		m_flRadius = atof(pkvd->szValue);
+		m_flRadius = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	if (FStrEq(pkvd->szKeyName, "roomtype"))
 	{
-		m_flRoomtype = atof(pkvd->szValue);
+		m_flRoomtype = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 }

@@ -220,7 +220,7 @@ void CFuncIllusionary :: KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "skin"))//skin is used for content type
 	{
-		pev->skin = atof(pkvd->szValue);
+		pev->skin = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else
@@ -316,12 +316,12 @@ void CFuncRotating :: KeyValue( KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "fanfriction"))
 	{
-		m_flFanFriction = atof(pkvd->szValue)/100;
+		m_flFanFriction = std::atof(pkvd->szValue)/100;
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "Volume"))
 	{
-		m_flVolume = atof(pkvd->szValue)/10.0;
+		m_flVolume = std::atof(pkvd->szValue)/10.0;
 
 		if (m_flVolume > 1.0)
 			m_flVolume = 1.0;
@@ -773,12 +773,12 @@ void CPendulum :: KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "distance"))
 	{
-		m_distance = atof(pkvd->szValue);
+		m_distance = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "damp"))
 	{
-		m_damp = atof(pkvd->szValue) * 0.001;
+		m_damp = std::atof(pkvd->szValue) * 0.001;
 		pkvd->fHandled = TRUE;
 	}
 	else 

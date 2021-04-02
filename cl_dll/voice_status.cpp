@@ -298,7 +298,7 @@ int CVoiceStatus::VidInit()
 		gEngfuncs.COM_ParseFile(pFile, token);
 		if(token[0] >= '0' && token[0] <= '9')
 		{
-			m_VoiceHeadModelHeight = (float)atof(token);
+			m_VoiceHeadModelHeight = (float)std::atof(token);
 		}
 
 		gEngfuncs.COM_FreeFile(pFile);

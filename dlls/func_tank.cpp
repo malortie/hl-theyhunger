@@ -215,57 +215,57 @@ void CFuncTank :: KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "yawrate"))
 	{
-		m_yawRate = atof(pkvd->szValue);
+		m_yawRate = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "yawrange"))
 	{
-		m_yawRange = atof(pkvd->szValue);
+		m_yawRange = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "yawtolerance"))
 	{
-		m_yawTolerance = atof(pkvd->szValue);
+		m_yawTolerance = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "pitchrange"))
 	{
-		m_pitchRange = atof(pkvd->szValue);
+		m_pitchRange = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "pitchrate"))
 	{
-		m_pitchRate = atof(pkvd->szValue);
+		m_pitchRate = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "pitchtolerance"))
 	{
-		m_pitchTolerance = atof(pkvd->szValue);
+		m_pitchTolerance = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "firerate"))
 	{
-		m_fireRate = atof(pkvd->szValue);
+		m_fireRate = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "barrel"))
 	{
-		m_barrelPos.x = atof(pkvd->szValue);
+		m_barrelPos.x = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "barrely"))
 	{
-		m_barrelPos.y = atof(pkvd->szValue);
+		m_barrelPos.y = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "barrelz"))
 	{
-		m_barrelPos.z = atof(pkvd->szValue);
+		m_barrelPos.z = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "spritescale"))
 	{
-		m_spriteScale = atof(pkvd->szValue);
+		m_spriteScale = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "spritesmoke"))
@@ -285,7 +285,7 @@ void CFuncTank :: KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "persistence"))
 	{
-		m_persist = atof(pkvd->szValue);
+		m_persist = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "bullet"))
@@ -305,12 +305,12 @@ void CFuncTank :: KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "minRange"))
 	{
-		m_minRange = atof(pkvd->szValue);
+		m_minRange = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "maxRange"))
 	{
-		m_maxRange = atof(pkvd->szValue);
+		m_maxRange = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "master"))

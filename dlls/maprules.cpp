@@ -259,12 +259,12 @@ void CGameText::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "x"))
 	{
-		m_textParms.x = atof( pkvd->szValue );
+		m_textParms.x = std::atof( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "y"))
 	{
-		m_textParms.y = atof( pkvd->szValue );
+		m_textParms.y = std::atof( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "effect"))
@@ -294,22 +294,22 @@ void CGameText::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "fadein"))
 	{
-		m_textParms.fadeinTime = atof( pkvd->szValue );
+		m_textParms.fadeinTime = std::atof( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "fadeout"))
 	{
-		m_textParms.fadeoutTime = atof( pkvd->szValue );
+		m_textParms.fadeoutTime = std::atof( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "holdtime"))
 	{
-		m_textParms.holdTime = atof( pkvd->szValue );
+		m_textParms.holdTime = std::atof( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "fxtime"))
 	{
-		m_textParms.fxTime = atof( pkvd->szValue );
+		m_textParms.fxTime = std::atof( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else

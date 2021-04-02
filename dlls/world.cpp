@@ -687,13 +687,13 @@ void CWorld :: KeyValue( KeyValueData *pkvd )
 	else if ( FStrEq(pkvd->szKeyName, "WaveHeight") )
 	{
 		// Sent over net now.
-		pev->scale = atof(pkvd->szValue) * (1.0/8.0);
+		pev->scale = std::atof(pkvd->szValue) * (1.0/8.0);
 		pkvd->fHandled = TRUE;
 		CVAR_SET_FLOAT( "sv_wateramp", pev->scale );
 	}
 	else if ( FStrEq(pkvd->szKeyName, "MaxRange") )
 	{
-		pev->speed = atof(pkvd->szValue);
+		pev->speed = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if ( FStrEq(pkvd->szKeyName, "chaptertitle") )

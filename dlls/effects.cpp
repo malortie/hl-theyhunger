@@ -532,7 +532,7 @@ void CLightning::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "life"))
 	{
-		m_life = atof(pkvd->szValue);
+		m_life = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "BoltWidth"))
@@ -552,7 +552,7 @@ void CLightning::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "StrikeTime"))
 	{
-		m_restrike = atof(pkvd->szValue);
+		m_restrike = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "texture"))
@@ -567,12 +567,12 @@ void CLightning::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "Radius"))
 	{
-		m_radius = atof( pkvd->szValue );
+		m_radius = std::atof( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "damage"))
 	{
-		pev->dmg = atof(pkvd->szValue);
+		pev->dmg = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else
@@ -1003,7 +1003,7 @@ void CLaser::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "width"))
 	{
-		SetWidth( (int) atof(pkvd->szValue) );
+		SetWidth( (int) std::atof(pkvd->szValue) );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "NoiseAmplitude"))
@@ -1033,7 +1033,7 @@ void CLaser::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "damage"))
 	{
-		pev->dmg = atof(pkvd->szValue);
+		pev->dmg = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else
@@ -1405,17 +1405,17 @@ void CGibShooter::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "m_flVelocity"))
 	{
-		m_flGibVelocity = atof(pkvd->szValue);
+		m_flGibVelocity = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "m_flVariance"))
 	{
-		m_flVariance = atof(pkvd->szValue);
+		m_flVariance = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "m_flGibLife"))
 	{
-		m_flGibLife = atof(pkvd->szValue);
+		m_flGibLife = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else
@@ -1773,7 +1773,7 @@ void CBlood::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "amount"))
 	{
-		SetBloodAmount( atof(pkvd->szValue) );
+		SetBloodAmount( std::atof(pkvd->szValue) );
 		pkvd->fHandled = TRUE;
 	}
 	else
@@ -1881,22 +1881,22 @@ void CShake::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "amplitude"))
 	{
-		SetAmplitude( atof(pkvd->szValue) );
+		SetAmplitude( std::atof(pkvd->szValue) );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "frequency"))
 	{
-		SetFrequency( atof(pkvd->szValue) );
+		SetFrequency( std::atof(pkvd->szValue) );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "duration"))
 	{
-		SetDuration( atof(pkvd->szValue) );
+		SetDuration( std::atof(pkvd->szValue) );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "radius"))
 	{
-		SetRadius( atof(pkvd->szValue) );
+		SetRadius( std::atof(pkvd->szValue) );
 		pkvd->fHandled = TRUE;
 	}
 	else
@@ -1946,12 +1946,12 @@ void CFade::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "duration"))
 	{
-		SetDuration( atof(pkvd->szValue) );
+		SetDuration( std::atof(pkvd->szValue) );
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "holdtime"))
 	{
-		SetHoldTime( atof(pkvd->szValue) );
+		SetHoldTime( std::atof(pkvd->szValue) );
 		pkvd->fHandled = TRUE;
 	}
 	else
@@ -2046,7 +2046,7 @@ void CMessage::KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "messagevolume"))
 	{
-		pev->scale = atof(pkvd->szValue) * 0.1;
+		pev->scale = std::atof(pkvd->szValue) * 0.1;
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "messageattenuation"))

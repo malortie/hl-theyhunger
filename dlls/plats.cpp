@@ -62,37 +62,37 @@ void CBasePlatTrain :: KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "lip"))
 	{
-		m_flLip = atof(pkvd->szValue);
+		m_flLip = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "wait"))
 	{
-		m_flWait = atof(pkvd->szValue);
+		m_flWait = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "height"))
 	{
-		m_flHeight = atof(pkvd->szValue);
+		m_flHeight = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "rotation"))
 	{
-		m_vecFinalAngle.x = atof(pkvd->szValue);
+		m_vecFinalAngle.x = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "movesnd"))
 	{
-		m_bMoveSnd = atof(pkvd->szValue);
+		m_bMoveSnd = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "stopsnd"))
 	{
-		m_bStopSnd = atof(pkvd->szValue);
+		m_bStopSnd = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "volume"))
 	{
-		m_volume = atof(pkvd->szValue);
+		m_volume = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else
@@ -958,17 +958,17 @@ void CFuncTrackTrain :: KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "wheels"))
 	{
-		m_length = atof(pkvd->szValue);
+		m_length = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "height"))
 	{
-		m_height = atof(pkvd->szValue);
+		m_height = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "startspeed"))
 	{
-		m_startSpeed = atof(pkvd->szValue);
+		m_startSpeed = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "sounds"))
@@ -984,7 +984,7 @@ void CFuncTrackTrain :: KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "bank"))
 	{
-		m_flBank = atof(pkvd->szValue);
+		m_flBank = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else
