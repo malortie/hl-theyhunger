@@ -61,7 +61,7 @@ void COM_Log( char *pszFile, char *fmt, ...)
 	vsprintf (string, fmt,argptr);
 	va_end (argptr);
 
-	fp = fopen( pfilename, "a+t");
+	fp = std::fopen( pfilename, "a+t");
 	if (fp)
 	{
 		fprintf(fp, "%s", string);

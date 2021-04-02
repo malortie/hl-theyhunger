@@ -1662,7 +1662,7 @@ void CTestHull :: BuildNodeGraph( void )
 	strcat( szNrpFilename, STRING( gpGlobals->mapname ) );
 	strcat( szNrpFilename, ".nrp" );
 
-	file = fopen ( szNrpFilename, "w+" );
+	file = std::fopen ( szNrpFilename, "w+" );
 
 	if ( !file )
 	{// file error
@@ -2512,7 +2512,7 @@ int CGraph :: FSaveGraph ( char *szMapName )
 	strcat( szFilename, szMapName );
 	strcat( szFilename, ".nod" );
 
-	file = fopen ( szFilename, "wb" );
+	file = std::fopen ( szFilename, "wb" );
 
 	ALERT ( at_aiconsole, "Created: %s\n", szFilename );
 
