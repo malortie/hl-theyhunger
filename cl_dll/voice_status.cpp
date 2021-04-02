@@ -176,7 +176,7 @@ CVoiceStatus::~CVoiceStatus()
 			m_BanMgr.SaveState(m_pchGameDir);
 		}
 
-		free(m_pchGameDir);
+		std::free(m_pchGameDir);
 	}
 }
 

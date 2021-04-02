@@ -279,7 +279,7 @@ void KB_Shutdown( void )
 	while ( p )
 	{
 		n = p->next;
-		free( p );
+		std::free( p );
 		p = n;
 	}
 	g_kbkeys = NULL;

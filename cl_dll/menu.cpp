@@ -264,7 +264,7 @@ int CHudMenu :: MsgFunc_ShowMenu( const char *pszName, int iSize, void *pbuf )
 			if ( KB_ConvertString( g_szMenuString, &temp ) )
 			{
 				strcpy( g_szMenuString, temp );
-				free( temp );
+				std::free( temp );
 			}
 		}
 

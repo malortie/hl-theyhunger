@@ -426,7 +426,7 @@ void CGlobalState::ClearStates( void )
 	while ( pFree )
 	{
 		globalentity_t *pNext = pFree->pNext;
-		free( pFree );
+		std::free( pFree );
 		pFree = pNext;
 	}
 	Reset();

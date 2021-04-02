@@ -69,7 +69,7 @@ void CGraph :: InitGraph( void)
 	//
 	if ( m_pLinkPool )
 	{
-		free ( m_pLinkPool );
+		std::free ( m_pLinkPool );
 		m_pLinkPool = NULL;
 	}
 		
@@ -77,13 +77,13 @@ void CGraph :: InitGraph( void)
 	//
 	if ( m_pNodes )
 	{
-		free ( m_pNodes );
+		std::free ( m_pNodes );
 		m_pNodes = NULL;
 	}
 
 	if ( m_di )
 	{
-		free ( m_di );
+		std::free ( m_di );
 		m_di = NULL;
 	}
 
@@ -91,13 +91,13 @@ void CGraph :: InitGraph( void)
 	//
 	if ( m_pRouteInfo )
 	{
-		free ( m_pRouteInfo );
+		std::free ( m_pRouteInfo );
 		m_pRouteInfo = NULL;
 	}
 
 	if (m_pHashLinks)
 	{
-		free(m_pHashLinks);
+		std::free(m_pHashLinks);
 		m_pHashLinks = NULL;
 	}
 
@@ -1670,7 +1670,7 @@ void CTestHull :: BuildNodeGraph( void )
 
 		if ( pTempPool )
 		{
-			free ( pTempPool );
+			std::free ( pTempPool );
 		}
 
 		return;
@@ -1757,7 +1757,7 @@ void CTestHull :: BuildNodeGraph( void )
 		
 		if ( pTempPool )
 		{
-			free ( pTempPool );
+			std::free ( pTempPool );
 		}
 
 		if ( file )
@@ -1826,7 +1826,7 @@ void CTestHull :: BuildNodeGraph( void )
 					ALERT ( at_aiconsole, "**** j = %d ****\n", j );
 					if ( pTempPool )
 					{
-						free ( pTempPool );
+						std::free ( pTempPool );
 					}
 
 					if ( file )
@@ -1944,7 +1944,7 @@ void CTestHull :: BuildNodeGraph( void )
 		ALERT ( at_aiconsole, "Couldn't malloc LinkPool!\n" );
 		if ( pTempPool )
 		{
-			free ( pTempPool );
+			std::free ( pTempPool );
 		}
 		if ( file )
 		{// close the file
@@ -2037,7 +2037,7 @@ void CTestHull :: BuildNodeGraph( void )
 
 	if ( pTempPool )
 	{// free the temp pool
-		free ( pTempPool );
+		std::free ( pTempPool );
 	}
 
 	if ( file )
@@ -2893,7 +2893,7 @@ void CGraph::BuildLinkLookups(void)
 
 void CGraph::BuildRegionTables(void)
 {
-	if (m_di) free(m_di);
+	if (m_di) std::free(m_di);
 
 	// Go ahead and setup for range searching the nodes for FindNearestNodes
 	//
@@ -3306,7 +3306,7 @@ void CGraph :: ComputeStaticRoutingTables( void )
 						{
 							char *Tmp = (char *)calloc(sizeof(char), (m_nRouteInfo + nRoute));
 							memcpy(Tmp, m_pRouteInfo, m_nRouteInfo);
-							free(m_pRouteInfo);
+							std::free(m_pRouteInfo);
 							m_pRouteInfo = Tmp;
 							memcpy(m_pRouteInfo + m_nRouteInfo, pRoute, nRoute);
 							m_pNodes[ iFrom ].m_pNextBestNode[iHull][iCap] = m_nRouteInfo;

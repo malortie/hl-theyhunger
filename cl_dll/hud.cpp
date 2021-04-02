@@ -342,7 +342,7 @@ void CHud :: Init( void )
 		{
 			pList = m_pHudList;
 			m_pHudList = m_pHudList->pNext;
-			free( pList );
+			std::free( pList );
 		}
 		m_pHudList = NULL;
 	}
@@ -388,7 +388,7 @@ CHud :: ~CHud()
 		{
 			pList = m_pHudList;
 			m_pHudList = m_pHudList->pNext;
-			free( pList );
+			std::free( pList );
 		}
 		m_pHudList = NULL;
 	}
