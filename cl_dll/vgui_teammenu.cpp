@@ -124,7 +124,7 @@ CTeamMenuPanel::CTeamMenuPanel(int iTrans, int iRemoveMe, int x,int y,int wide,i
 		}
 
 		// Create the Signals
-		sprintf(sz, "jointeam %d", i);
+		std::sprintf(sz, "jointeam %d", i);
 		m_pButtons[i]->addActionSignal( new CMenuHandler_StringCommandWatch( sz, true ) );
 		m_pButtons[i]->addInputSignal( new CHandler_MenuButtonOver(this, i) );
 
@@ -182,7 +182,7 @@ void CTeamMenuPanel::Update( void )
 
 				// bound key replacement
 				char sz[32]; 
-				sprintf( sz, "%d", i );
+				std::sprintf( sz, "%d", i );
 				m_pButtons[i]->setBoundKey( sz[0] );
 
 				m_pButtons[i]->setVisible( true );
@@ -219,9 +219,9 @@ void CTeamMenuPanel::Update( void )
 					// Set the text of the info Panel
 					char szText[ ((MAX_PLAYER_NAME_LENGTH + 3) * 31) + 256 ]; 
 					if (iTotal == 1)
-						sprintf(szText, "%s: %d Player (%d points)", gViewPort->GetTeamName(i), iTotal, g_TeamInfo[i].frags );
+						std::sprintf(szText, "%s: %d Player (%d points)", gViewPort->GetTeamName(i), iTotal, g_TeamInfo[i].frags );
 					else
-						sprintf(szText, "%s: %d Players (%d points)", gViewPort->GetTeamName(i), iTotal, g_TeamInfo[i].frags );
+						std::sprintf(szText, "%s: %d Players (%d points)", gViewPort->GetTeamName(i), iTotal, g_TeamInfo[i].frags );
 					strncat( szText, szPlayerList, sizeof(szText) - strlen(szText) );
 					szText[ sizeof(szText) - 1 ] = '\0';
 

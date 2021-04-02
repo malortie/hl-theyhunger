@@ -106,7 +106,7 @@ void SpectatorSpray(void)
 	pmtrace_t * trace = gEngfuncs.PM_TraceLine( v_origin, forward, PM_TRACELINE_PHYSENTSONLY, 2, -1 );
 	if ( trace->fraction != 1.0 )
 	{
-		sprintf(string, "drc_spray %.2f %.2f %.2f %i", 
+		std::sprintf(string, "drc_spray %.2f %.2f %.2f %i", 
 			trace->endpos[0], trace->endpos[1], trace->endpos[2], trace->ent );
 		gEngfuncs.pfnServerCmd(string);
 	}
@@ -665,7 +665,7 @@ int CHudSpectator::Draw(float flTime)
 		color = GetClientColor( i+1 );
 
 		// draw the players name and health underneath
-		sprintf(string, "%s", g_PlayerInfoList[i+1].name );
+		std::sprintf(string, "%s", g_PlayerInfoList[i+1].name );
 		
 		lx = strlen(string)*3; // 3 is avg. character length :)
 
@@ -893,7 +893,7 @@ void CHudSpectator::FindNextPlayer(bool bReverse)
 	{
 		char cmdstring[32];
 		// forward command to server
-		sprintf(cmdstring,"follownext %i",bReverse?1:0);
+		std::sprintf(cmdstring,"follownext %i",bReverse?1:0);
 		gEngfuncs.pfnServerCmd(cmdstring);
 		return;
 	}
@@ -965,7 +965,7 @@ void CHudSpectator::FindPlayer(const char *name)
 	{
 		char cmdstring[32];
 		// forward command to server
-		sprintf(cmdstring,"follow %s",name);
+		std::sprintf(cmdstring,"follow %s",name);
 		gEngfuncs.pfnServerCmd(cmdstring);
 		return;
 	}
@@ -1155,7 +1155,7 @@ void CHudSpectator::SetModes(int iNewMainMode, int iNewInsetMode)
 		{
 			char cmdstring[32];
 			// forward command to server
-			sprintf(cmdstring,"specmode %i",iNewMainMode );
+			std::sprintf(cmdstring,"specmode %i",iNewMainMode );
 			gEngfuncs.pfnServerCmd(cmdstring);
 			return;
 		}
@@ -1224,8 +1224,8 @@ void CHudSpectator::SetModes(int iNewMainMode, int iNewInsetMode)
 		gViewPort->MsgFunc_ResetFade( NULL, 0, NULL );
 
 		char string[128];
-		sprintf(string, "#Spec_Mode%d", g_iUser1 );
-		sprintf(string, "%c%s", HUD_PRINTCENTER, CHudTextMessage::BufferedLocaliseTextString( string ));
+		std::sprintf(string, "#Spec_Mode%d", g_iUser1 );
+		std::sprintf(string, "%c%s", HUD_PRINTCENTER, CHudTextMessage::BufferedLocaliseTextString( string ));
 		gHUD.m_TextMessage.MsgFunc_TextMsg(NULL, strlen(string)+1, string );
 	}
 
@@ -1274,7 +1274,7 @@ bool CHudSpectator::ParseOverviewFile( )
 	strcpy(levelname, m_OverviewData.map + 5);
 	levelname[strlen(levelname)-4] = 0;
 	
-	sprintf(filename, "overviews/%s.txt", levelname );
+	std::sprintf(filename, "overviews/%s.txt", levelname );
 
 	pfile = (char *)gEngfuncs.COM_LoadFile( filename, 5, NULL);
 
@@ -1867,7 +1867,7 @@ void CHudSpectator::CheckSettings()
 		{
 			// tell proxy our new chat mode
 			char chatcmd[32];
-			sprintf(chatcmd, "ignoremsg %i", m_chatEnabled?0:1 );
+			std::sprintf(chatcmd, "ignoremsg %i", m_chatEnabled?0:1 );
 			gEngfuncs.pfnServerCmd(chatcmd);
 		}
 	}

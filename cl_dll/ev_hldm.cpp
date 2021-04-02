@@ -231,16 +231,16 @@ char *EV_HLDM_DamageDecal( physent_t *pe )
 	if ( pe->classnumber == 1 )
 	{
 		idx = gEngfuncs.pfnRandomLong( 0, 2 );
-		sprintf( decalname, "{break%i", idx + 1 );
+		std::sprintf( decalname, "{break%i", idx + 1 );
 	}
 	else if ( pe->rendermode != kRenderNormal )
 	{
-		sprintf( decalname, "{bproof1" );
+		std::sprintf( decalname, "{bproof1" );
 	}
 	else
 	{
 		idx = gEngfuncs.pfnRandomLong( 0, 4 );
-		sprintf( decalname, "{shot%i", idx + 1 );
+		std::sprintf( decalname, "{shot%i", idx + 1 );
 	}
 	return decalname;
 }

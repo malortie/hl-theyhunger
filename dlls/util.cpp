@@ -339,9 +339,9 @@ DBG_AssertFunction(
 		return;
 	char szOut[512];
 	if (szMessage != NULL)
-		sprintf(szOut, "ASSERT FAILED:\n %s \n(%s@%d)\n%s", szExpr, szFile, szLine, szMessage);
+		std::sprintf(szOut, "ASSERT FAILED:\n %s \n(%s@%d)\n%s", szExpr, szFile, szLine, szMessage);
 	else
-		sprintf(szOut, "ASSERT FAILED:\n %s \n(%s@%d)", szExpr, szFile, szLine);
+		std::sprintf(szOut, "ASSERT FAILED:\n %s \n(%s@%d)", szExpr, szFile, szLine);
 	ALERT(at_console, szOut);
 	}
 #endif	// DEBUG
@@ -897,28 +897,28 @@ void UTIL_SayTextAll( const char *pText, CBaseEntity *pEntity )
 char *UTIL_dtos1( int d )
 {
 	static char buf[8];
-	sprintf( buf, "%d", d );
+	std::sprintf( buf, "%d", d );
 	return buf;
 }
 
 char *UTIL_dtos2( int d )
 {
 	static char buf[8];
-	sprintf( buf, "%d", d );
+	std::sprintf( buf, "%d", d );
 	return buf;
 }
 
 char *UTIL_dtos3( int d )
 {
 	static char buf[8];
-	sprintf( buf, "%d", d );
+	std::sprintf( buf, "%d", d );
 	return buf;
 }
 
 char *UTIL_dtos4( int d )
 {
 	static char buf[8];
-	sprintf( buf, "%d", d );
+	std::sprintf( buf, "%d", d );
 	return buf;
 }
 

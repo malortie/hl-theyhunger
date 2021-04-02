@@ -231,11 +231,11 @@ void CHalfLifeTeamplay::InitHUD( CBasePlayer *pPlayer )
 	char text[1024];
 	if ( !strcmp( mdls, pPlayer->m_szTeamName ) )
 	{
-		sprintf( text, "* you are on team \'%s\'\n", pPlayer->m_szTeamName );
+		std::sprintf( text, "* you are on team \'%s\'\n", pPlayer->m_szTeamName );
 	}
 	else
 	{
-		sprintf( text, "* assigned to team %s\n", pPlayer->m_szTeamName );
+		std::sprintf( text, "* assigned to team %s\n", pPlayer->m_szTeamName );
 	}
 
 	ChangePlayerTeam( pPlayer, pPlayer->m_szTeamName, FALSE, FALSE );
@@ -326,7 +326,7 @@ void CHalfLifeTeamplay::ClientUserInfoChanged( CBasePlayer *pPlayer, char *infob
 
 		g_engfuncs.pfnSetClientKeyValue( clientIndex, g_engfuncs.pfnGetInfoKeyBuffer( pPlayer->edict() ), "model", pPlayer->m_szTeamName );
 		g_engfuncs.pfnSetClientKeyValue( clientIndex, g_engfuncs.pfnGetInfoKeyBuffer( pPlayer->edict() ), "team", pPlayer->m_szTeamName );
-		sprintf( text, "* Not allowed to change teams in this game!\n" );
+		std::sprintf( text, "* Not allowed to change teams in this game!\n" );
 		UTIL_SayText( text, pPlayer );
 		return;
 	}
@@ -336,14 +336,14 @@ void CHalfLifeTeamplay::ClientUserInfoChanged( CBasePlayer *pPlayer, char *infob
 		int clientIndex = pPlayer->entindex();
 
 		g_engfuncs.pfnSetClientKeyValue( clientIndex, g_engfuncs.pfnGetInfoKeyBuffer( pPlayer->edict() ), "model", pPlayer->m_szTeamName );
-		sprintf( text, "* Can't change team to \'%s\'\n", mdls );
+		std::sprintf( text, "* Can't change team to \'%s\'\n", mdls );
 		UTIL_SayText( text, pPlayer );
-		sprintf( text, "* Server limits teams to \'%s\'\n", m_szTeamList );
+		std::sprintf( text, "* Server limits teams to \'%s\'\n", m_szTeamList );
 		UTIL_SayText( text, pPlayer );
 		return;
 	}
 	// notify everyone of the team change
-	sprintf( text, "* %s has changed to team \'%s\'\n", STRING(pPlayer->pev->netname), mdls );
+	std::sprintf( text, "* %s has changed to team \'%s\'\n", STRING(pPlayer->pev->netname), mdls );
 	UTIL_SayTextAll( text, pPlayer );
 
 	UTIL_LogPrintf( "\"%s<%i><%s><%s>\" joined team \"%s\"\n", 

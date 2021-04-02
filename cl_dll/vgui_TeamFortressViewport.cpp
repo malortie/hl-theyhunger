@@ -182,10 +182,10 @@ char* GetVGUITGAName(const char *pszName)
 		i = 320;
 	else
 		i = 640;
-	sprintf(sz, pszName, i);
+	std::sprintf(sz, pszName, i);
 
 	gamedir = gEngfuncs.pfnGetGameDirectory();
-	sprintf(gd, "%s/gfx/vgui/%s.tga",gamedir,sz);
+	std::sprintf(gd, "%s/gfx/vgui/%s.tga",gamedir,sz);
 
 	return gd;
 }
@@ -998,7 +998,7 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 		for (int i = 0; i < 4; i++)
 		{
 			char sz[256]; 
-			sprintf(sz, "jointeam %d", i+1);
+			std::sprintf(sz, "jointeam %d", i+1);
 			m_pTeamButtons[i] = new TeamButton(i+1, "teamname", 0, BUTTON_SIZE_Y, CMENU_SIZE_X, BUTTON_SIZE_Y);
 			m_pTeamButtons[i]->addActionSignal(new CMenuHandler_StringCommandWatch( sz ));
 			pMenu->AddButton( m_pTeamButtons[i] ); 
@@ -1565,8 +1565,8 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 			gHUD.m_TextMessage.MsgFunc_TextMsg( NULL, strlen( tempString ) + 1, tempString );
 		}
 		
-		sprintf(bottomText,"#Spec_Mode%d", g_iUser1 );
-		sprintf(helpString2,"#Spec_Mode%d", g_iUser1 );
+		std::sprintf(bottomText,"#Spec_Mode%d", g_iUser1 );
+		std::sprintf(helpString2,"#Spec_Mode%d", g_iUser1 );
 
 		if ( gEngfuncs.IsSpectateOnly() )
 			strcat(helpString2, " - HLTV");
@@ -1617,7 +1617,7 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 		if ( gHUD.m_Spectator.m_autoDirector->value )
 		{
 			char tempString[128];
-			sprintf(tempString, "#Spec_Auto %s", helpString2);
+			std::sprintf(tempString, "#Spec_Auto %s", helpString2);
 			strcpy( helpString2, tempString );
 		}
 

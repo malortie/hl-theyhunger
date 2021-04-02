@@ -127,7 +127,7 @@ static byte *LoadFileByResolution( const char *filePrefix, int xRes, const char 
 
 		// try load
 		char fname[256];
-		sprintf( fname, "%s%d%s", filePrefix, g_ResArray[resNum], filePostfix );
+		std::sprintf( fname, "%s%d%s", filePrefix, g_ResArray[resNum], filePostfix );
 		pFile = gEngfuncs.COM_LoadFile( fname, 5, NULL );
 
 		if ( pFile )
@@ -407,7 +407,7 @@ buildDefaultFont:
 				else if ( m_xRes >= 800 )
 					fontRes = 800;
 
-				sprintf(fontFilename, "gfx\\vgui\\fonts\\%d_%s.tga", fontRes, m_pSchemeList[i].schemeName);
+				std::sprintf(fontFilename, "gfx\\vgui\\fonts\\%d_%s.tga", fontRes, m_pSchemeList[i].schemeName);
 				pFontData = gEngfuncs.COM_LoadFile( fontFilename, 5, &fontFileLength );
 				if(!pFontData)
 					gEngfuncs.Con_Printf("Missing bitmap font: %s\n", fontFilename);

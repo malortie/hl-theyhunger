@@ -187,7 +187,7 @@ void CHudServers::ServerResponse( struct net_response_s *response )
 		{
 			szresponse = (char *)response->response;
 			len = strlen( szresponse ) + 100 + 1;
-			sprintf( sz, "%i", (int)( 1000.0 * response->ping ) );
+			std::sprintf( sz, "%i", (int)( 1000.0 * response->ping ) );
 
 			browser = new server_t;
 			browser->remote_address = response->remote_address;
@@ -222,7 +222,7 @@ void CHudServers::PingResponse( struct net_response_s *response )
 	switch ( response->type )
 	{
 	case NETAPI_REQUEST_PING:
-		sprintf( sz, "%.2f", 1000.0 * response->ping );
+		std::sprintf( sz, "%.2f", 1000.0 * response->ping );
 
 		gEngfuncs.Con_Printf( "ping == %s\n", sz );
 		break;
@@ -821,7 +821,7 @@ int CHudServers::LoadMasterAddresses( int maxservers, int *count, netadr_t *padr
 			if ( !stricmp ( m_szToken, "}" ) )
 				break;
 			
-			sprintf( base, "%s", m_szToken );
+			std::sprintf( base, "%s", m_szToken );
 				
 			pstart = gEngfuncs.COM_ParseFile( pstart, m_szToken );
 			
@@ -840,7 +840,7 @@ int CHudServers::LoadMasterAddresses( int maxservers, int *count, netadr_t *padr
 			if ( !nPort )
 				nPort = nDefaultPort;
 
-			sprintf( szAdr, "%s:%i", base, nPort );
+			std::sprintf( szAdr, "%s:%i", base, nPort );
 
 			// Can we resolve it any better
 			if ( !NET_API->StringToAdr( szAdr, &adr ) )
@@ -856,7 +856,7 @@ int CHudServers::LoadMasterAddresses( int maxservers, int *count, netadr_t *padr
 finish_master:
 	if ( !nCount )
 	{
-		sprintf( szMaster, VALVE_MASTER_ADDRESS );    // IP:PORT string
+		std::sprintf( szMaster, VALVE_MASTER_ADDRESS );    // IP:PORT string
 
 		// Convert to netadr_t
 		if ( NET_API->StringToAdr ( szMaster, &adr ) )

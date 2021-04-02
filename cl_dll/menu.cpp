@@ -212,7 +212,7 @@ void CHudMenu :: SelectMenuItem( int menu_item )
 	if ( (menu_item > 0) && (m_bitsValidSlots & (1 << (menu_item-1))) )
 	{
 		char szbuf[32];
-		sprintf( szbuf, "menuselect %d\n", menu_item );
+		std::sprintf( szbuf, "menuselect %d\n", menu_item );
 		EngineClientCmd( szbuf );
 
 		// remove the menu

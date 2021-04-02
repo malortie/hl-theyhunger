@@ -202,8 +202,8 @@ void ControlConfigPanel::AddCVarFromInputStream(InputStream* is)
 
 void ControlConfigPanel::GetCVarBind(const char* cvar,char* bind,int bindLen,char* bindAlt,int bindAltLen)
 {
-	sprintf(bind,"%s : Bind",cvar);
-	sprintf(bindAlt,"%s : BindAlt",cvar);
+	std::sprintf(bind,"%s : Bind",cvar);
+	std::sprintf(bindAlt,"%s : BindAlt",cvar);
 }
 
 void ControlConfigPanel::SetCVarBind(const char* cvar,const char* bind,const char* bindAlt)

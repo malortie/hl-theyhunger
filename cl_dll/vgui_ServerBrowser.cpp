@@ -131,7 +131,7 @@ public:
 		address = gEngfuncs.pNetAPI->ValueForKey( info, "address" );
 		//gEngfuncs.Con_Printf( "Connecting to %s\n", address );
 
-		sprintf( sz, "connect %s\n", address );
+		std::sprintf( sz, "connect %s\n", address );
 
 		EngineClientCmd( sz );
 
@@ -226,7 +226,7 @@ public:
 				val2 = gEngfuncs.pNetAPI->ValueForKey( info, "max" );
 				if ( val && val2 )
 				{
-					sprintf( sz, "%s/%s", val, val2 );
+					std::sprintf( sz, "%s/%s", val, val2 );
 					sz[ 31 ] = '\0';
 					// Server Map;
 					m_pLabel->setText( sz );
