@@ -1771,7 +1771,7 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow( int iTextToShow )
 			if ( ch )
 			{
 				// move the string back over the '/'
-				memmove( m_sMapName, ch+1, strlen(ch)+1 );
+				std::memmove( m_sMapName, ch+1, strlen(ch)+1 );
 			}
 		}
 

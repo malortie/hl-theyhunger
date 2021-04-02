@@ -104,7 +104,7 @@ int CHudDeathNotice :: Draw( float flTime )
 		if ( rgDeathNoticeList[i].flDisplayTime < flTime )
 		{ // display time has expired
 			// remove the current item from the list
-			memmove( &rgDeathNoticeList[i], &rgDeathNoticeList[i+1], sizeof(DeathNoticeItem) * (MAX_DEATHNOTICES - i) );
+			std::memmove( &rgDeathNoticeList[i], &rgDeathNoticeList[i+1], sizeof(DeathNoticeItem) * (MAX_DEATHNOTICES - i) );
 			i--;  // continue on the next item;  stop the counter getting incremented
 			continue;
 		}
@@ -181,7 +181,7 @@ int CHudDeathNotice :: MsgFunc_DeathMsg( const char *pszName, int iSize, void *p
 	}
 	if ( i == MAX_DEATHNOTICES )
 	{ // move the rest of the list forward to make room for this item
-		memmove( rgDeathNoticeList, rgDeathNoticeList+1, sizeof(DeathNoticeItem) * MAX_DEATHNOTICES );
+		std::memmove( rgDeathNoticeList, rgDeathNoticeList+1, sizeof(DeathNoticeItem) * MAX_DEATHNOTICES );
 		i = MAX_DEATHNOTICES - 1;
 	}
 
