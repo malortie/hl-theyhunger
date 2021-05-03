@@ -30,7 +30,7 @@ extern "C"
 #include "pm_shared.h"
 }
 
-#include <string.h>
+#include <cstring>
 #include "hud_servers.h"
 #include "vgui_int.h"
 #include "interface.h"
@@ -151,7 +151,7 @@ int CL_DLLEXPORT Initialize( cl_enginefunc_t *pEnginefuncs, int iVersion )
 	if (iVersion != CLDLL_INTERFACE_VERSION)
 		return 0;
 
-	memcpy(&gEngfuncs, pEnginefuncs, sizeof(cl_enginefunc_t));
+	std::memcpy(&gEngfuncs, pEnginefuncs, sizeof(cl_enginefunc_t));
 
 	EV_HookEvents();
 	CL_LoadParticleMan();

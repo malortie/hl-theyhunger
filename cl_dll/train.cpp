@@ -20,8 +20,8 @@
 
 #include "hud.h"
 #include "cl_util.h"
-#include <string.h>
-#include <stdio.h>
+#include <cstring>
+#include <cstdio>
 #include "parsemsg.h"
 
 #if defined ( HUNGER_CLIENT_DLL )

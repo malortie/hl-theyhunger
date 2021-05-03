@@ -20,8 +20,8 @@
 
 #include "hud.h"
 #include "cl_util.h"
-#include <string.h>
-#include <stdio.h>
+#include <cstring>
+#include <cstdio>
 #include "parsemsg.h"
 
 DECLARE_MESSAGE( m_Message, HudText )
@@ -55,8 +55,8 @@ int CHudMessage::VidInit( void )
 
 void CHudMessage::Reset( void )
 {
- 	memset( m_pMessages, 0, sizeof( m_pMessages[0] ) * maxHUDMessages );
-	memset( m_startTime, 0, sizeof( m_startTime[0] ) * maxHUDMessages );
+ 	std::memset( m_pMessages, 0, sizeof( m_pMessages[0] ) * maxHUDMessages );
+	std::memset( m_startTime, 0, sizeof( m_startTime[0] ) * maxHUDMessages );
 	
 	m_gameTitleTime = 0;
 	m_pGameTitle = NULL;
@@ -226,7 +226,7 @@ void CHudMessage::MessageScanStart( void )
 			m_parms.fadeBlend = 0;	// Pure source (on)
 		m_parms.charTime = 0;
 
-		if ( m_parms.pMessage->effect == 1 && (rand()%100) < 10 )
+		if ( m_parms.pMessage->effect == 1 && (std::rand()%100) < 10 )
 			m_parms.charTime = 1;
 		break;
 
@@ -382,7 +382,7 @@ int CHudMessage::Draw( float fTime )
 			
 			// Fade in is per character in scanning messages
 			case 2:
-				endTime = m_startTime[i] + (pMessage->fadein * strlen( pMessage->pMessage )) + pMessage->fadeout + pMessage->holdtime;
+				endTime = m_startTime[i] + (pMessage->fadein * std::strlen( pMessage->pMessage )) + pMessage->fadeout + pMessage->holdtime;
 				break;
 			}
 
@@ -446,7 +446,7 @@ void CHudMessage::MessageAdd( const char *pName, float time )
 				g_pCustomMessage.fxtime = 0.25;
 				g_pCustomMessage.holdtime = 5;
 				g_pCustomMessage.pName = g_pCustomName;
-				strcpy( g_pCustomText, pName );
+				std::strcpy( g_pCustomText, pName );
 				g_pCustomMessage.pMessage = g_pCustomText;
 
 				tempMessage = &g_pCustomMessage;
@@ -457,15 +457,15 @@ void CHudMessage::MessageAdd( const char *pName, float time )
 				if ( m_pMessages[j] )
 				{
 					// is this message already in the list
-					if ( !strcmp( tempMessage->pMessage, m_pMessages[j]->pMessage ) )
+					if ( !std::strcmp( tempMessage->pMessage, m_pMessages[j]->pMessage ) )
 					{
 						return;
 					}
 
 					// get rid of any other messages in same location (only one displays at a time)
-					if ( fabs( tempMessage->y - m_pMessages[j]->y ) < 0.0001 )
+					if ( std::abs( tempMessage->y - m_pMessages[j]->y ) < 0.0001 )
 					{
-						if ( fabs( tempMessage->x - m_pMessages[j]->x ) < 0.0001 )
+						if ( std::abs( tempMessage->x - m_pMessages[j]->x ) < 0.0001 )
 						{
 							m_pMessages[j] = NULL;
 						}

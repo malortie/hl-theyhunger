@@ -87,9 +87,9 @@ void SpectatorMode(void)
 
 	// SetModes() will decide if command is executed on server or local
 	if ( gEngfuncs.Cmd_Argc() == 2 )
-		gHUD.m_Spectator.SetModes( atoi( gEngfuncs.Cmd_Argv(1) ), -1 );
+		gHUD.m_Spectator.SetModes( std::atoi( gEngfuncs.Cmd_Argv(1) ), -1 );
 	else if ( gEngfuncs.Cmd_Argc() == 3 )
-		gHUD.m_Spectator.SetModes( atoi( gEngfuncs.Cmd_Argv(1) ), atoi( gEngfuncs.Cmd_Argv(2) )  );	
+		gHUD.m_Spectator.SetModes( std::atoi( gEngfuncs.Cmd_Argv(1) ), std::atoi( gEngfuncs.Cmd_Argv(2) )  );	
 }
 
 void SpectatorSpray(void)
@@ -106,7 +106,7 @@ void SpectatorSpray(void)
 	pmtrace_t * trace = gEngfuncs.PM_TraceLine( v_origin, forward, PM_TRACELINE_PHYSENTSONLY, 2, -1 );
 	if ( trace->fraction != 1.0 )
 	{
-		sprintf(string, "drc_spray %.2f %.2f %.2f %i", 
+		std::sprintf(string, "drc_spray %.2f %.2f %.2f %i", 
 			trace->endpos[0], trace->endpos[1], trace->endpos[2], trace->ent );
 		gEngfuncs.pfnServerCmd(string);
 	}
@@ -142,7 +142,7 @@ void SpectatorMenu( void )
 		return;
 	}
 	
-	gViewPort->m_pSpectatorPanel->ShowMenu( atoi( gEngfuncs.Cmd_Argv(1))!=0  );
+	gViewPort->m_pSpectatorPanel->ShowMenu( std::atoi( gEngfuncs.Cmd_Argv(1))!=0  );
 }
 
 void ToggleScores( void )
@@ -175,8 +175,8 @@ int CHudSpectator::Init()
 	m_chatEnabled = (gHUD.m_SayText.m_HUD_saytext->value!=0);
 	iJumpSpectator	= 0;
 
-	memset( &m_OverviewData, 0, sizeof(m_OverviewData));
-	memset( &m_OverviewEntities, 0, sizeof(m_OverviewEntities));
+	std::memset( &m_OverviewData, 0, sizeof(m_OverviewData));
+	std::memset( &m_OverviewEntities, 0, sizeof(m_OverviewEntities));
 	m_lastPrimaryObject = m_lastSecondaryObject = 0;
 
 	gEngfuncs.pfnAddCommand ("spec_mode", SpectatorMode );
@@ -210,12 +210,12 @@ void UTIL_StringToVector( float * pVector, const char *pString )
 	char *pstr, *pfront, tempString[128];
 	int	j;
 
-	strcpy( tempString, pString );
+	std::strcpy( tempString, pString );
 	pstr = pfront = tempString;
 	
 	for ( j = 0; j < 3; j++ )		
 	{
-		pVector[j] = atof( pfront );
+		pVector[j] = std::atof( pfront );
 		
 		while ( *pstr && *pstr != ' ' )
 			pstr++;
@@ -280,10 +280,10 @@ int UTIL_FindEntityInMap(char * name, float * origin, float * angle)
 				return 0;
 			};
 			
-			strcpy (keyname, token);
+			std::strcpy (keyname, token);
 
 			// another hack to fix keynames with trailing spaces
-			n = strlen(keyname);
+			n = std::strlen(keyname);
 			while (n && keyname[n-1] == ' ')
 			{
 				keyname[n-1] = 0;
@@ -304,17 +304,17 @@ int UTIL_FindEntityInMap(char * name, float * origin, float * angle)
 				return 0;
 			}
 
-			if (!strcmp(keyname,"classname"))
+			if (!std::strcmp(keyname,"classname"))
 			{
-				if (!strcmp(token, name ))
+				if (!std::strcmp(token, name ))
 				{
 					found = 1;	// thats our entity
 				}
 			};
 
-			if( !strcmp( keyname, "angle" ) )
+			if( !std::strcmp( keyname, "angle" ) )
 			{
-				float y = atof( token );
+				float y = std::atof( token );
 				
 				if (y >= 0)
 				{
@@ -335,12 +335,12 @@ int UTIL_FindEntityInMap(char * name, float * origin, float * angle)
 				angle[2] =  0.0f;
 			}
 
-			if( !strcmp( keyname, "angles" ) )
+			if( !std::strcmp( keyname, "angles" ) )
 			{
 				UTIL_StringToVector(angle, token);
 			}
 			
-			if (!strcmp(keyname,"origin"))
+			if (!std::strcmp(keyname,"origin"))
 			{
 				UTIL_StringToVector(origin, token);
 
@@ -665,9 +665,9 @@ int CHudSpectator::Draw(float flTime)
 		color = GetClientColor( i+1 );
 
 		// draw the players name and health underneath
-		sprintf(string, "%s", g_PlayerInfoList[i+1].name );
+		std::sprintf(string, "%s", g_PlayerInfoList[i+1].name );
 		
-		lx = strlen(string)*3; // 3 is avg. character length :)
+		lx = std::strlen(string)*3; // 3 is avg. character length :)
 
 		gEngfuncs.pfnDrawSetTextColor( color[0], color[1], color[2] );
 		DrawConsoleString( m_vPlayerPos[i][0]-lx,m_vPlayerPos[i][1], string);
@@ -767,7 +767,7 @@ void CHudSpectator::DirectorMessage( int iSize, void *pbuf )
 								msg->holdtime	= READ_FLOAT();	// holdtime
 								msg->fxtime		= READ_FLOAT();	// fxtime;
 
-								strncpy( m_HUDMessageText[m_lastHudMessage], READ_STRING(), 128 );
+								std::strncpy( m_HUDMessageText[m_lastHudMessage], READ_STRING(), 128 );
 								m_HUDMessageText[m_lastHudMessage][127]=0;	// text 
 
 								msg->pMessage = m_HUDMessageText[m_lastHudMessage];
@@ -893,7 +893,7 @@ void CHudSpectator::FindNextPlayer(bool bReverse)
 	{
 		char cmdstring[32];
 		// forward command to server
-		sprintf(cmdstring,"follownext %i",bReverse?1:0);
+		std::sprintf(cmdstring,"follownext %i",bReverse?1:0);
 		gEngfuncs.pfnServerCmd(cmdstring);
 		return;
 	}
@@ -965,7 +965,7 @@ void CHudSpectator::FindPlayer(const char *name)
 	{
 		char cmdstring[32];
 		// forward command to server
-		sprintf(cmdstring,"follow %s",name);
+		std::sprintf(cmdstring,"follow %s",name);
 		gEngfuncs.pfnServerCmd(cmdstring);
 		return;
 	}
@@ -1155,7 +1155,7 @@ void CHudSpectator::SetModes(int iNewMainMode, int iNewInsetMode)
 		{
 			char cmdstring[32];
 			// forward command to server
-			sprintf(cmdstring,"specmode %i",iNewMainMode );
+			std::sprintf(cmdstring,"specmode %i",iNewMainMode );
 			gEngfuncs.pfnServerCmd(cmdstring);
 			return;
 		}
@@ -1217,16 +1217,16 @@ void CHudSpectator::SetModes(int iNewMainMode, int iNewInsetMode)
 		}
 		else
 		{
-			memset( &m_crosshairRect,0,sizeof(m_crosshairRect) );
+			std::memset( &m_crosshairRect,0,sizeof(m_crosshairRect) );
 			SetCrosshair( 0, m_crosshairRect, 0, 0, 0 );
 		} 
 
 		gViewPort->MsgFunc_ResetFade( NULL, 0, NULL );
 
 		char string[128];
-		sprintf(string, "#Spec_Mode%d", g_iUser1 );
-		sprintf(string, "%c%s", HUD_PRINTCENTER, CHudTextMessage::BufferedLocaliseTextString( string ));
-		gHUD.m_TextMessage.MsgFunc_TextMsg(NULL, strlen(string)+1, string );
+		std::sprintf(string, "#Spec_Mode%d", g_iUser1 );
+		std::sprintf(string, "%c%s", HUD_PRINTCENTER, CHudTextMessage::BufferedLocaliseTextString( string ));
+		gHUD.m_TextMessage.MsgFunc_TextMsg(NULL, std::strlen(string)+1, string );
 	}
 
 	gViewPort->UpdateSpectatorPanel();
@@ -1253,7 +1253,7 @@ bool CHudSpectator::ParseOverviewFile( )
 	
 	char *pfile  = NULL;
 
-	memset( &m_OverviewData, 0, sizeof(m_OverviewData));
+	std::memset( &m_OverviewData, 0, sizeof(m_OverviewData));
 
 	// fill in standrd values
 	m_OverviewData.insetWindowX = 4;	// upper left corner
@@ -1266,15 +1266,15 @@ bool CHudSpectator::ParseOverviewFile( )
 	m_OverviewData.zoom	= 1.0f;
 	m_OverviewData.layers = 0;
 	m_OverviewData.layersHeights[0] = 0.0f;
-	strcpy( m_OverviewData.map, gEngfuncs.pfnGetLevelName() );
+	std::strcpy( m_OverviewData.map, gEngfuncs.pfnGetLevelName() );
 
-	if ( strlen( m_OverviewData.map ) == 0 )
+	if ( std::strlen( m_OverviewData.map ) == 0 )
 		return false; // not active yet
 
-	strcpy(levelname, m_OverviewData.map + 5);
-	levelname[strlen(levelname)-4] = 0;
+	std::strcpy(levelname, m_OverviewData.map + 5);
+	levelname[std::strlen(levelname)-4] = 0;
 	
-	sprintf(filename, "overviews/%s.txt", levelname );
+	std::sprintf(filename, "overviews/%s.txt", levelname );
 
 	pfile = (char *)gEngfuncs.COM_LoadFile( filename, 5, NULL);
 
@@ -1309,32 +1309,32 @@ bool CHudSpectator::ParseOverviewFile( )
 				if ( !stricmp( token, "zoom" ) )
 				{
 					pfile = gEngfuncs.COM_ParseFile(pfile,token);
-					m_OverviewData.zoom = atof( token );
+					m_OverviewData.zoom = std::atof( token );
 				} 
 				else if ( !stricmp( token, "origin" ) )
 				{
 					pfile = gEngfuncs.COM_ParseFile(pfile, token); 
-					m_OverviewData.origin[0] = atof( token );
+					m_OverviewData.origin[0] = std::atof( token );
 					pfile = gEngfuncs.COM_ParseFile(pfile,token); 
-					m_OverviewData.origin[1] = atof( token );
+					m_OverviewData.origin[1] = std::atof( token );
 					pfile = gEngfuncs.COM_ParseFile(pfile, token); 
-					m_OverviewData.origin[2] = atof( token );
+					m_OverviewData.origin[2] = std::atof( token );
 				}
 				else if ( !stricmp( token, "rotated" ) )
 				{
 					pfile = gEngfuncs.COM_ParseFile(pfile,token); 
-					m_OverviewData.rotated = atoi( token );
+					m_OverviewData.rotated = std::atoi( token );
 				}
 				else if ( !stricmp( token, "inset" ) )
 				{
 					pfile = gEngfuncs.COM_ParseFile(pfile,token); 
-					m_OverviewData.insetWindowX = atof( token );
+					m_OverviewData.insetWindowX = std::atof( token );
 					pfile = gEngfuncs.COM_ParseFile(pfile,token); 
-					m_OverviewData.insetWindowY = atof( token );
+					m_OverviewData.insetWindowY = std::atof( token );
 					pfile = gEngfuncs.COM_ParseFile(pfile,token); 
-					m_OverviewData.insetWindowWidth = atof( token );
+					m_OverviewData.insetWindowWidth = std::atof( token );
 					pfile = gEngfuncs.COM_ParseFile(pfile,token); 
-					m_OverviewData.insetWindowHeight = atof( token );
+					m_OverviewData.insetWindowHeight = std::atof( token );
 
 				}
 				else
@@ -1373,14 +1373,14 @@ bool CHudSpectator::ParseOverviewFile( )
 				if ( !stricmp( token, "image" ) )
 				{
 					pfile = gEngfuncs.COM_ParseFile(pfile,token);
-					strcpy(m_OverviewData.layersImages[ m_OverviewData.layers ], token);
+					std::strcpy(m_OverviewData.layersImages[ m_OverviewData.layers ], token);
 					
 					
 				} 
 				else if ( !stricmp( token, "height" ) )
 				{
 					pfile = gEngfuncs.COM_ParseFile(pfile,token); 
-					height = atof(token);
+					height = std::atof(token);
 					m_OverviewData.layersHeights[ m_OverviewData.layers ] = height;
 				}
 				else
@@ -1428,7 +1428,7 @@ void CHudSpectator::DrawOverviewLayer()
 	if ( hasMapImage)
 	{
 		i = m_MapSprite->numframes / (4*3);
-		i = sqrt((float)i);
+		i = std::sqrt((float)i);
 		xTiles = i*4;
 		yTiles = i*3;
 	}
@@ -1772,7 +1772,7 @@ void CHudSpectator::CheckOverviewEntities()
 		// remove entity from list if it is too old
 		if ( m_OverviewEntities[i].killTime < time )
 		{
-			memset( &m_OverviewEntities[i], 0, sizeof (overviewEntity_t) );
+			std::memset( &m_OverviewEntities[i], 0, sizeof (overviewEntity_t) );
 		}
 	}
 }
@@ -1867,7 +1867,7 @@ void CHudSpectator::CheckSettings()
 		{
 			// tell proxy our new chat mode
 			char chatcmd[32];
-			sprintf(chatcmd, "ignoremsg %i", m_chatEnabled?0:1 );
+			std::sprintf(chatcmd, "ignoremsg %i", m_chatEnabled?0:1 );
 			gEngfuncs.pfnServerCmd(chatcmd);
 		}
 	}
@@ -1884,7 +1884,7 @@ void CHudSpectator::CheckSettings()
 	}
 	else
 	{
-		memset( &m_crosshairRect,0,sizeof(m_crosshairRect) );
+		std::memset( &m_crosshairRect,0,sizeof(m_crosshairRect) );
 		SetCrosshair( 0, m_crosshairRect, 0, 0, 0 );
 	} 
 
@@ -1934,14 +1934,14 @@ int CHudSpectator::ToggleInset(bool allowOff)
 void CHudSpectator::Reset()
 {
 	// Reset HUD
-	if ( strcmp( m_OverviewData.map, gEngfuncs.pfnGetLevelName() ) )
+	if ( std::strcmp( m_OverviewData.map, gEngfuncs.pfnGetLevelName() ) )
 	{
 		// update level overview if level changed
 		ParseOverviewFile();
 		LoadMapSprites();
 	}
 
-	memset( &m_OverviewEntities, 0, sizeof(m_OverviewEntities));
+	std::memset( &m_OverviewEntities, 0, sizeof(m_OverviewEntities));
 
 	m_FOV = 90.0f;
 
@@ -1961,8 +1961,8 @@ void CHudSpectator::InitHUDData()
 	iJumpSpectator	= 0;
 	g_iUser1 = g_iUser2 = 0;
 
-	memset( &m_OverviewData, 0, sizeof(m_OverviewData));
-	memset( &m_OverviewEntities, 0, sizeof(m_OverviewEntities));
+	std::memset( &m_OverviewData, 0, sizeof(m_OverviewData));
+	std::memset( &m_OverviewEntities, 0, sizeof(m_OverviewEntities));
 
 	if ( gEngfuncs.IsSpectateOnly() || gEngfuncs.pDemoAPI->IsPlayingback() )
 		m_autoDirector->value = 1.0f;

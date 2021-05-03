@@ -21,8 +21,8 @@
 #include "cl_util.h"
 #include "parsemsg.h"
 
-#include <string.h>
-#include <stdio.h>
+#include <cstring>
+#include <cstdio>
 
 #include "vgui_TeamFortressViewport.h"
 
@@ -187,8 +187,8 @@ int CHudMenu :: Draw( float flTime )
 			{
 				sptr++;
 			}
-			strncpy( menubuf, ptr, min( ( sptr - ptr), (int)sizeof( menubuf ) ));
-			menubuf[ min( ( sptr - ptr), (int)(sizeof( menubuf )-1) ) ] = '\0';
+			std::strncpy( menubuf, ptr, std::min( ( sptr - ptr), (int)sizeof( menubuf ) ));
+			menubuf[ std::min( ( sptr - ptr), (int)(sizeof( menubuf )-1) ) ] = '\0';
 			
 			if ( menu_ralign )
 			{		
@@ -212,7 +212,7 @@ void CHudMenu :: SelectMenuItem( int menu_item )
 	if ( (menu_item > 0) && (m_bitsValidSlots & (1 << (menu_item-1))) )
 	{
 		char szbuf[32];
-		sprintf( szbuf, "menuselect %d\n", menu_item );
+		std::sprintf( szbuf, "menuselect %d\n", menu_item );
 		EngineClientCmd( szbuf );
 
 		// remove the menu
@@ -248,23 +248,23 @@ int CHudMenu :: MsgFunc_ShowMenu( const char *pszName, int iSize, void *pbuf )
 	{
 		if ( !m_fWaitingForMore ) // this is the start of a new menu
 		{
-			strncpy( g_szPrelocalisedMenuString, READ_STRING(), MAX_MENU_STRING );
+			std::strncpy( g_szPrelocalisedMenuString, READ_STRING(), MAX_MENU_STRING );
 		}
 		else
 		{  // append to the current menu string
-			strncat( g_szPrelocalisedMenuString, READ_STRING(), MAX_MENU_STRING - strlen(g_szPrelocalisedMenuString) );
+			std::strncat( g_szPrelocalisedMenuString, READ_STRING(), MAX_MENU_STRING - std::strlen(g_szPrelocalisedMenuString) );
 		}
 		g_szPrelocalisedMenuString[MAX_MENU_STRING-1] = 0;  // ensure null termination (strncat/strncpy does not)
 
 		if ( !NeedMore )
 		{  // we have the whole string, so we can localise it now
-			strcpy( g_szMenuString, gHUD.m_TextMessage.BufferedLocaliseTextString( g_szPrelocalisedMenuString ) );
+			std::strcpy( g_szMenuString, gHUD.m_TextMessage.BufferedLocaliseTextString( g_szPrelocalisedMenuString ) );
 
 			// Swap in characters
 			if ( KB_ConvertString( g_szMenuString, &temp ) )
 			{
-				strcpy( g_szMenuString, temp );
-				free( temp );
+				std::strcpy( g_szMenuString, temp );
+				std::free( temp );
 			}
 		}
 

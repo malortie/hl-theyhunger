@@ -16,7 +16,7 @@
 #include<VGUI_TextImage.h>
 #include "../game_shared/vgui_listbox.h"
 
-#include <ctype.h>
+#include <cctype>
 
 #define MAX_SCORES					10
 #define MAX_SCOREBOARD_TEAMS		5
@@ -62,7 +62,7 @@ public:
 		_image[1]->getTextSize(w2, t2);
 
 		wide = w1 + w2;
-		tall = max(t1, t2);
+		tall = std::max(t1, t2);
 		setSize(wide, tall);
 	}
 
@@ -151,10 +151,10 @@ public:
 	{
 		// strip any non-alnum characters from the end
 		char buf[512];
-		strcpy(buf, text);
+		std::strcpy(buf, text);
 
-		int len = strlen(buf);
-		while (len && isspace(buf[--len]))
+		int len = std::strlen(buf);
+		while (len && std::isspace(buf[--len]))
 		{
 			buf[len] = 0;
 		}

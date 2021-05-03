@@ -5,7 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#include <assert.h>
+#include <cassert>
 #include "hud.h"
 #include "cl_util.h"
 #include "const.h"
@@ -16,10 +16,10 @@
 #include "dlight.h"
 #include "triangleapi.h"
 
-#include <stdio.h>
-#include <string.h>
-#include <memory.h>
-#include <math.h>
+#include <cstdio>
+#include <cstring>
+#include <memory>
+#include <cmath>
 
 #include "studio_util.h"
 #include "r_studioint.h"
@@ -111,7 +111,7 @@ int CL_DLLEXPORT HUD_GetStudioModelInterface( int version, struct r_studio_inter
 	*ppinterface = &studio;
 
 	// Copy in engine helper functions
-	memcpy( &IEngineStudio, pstudio, sizeof( IEngineStudio ) );
+	std::memcpy( &IEngineStudio, pstudio, sizeof( IEngineStudio ) );
 
 	// Initialize local variables, etc.
 	R_StudioInit();

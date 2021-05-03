@@ -22,8 +22,8 @@
 
 #include "hud.h"
 #include "cl_util.h"
-#include <string.h>
-#include <stdio.h>
+#include <cstring>
+#include <cstdio>
 #include "parsemsg.h"
 
 #include "vgui_TeamFortressViewport.h"
@@ -130,7 +130,7 @@ char *CHudTextMessage::LookupString( const char *msg, int *msg_dest )
 
 void StripEndNewlineFromString( char *str )
 {
-	int s = strlen( str ) - 1;
+	int s = std::strlen( str ) - 1;
 	if ( str[s] == '\n' || str[s] == '\r' )
 		str[s] = 0;
 }

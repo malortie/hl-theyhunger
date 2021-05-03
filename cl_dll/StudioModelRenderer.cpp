@@ -11,10 +11,10 @@
 #include "dlight.h"
 #include "triangleapi.h"
 
-#include <stdio.h>
-#include <string.h>
-#include <memory.h>
-#include <math.h>
+#include <cstdio>
+#include <cstring>
+#include <memory>
+#include <cmath>
 
 #include "studio_util.h"
 #include "r_studioint.h"
@@ -124,7 +124,7 @@ void CStudioModelRenderer::StudioCalcBoneAdj( float dadt, float *adj, const byte
 			// check for 360% wrapping
 			if (pbonecontroller[j].type & STUDIO_RLOOP)
 			{
-				if (abs(pcontroller1[i] - pcontroller2[i]) > 128)
+				if (std::abs(pcontroller1[i] - pcontroller2[i]) > 128)
 				{
 					int a, b;
 					a = (pcontroller1[j] + 128) % 256;
@@ -934,19 +934,19 @@ void CStudioModelRenderer::StudioSetupBones ( void )
 
 		for ( i = 0; i < m_pStudioHeader->numbones; i++ )
 		{
-			if ( !strcmp( pbones[i].name, "Bip01 Spine" ) )
+			if ( !std::strcmp( pbones[i].name, "Bip01 Spine" ) )
 			{
 				copy = 0;
 			}
-			else if ( !strcmp( pbones[ pbones[i].parent ].name, "Bip01 Pelvis" ) )
+			else if ( !std::strcmp( pbones[ pbones[i].parent ].name, "Bip01 Pelvis" ) )
 			{
 				copy = 1;
 			}
 				
 			if ( copy )
 			{
-				memcpy( pos[i], pos2[i], sizeof( pos[i] ) );
-				memcpy( q[i], q2[i], sizeof( q[i] ) );
+				std::memcpy( pos[i], pos2[i], sizeof( pos[i] ) );
+				std::memcpy( q[i], q2[i], sizeof( q[i] ) );
 			}
 		}
 	}
@@ -1004,7 +1004,7 @@ void CStudioModelRenderer::StudioSaveBones( void )
 
 	for (i = 0; i < m_pStudioHeader->numbones; i++) 
 	{
-		strcpy( m_nCachedBoneNames[i], pbones[i].name );
+		std::strcpy( m_nCachedBoneNames[i], pbones[i].name );
 		MatrixCopy( (*m_pbonetransform)[i], m_rgCachedBoneTransform[i] );
 		MatrixCopy( (*m_plighttransform)[i], m_rgCachedLightTransform[i] );
 	}
@@ -1231,7 +1231,7 @@ int CStudioModelRenderer::StudioDrawModel( int flags )
 		{
 			cl_entity_t *ent = gEngfuncs.GetEntityByIndex( m_pCurrentEntity->index );
 
-			memcpy( ent->attachment, m_pCurrentEntity->attachment, sizeof( vec3_t ) * 4 );
+			std::memcpy( ent->attachment, m_pCurrentEntity->attachment, sizeof( vec3_t ) * 4 );
 		}
 	}
 
@@ -1397,7 +1397,7 @@ void CStudioModelRenderer::StudioEstimateGait( entity_state_t *pplayer )
 	}
 	else
 	{
-		m_pPlayerInfo->gaityaw = (atan2(est_velocity[1], est_velocity[0]) * 180 / M_PI);
+		m_pPlayerInfo->gaityaw = (std::atan2(est_velocity[1], est_velocity[0]) * 180 / M_PI);
 		if (m_pPlayerInfo->gaityaw > 180)
 			m_pPlayerInfo->gaityaw = 180;
 		if (m_pPlayerInfo->gaityaw < -180)
@@ -1761,7 +1761,7 @@ int CStudioModelRenderer::StudioDrawPlayer( int flags, entity_state_t *pplayer )
 		{
 			cl_entity_t *ent = gEngfuncs.GetEntityByIndex( m_pCurrentEntity->index );
 
-			memcpy( ent->attachment, m_pCurrentEntity->attachment, sizeof( vec3_t ) * 4 );
+			std::memcpy( ent->attachment, m_pCurrentEntity->attachment, sizeof( vec3_t ) * 4 );
 		}
 	}
 
@@ -1949,7 +1949,7 @@ void CStudioModelRenderer::StudioCalcAttachments( void )
 	if ( m_pStudioHeader->numattachments > 4 )
 	{
 		gEngfuncs.Con_DPrintf( "Too many attachments on %s\n", m_pCurrentEntity->model->name );
-		exit( -1 );
+		std::exit( -1 );
 	}
 
 	// calculate attachment points

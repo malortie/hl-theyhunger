@@ -12,7 +12,7 @@
 #include<VGUI_SurfaceBase.h>
 #include<VGUI_TextEntry.h>
 #include<VGUI_ActionSignal.h>
-#include<string.h>
+#include<cstring>
 #include "hud.h"
 #include "cl_util.h"
 #include "camera.h"
@@ -51,7 +51,7 @@ public:
 	{
 		char buf[256];
 		_textEntry->getText(0,buf,256);
-		sscanf(buf,"%d",&_bindIndex);
+		std::sscanf(buf,"%d",&_bindIndex);
 	}
 protected:
 	virtual void paintBackground()

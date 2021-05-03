@@ -18,21 +18,19 @@
 // implementation of class-less helper functions
 //
 
-#include "stdio.h"
-#include "stdlib.h"
-#include "math.h"
+#include <cstdio>
+#include <cstdlib>
+#include <cmath>
 
 #include "hud.h"
 #include "cl_util.h"
-#include <string.h>
+#include <cstring>
 
 #ifndef M_PI
 #define M_PI		3.14159265358979323846	// matches value in gcc v2 math.h
 #endif
 
 vec3_t vec3_origin( 0, 0, 0 );
-
-double sqrt(double x);
 
 float Length(const float *v)
 {
@@ -42,7 +40,7 @@ float Length(const float *v)
 	length = 0;
 	for (i=0 ; i< 3 ; i++)
 		length += v[i]*v[i];
-	length = sqrt (length);		// FIXME
+	length = std::sqrt (length);		// FIXME
 
 	return length;
 }
@@ -61,12 +59,12 @@ void VectorAngles( const float *forward, float *angles )
 	}
 	else
 	{
-		yaw = (atan2(forward[1], forward[0]) * 180 / M_PI);
+		yaw = (std::atan2(forward[1], forward[0]) * 180 / M_PI);
 		if (yaw < 0)
 			yaw += 360;
 
-		tmp = sqrt (forward[0]*forward[0] + forward[1]*forward[1]);
-		pitch = (atan2(forward[2], tmp) * 180 / M_PI);
+		tmp = std::sqrt (forward[0]*forward[0] + forward[1]*forward[1]);
+		pitch = (std::atan2(forward[2], tmp) * 180 / M_PI);
 		if (pitch < 0)
 			pitch += 360;
 	}
@@ -81,7 +79,7 @@ float VectorNormalize (float *v)
 	float	length, ilength;
 
 	length = v[0]*v[0] + v[1]*v[1] + v[2]*v[2];
-	length = sqrt (length);		// FIXME
+	length = std::sqrt (length);		// FIXME
 
 	if (length)
 	{
@@ -126,7 +124,7 @@ HSPRITE LoadSprite(const char *pszName)
 	else
 		i = 640;
 
-	sprintf(sz, pszName, i);
+	std::sprintf(sz, pszName, i);
 
 	return SPR_Load(sz);
 }

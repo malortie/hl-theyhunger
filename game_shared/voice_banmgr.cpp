@@ -5,8 +5,8 @@
 // $NoKeywords: $
 //=============================================================================
 
-#include <string.h>
-#include <stdio.h>
+#include <cstring>
+#include <cstdio>
 #include "voice_banmgr.h"
 
 
@@ -48,26 +48,26 @@ bool CVoiceBanMgr::Init(char const *pGameDir)
 	_snprintf(filename, sizeof(filename), "%s/%s", pGameDir, g_pBanMgrFilename);
 
 	// Load in the squelch file.
-	FILE *fp = fopen(filename, "rb");
+	FILE *fp = std::fopen(filename, "rb");
 	if(fp)
 	{
 		int version;
-		fread(&version, 1, sizeof(version), fp);
+		std::fread(&version, 1, sizeof(version), fp);
 		if(version == BANMGR_FILEVERSION)
 		{
-			fseek(fp, 0, SEEK_END);
-			int nIDs = (ftell(fp) - sizeof(version)) / 16;
-			fseek(fp, sizeof(version), SEEK_SET);
+			std::fseek(fp, 0, SEEK_END);
+			int nIDs = (std::ftell(fp) - sizeof(version)) / 16;
+			std::fseek(fp, sizeof(version), SEEK_SET);
 
 			for(int i=0; i < nIDs; i++)
 			{
 				char playerID[16];
-				fread(playerID, 1, 16, fp);
+				std::fread(playerID, 1, 16, fp);
 				AddBannedPlayer(playerID);
 			}			
 		}
 
-		fclose(fp);
+		std::fclose(fp);
 	}
 
 	return true;
@@ -98,22 +98,22 @@ void CVoiceBanMgr::SaveState(char const *pGameDir)
 	char filename[512];
 	_snprintf(filename, sizeof(filename), "%s/%s", pGameDir, g_pBanMgrFilename);
 
-	FILE *fp = fopen(filename, "wb");
+	FILE *fp = std::fopen(filename, "wb");
 	if(fp)
 	{
 		int version = BANMGR_FILEVERSION;
-		fwrite(&version, 1, sizeof(version), fp);
+		std::fwrite(&version, 1, sizeof(version), fp);
 
 		for(int i=0; i < 256; i++)
 		{
 			BannedPlayer *pListHead = &m_PlayerHash[i];
 			for(BannedPlayer *pCur=pListHead->m_pNext; pCur != pListHead; pCur=pCur->m_pNext)
 			{
-				fwrite(pCur->m_PlayerID, 1, 16, fp);
+				std::fwrite(pCur->m_PlayerID, 1, 16, fp);
 			}
 		}
 
-		fclose(fp);
+		std::fclose(fp);
 	}
 }
 
@@ -173,7 +173,7 @@ CVoiceBanMgr::BannedPlayer* CVoiceBanMgr::InternalFindPlayerSquelch(char const p
 	BannedPlayer *pListHead = &m_PlayerHash[index];
 	for(BannedPlayer *pCur=pListHead->m_pNext; pCur != pListHead; pCur=pCur->m_pNext)
 	{
-		if(memcmp(playerID, pCur->m_PlayerID, 16) == 0)
+		if(std::memcmp(playerID, pCur->m_PlayerID, 16) == 0)
 			return pCur;
 	}
 
@@ -188,7 +188,7 @@ CVoiceBanMgr::BannedPlayer* CVoiceBanMgr::AddBannedPlayer(char const playerID[16
 		return NULL;
 
 	int index = HashPlayerID(playerID);
-	memcpy(pNew->m_PlayerID, playerID, 16);
+	std::memcpy(pNew->m_PlayerID, playerID, 16);
 	pNew->m_pNext = &m_PlayerHash[index];
 	pNew->m_pPrev = m_PlayerHash[index].m_pPrev;
 	pNew->m_pPrev->m_pNext = pNew->m_pNext->m_pPrev = pNew;

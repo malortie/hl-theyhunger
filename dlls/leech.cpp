@@ -35,7 +35,7 @@
 //
 
 
-#include	"float.h"
+#include	<cfloat>
 #include	"extdll.h"
 #include	"util.h"
 #include	"cbase.h"
@@ -395,7 +395,7 @@ float CLeech::ObstacleDistance( CBaseEntity *pTarget )
 		}
 		else
 		{
-			if ( fabs(m_height - pev->origin.z) > 10 )
+			if ( std::abs(m_height - pev->origin.z) > 10 )
 				return tr.flFraction;
 		}
 	}

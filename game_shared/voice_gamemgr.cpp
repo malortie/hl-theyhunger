@@ -7,8 +7,8 @@
 
 #include "archtypes.h"     // DAL
 #include "voice_gamemgr.h"
-#include <string.h>
-#include <assert.h>
+#include <cstring>
+#include <cassert>
 #include "extdll.h"
 #include "util.h"
 #include "cbase.h"
@@ -180,7 +180,7 @@ bool CVoiceGameMgr::ClientCommand(CBasePlayer *pPlayer, const char *cmd)
 		for(int i=1; i < CMD_ARGC(); i++)
 		{
 			uint32 mask = 0;
-			sscanf(CMD_ARGV(i), "%x", &mask);
+			std::sscanf(CMD_ARGV(i), "%x", &mask);
 
 			if(i <= VOICE_MAX_PLAYERS_DW)
 			{
@@ -199,8 +199,8 @@ bool CVoiceGameMgr::ClientCommand(CBasePlayer *pPlayer, const char *cmd)
 	}
 	else if(stricmp(cmd, "VModEnable") == 0 && CMD_ARGC() >= 2)
 	{
-		VoiceServerDebug( "CVoiceGameMgr::ClientCommand: VModEnable (%d)\n", !!atoi(CMD_ARGV(1)) );
-		g_PlayerModEnable[playerClientIndex] = !!atoi(CMD_ARGV(1));
+		VoiceServerDebug( "CVoiceGameMgr::ClientCommand: VModEnable (%d)\n", !!std::atoi(CMD_ARGV(1)) );
+		g_PlayerModEnable[playerClientIndex] = !!std::atoi(CMD_ARGV(1));
 		g_bWantModEnable[playerClientIndex] = false;
 		//UpdateMasks();		
 		return true;

@@ -30,7 +30,7 @@
 #include "event_args.h"
 #include "in_defs.h"
 
-#include <string.h>
+#include <cstring>
 
 #include "r_studioint.h"
 #include "com_model.h"
@@ -138,7 +138,7 @@ float EV_HLDM_PlayTextureSound( int idx, pmtrace_t *ptr, float *vecSrc, float *v
 		
 		if ( pTextureName )
 		{
-			strcpy( texname, pTextureName );
+			std::strcpy( texname, pTextureName );
 			pTextureName = texname;
 
 			// strip leading '-0' or '+0~' or '{' or '!'
@@ -153,7 +153,7 @@ float EV_HLDM_PlayTextureSound( int idx, pmtrace_t *ptr, float *vecSrc, float *v
 			}
 			
 			// '}}'
-			strcpy( szbuffer, pTextureName );
+			std::strcpy( szbuffer, pTextureName );
 			szbuffer[ CBTEXTURENAMEMAX - 1 ] = 0;
 				
 			// get texture type
@@ -242,16 +242,16 @@ char *EV_HLDM_DamageDecal( physent_t *pe )
 	if ( pe->classnumber == 1 )
 	{
 		idx = gEngfuncs.pfnRandomLong( 0, 2 );
-		sprintf( decalname, "{break%i", idx + 1 );
+		std::sprintf( decalname, "{break%i", idx + 1 );
 	}
 	else if ( pe->rendermode != kRenderNormal )
 	{
-		sprintf( decalname, "{bproof1" );
+		std::sprintf( decalname, "{bproof1" );
 	}
 	else
 	{
 		idx = gEngfuncs.pfnRandomLong( 0, 4 );
-		sprintf( decalname, "{shot%i", idx + 1 );
+		std::sprintf( decalname, "{shot%i", idx + 1 );
 	}
 	return decalname;
 }
@@ -1804,15 +1804,15 @@ void EV_TrainPitchAdjust( event_args_t *args )
 
 	switch ( noise )
 	{
-	case 1: strcpy( sz, "plats/ttrain1.wav"); break;
-	case 2: strcpy( sz, "plats/ttrain2.wav"); break;
-	case 3: strcpy( sz, "plats/ttrain3.wav"); break; 
-	case 4: strcpy( sz, "plats/ttrain4.wav"); break;
-	case 5: strcpy( sz, "plats/ttrain6.wav"); break;
-	case 6: strcpy( sz, "plats/ttrain7.wav"); break;
+	case 1: std::strcpy( sz, "plats/ttrain1.wav"); break;
+	case 2: std::strcpy( sz, "plats/ttrain2.wav"); break;
+	case 3: std::strcpy( sz, "plats/ttrain3.wav"); break; 
+	case 4: std::strcpy( sz, "plats/ttrain4.wav"); break;
+	case 5: std::strcpy( sz, "plats/ttrain6.wav"); break;
+	case 6: std::strcpy( sz, "plats/ttrain7.wav"); break;
 	default:
 		// no sound
-		strcpy( sz, "" );
+		std::strcpy( sz, "" );
 		return;
 	}
 

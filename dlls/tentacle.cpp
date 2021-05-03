@@ -332,12 +332,12 @@ void CTentacle::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "sweeparc"))
 	{
-		m_flMaxYaw = atof(pkvd->szValue) / 2.0;
+		m_flMaxYaw = std::atof(pkvd->szValue) / 2.0;
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "sound"))
 	{
-		m_iTapSound = atoi(pkvd->szValue);
+		m_iTapSound = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 
 	}
@@ -860,7 +860,7 @@ void CTentacle :: HandleAnimEvent( MonsterEvent_t *pEvent )
 	case 2:	// tap scrape
 	case 6: // light tap
 		{
-			Vector vecSrc = pev->origin + m_flTapRadius * Vector( cos( pev->angles.y * (M_PI / 180.0) ), sin( pev->angles.y * (M_PI / 180.0) ), 0.0 );
+			Vector vecSrc = pev->origin + m_flTapRadius * Vector( std::cos( pev->angles.y * (M_PI / 180.0) ), std::sin( pev->angles.y * (M_PI / 180.0) ), 0.0 );
 
 			vecSrc.z += MyHeight( );
 

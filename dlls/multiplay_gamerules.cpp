@@ -102,7 +102,7 @@ CHalfLifeMultiplay :: CHalfLifeMultiplay()
 			char szCommand[256];
 			
 			ALERT( at_console, "Executing listen server config file\n" );
-			sprintf( szCommand, "exec %s\n", lservercfgfile );
+			std::sprintf( szCommand, "exec %s\n", lservercfgfile );
 			SERVER_COMMAND( szCommand );
 		}
 	}
@@ -710,11 +710,11 @@ void CHalfLifeMultiplay::DeathNotice( CBasePlayer *pVictim, entvars_t *pKiller, 
 	}
 
 	// strip the monster_* or weapon_* from the inflictor's classname
-	if ( strncmp( killer_weapon_name, "weapon_", 7 ) == 0 )
+	if ( std::strncmp( killer_weapon_name, "weapon_", 7 ) == 0 )
 		killer_weapon_name += 7;
-	else if ( strncmp( killer_weapon_name, "monster_", 8 ) == 0 )
+	else if ( std::strncmp( killer_weapon_name, "monster_", 8 ) == 0 )
 		killer_weapon_name += 8;
-	else if ( strncmp( killer_weapon_name, "func_", 5 ) == 0 )
+	else if ( std::strncmp( killer_weapon_name, "func_", 5 ) == 0 )
 		killer_weapon_name += 5;
 
 	MESSAGE_BEGIN( MSG_ALL, gmsgDeathMsg );
@@ -724,9 +724,9 @@ void CHalfLifeMultiplay::DeathNotice( CBasePlayer *pVictim, entvars_t *pKiller, 
 	MESSAGE_END();
 
 	// replace the code names with the 'real' names
-	if ( !strcmp( killer_weapon_name, "egon" ) )
+	if ( !std::strcmp( killer_weapon_name, "egon" ) )
 		killer_weapon_name = gluon;
-	else if ( !strcmp( killer_weapon_name, "gauss" ) )
+	else if ( !std::strcmp( killer_weapon_name, "gauss" ) )
 		killer_weapon_name = tau;
 
 	if ( pVictim->pev == pKiller )  
@@ -1291,7 +1291,7 @@ int COM_TokenWaiting( char *buffer )
 	p = buffer;
 	while ( *p && *p!='\n')
 	{
-		if ( !isspace( *p ) || isalnum( *p ) )
+		if ( !std::isspace( *p ) || std::isalnum( *p ) )
 			return 1;
 
 		p++;
@@ -1326,22 +1326,22 @@ int ReloadMapCycleFile( char *filename, mapcycle_t *cycle )
 		while ( 1 )
 		{
 			hasbuffer = 0;
-			memset( szBuffer, 0, MAX_RULE_BUFFER );
+			std::memset( szBuffer, 0, MAX_RULE_BUFFER );
 
 			pFileList = COM_Parse( pFileList );
-			if ( strlen( com_token ) <= 0 )
+			if ( std::strlen( com_token ) <= 0 )
 				break;
 
-			strcpy( szMap, com_token );
+			std::strcpy( szMap, com_token );
 
 			// Any more tokens on this line?
 			if ( COM_TokenWaiting( pFileList ) )
 			{
 				pFileList = COM_Parse( pFileList );
-				if ( strlen( com_token ) > 0 )
+				if ( std::strlen( com_token ) > 0 )
 				{
 					hasbuffer = 1;
-					strcpy( szBuffer, com_token );
+					std::strcpy( szBuffer, com_token );
 				}
 			}
 
@@ -1353,28 +1353,28 @@ int ReloadMapCycleFile( char *filename, mapcycle_t *cycle )
 
 				item = new mapcycle_item_s;
 
-				strcpy( item->mapname, szMap );
+				std::strcpy( item->mapname, szMap );
 
 				item->minplayers = 0;
 				item->maxplayers = 0;
 
-				memset( item->rulebuffer, 0, MAX_RULE_BUFFER );
+				std::memset( item->rulebuffer, 0, MAX_RULE_BUFFER );
 
 				if ( hasbuffer )
 				{
 					s = g_engfuncs.pfnInfoKeyValue( szBuffer, "minplayers" );
 					if ( s && s[0] )
 					{
-						item->minplayers = atoi( s );
-						item->minplayers = max( item->minplayers, 0 );
-						item->minplayers = min( item->minplayers, gpGlobals->maxClients );
+						item->minplayers = std::atoi( s );
+						item->minplayers = std::max( item->minplayers, 0 );
+						item->minplayers = std::min( item->minplayers, gpGlobals->maxClients );
 					}
 					s = g_engfuncs.pfnInfoKeyValue( szBuffer, "maxplayers" );
 					if ( s && s[0] )
 					{
-						item->maxplayers = atoi( s );
-						item->maxplayers = max( item->maxplayers, 0 );
-						item->maxplayers = min( item->maxplayers, gpGlobals->maxClients );
+						item->maxplayers = std::atoi( s );
+						item->maxplayers = std::max( item->maxplayers, 0 );
+						item->maxplayers = std::min( item->maxplayers, gpGlobals->maxClients );
 					}
 
 					// Remove keys
@@ -1382,7 +1382,7 @@ int ReloadMapCycleFile( char *filename, mapcycle_t *cycle )
 					g_engfuncs.pfnInfo_RemoveKey( szBuffer, "minplayers" );
 					g_engfuncs.pfnInfo_RemoveKey( szBuffer, "maxplayers" );
 
-					strcpy( item->rulebuffer, szBuffer );
+					std::strcpy( item->rulebuffer, szBuffer );
 				}
 
 				item->next = cycle->items;
@@ -1494,13 +1494,13 @@ void ExtractCommandString( char *s, char *szCommand )
 		}
 		*o = 0;
 
-		strcat( szCommand, pkey );
-		if ( strlen( value ) > 0 )
+		std::strcat( szCommand, pkey );
+		if ( std::strlen( value ) > 0 )
 		{
-			strcat( szCommand, " " );
-			strcat( szCommand, value );
+			std::strcat( szCommand, " " );
+			std::strcat( szCommand, value );
 		}
-		strcat( szCommand, "\n" );
+		std::strcat( szCommand, "\n" );
 
 		if (!*s)
 			return;
@@ -1525,7 +1525,7 @@ void CHalfLifeMultiplay :: ChangeLevel( void )
 	char szCommands[ 1500 ];
 	char szRules[ 1500 ];
 	int minplayers = 0, maxplayers = 0;
-	strcpy( szFirstMapInList, "hldm1" );  // the absolute default level is hldm1
+	std::strcpy( szFirstMapInList, "hldm1" );  // the absolute default level is hldm1
 
 	int	curplayers;
 	BOOL do_cycle = TRUE;
@@ -1542,7 +1542,7 @@ void CHalfLifeMultiplay :: ChangeLevel( void )
 	// Has the map cycle filename changed?
 	if ( stricmp( mapcfile, szPreviousMapCycleFile ) )
 	{
-		strcpy( szPreviousMapCycleFile, mapcfile );
+		std::strcpy( szPreviousMapCycleFile, mapcfile );
 
 		DestroyMapCycle( &mapcycle );
 
@@ -1560,8 +1560,8 @@ void CHalfLifeMultiplay :: ChangeLevel( void )
 		mapcycle_item_s *item;
 
 		// Assume current map
-		strcpy( szNextMap, STRING(gpGlobals->mapname) );
-		strcpy( szFirstMapInList, STRING(gpGlobals->mapname) );
+		std::strcpy( szNextMap, STRING(gpGlobals->mapname) );
+		std::strcpy( szFirstMapInList, STRING(gpGlobals->mapname) );
 
 		// Traverse list
 		for ( item = mapcycle.next_item; item->next != mapcycle.next_item; item = item->next )
@@ -1612,15 +1612,15 @@ void CHalfLifeMultiplay :: ChangeLevel( void )
 		mapcycle.next_item = item->next;
 
 		// Perform logic on current item
-		strcpy( szNextMap, item->mapname );
+		std::strcpy( szNextMap, item->mapname );
 
 		ExtractCommandString( item->rulebuffer, szCommands );
-		strcpy( szRules, item->rulebuffer );
+		std::strcpy( szRules, item->rulebuffer );
 	}
 
 	if ( !IS_MAP_VALID(szNextMap) )
 	{
-		strcpy( szNextMap, szFirstMapInList );
+		std::strcpy( szNextMap, szFirstMapInList );
 	}
 
 	g_fGameOver = TRUE;
@@ -1630,13 +1630,13 @@ void CHalfLifeMultiplay :: ChangeLevel( void )
 	{
 		ALERT( at_console, "PLAYER COUNT:  min %i max %i current %i\n", minplayers, maxplayers, curplayers );
 	}
-	if ( strlen( szRules ) > 0 )
+	if ( std::strlen( szRules ) > 0 )
 	{
 		ALERT( at_console, "RULES:  %s\n", szRules );
 	}
 	
 	CHANGE_LEVEL( szNextMap, NULL );
-	if ( strlen( szCommands ) > 0 )
+	if ( std::strlen( szCommands ) > 0 )
 	{
 		SERVER_COMMAND( szCommands );
 	}
@@ -1664,17 +1664,17 @@ void CHalfLifeMultiplay :: SendMOTDToClient( edict_t *client )
 	{
 		char chunk[MAX_MOTD_CHUNK+1];
 		
-		if ( strlen( pFileList ) < MAX_MOTD_CHUNK )
+		if ( std::strlen( pFileList ) < MAX_MOTD_CHUNK )
 		{
-			strcpy( chunk, pFileList );
+			std::strcpy( chunk, pFileList );
 		}
 		else
 		{
-			strncpy( chunk, pFileList, MAX_MOTD_CHUNK );
+			std::strncpy( chunk, pFileList, MAX_MOTD_CHUNK );
 			chunk[MAX_MOTD_CHUNK] = 0;		// strncpy doesn't always append the null terminator
 		}
 
-		char_count += strlen( chunk );
+		char_count += std::strlen( chunk );
 		if ( char_count < MAX_MOTD_LENGTH )
 			pFileList = aFileList + char_count; 
 		else

@@ -23,8 +23,8 @@
 #include "cl_util.h"
 #include "parsemsg.h"
 
-#include <string.h>
-#include <stdio.h>
+#include <cstring>
+#include <cstdio>
 
 DECLARE_MESSAGE( m_StatusBar, StatusText );
 DECLARE_MESSAGE( m_StatusBar, StatusValue );
@@ -66,7 +66,7 @@ void CHudStatusBar :: Reset( void )
 	m_iFlags &= ~HUD_ACTIVE;  // start out inactive
 	for ( i = 0; i < MAX_STATUSBAR_LINES; i++ )
 		m_szStatusText[i][0] = 0;
-	memset( m_iStatusValues, 0, sizeof m_iStatusValues );
+	std::memset( m_iStatusValues, 0, sizeof m_iStatusValues );
 
 	m_iStatusValues[0] = 1;  // 0 is the special index, which always returns true
 
@@ -79,11 +79,11 @@ void CHudStatusBar :: ParseStatusString( int line_num )
 {
 	// localise string first
 	char szBuffer[MAX_STATUSTEXT_LENGTH];
-	memset( szBuffer, 0, sizeof szBuffer );
+	std::memset( szBuffer, 0, sizeof szBuffer );
 	gHUD.m_TextMessage.LocaliseTextString( m_szStatusText[line_num], szBuffer, MAX_STATUSTEXT_LENGTH );
 
 	// parse m_szStatusText & m_iStatusValues into m_szStatusBar
-	memset( m_szStatusBar[line_num], 0, MAX_STATUSTEXT_LENGTH );
+	std::memset( m_szStatusBar[line_num], 0, MAX_STATUSTEXT_LENGTH );
 	char *src = szBuffer;
 	char *dst = m_szStatusBar[line_num];
 
@@ -97,7 +97,7 @@ void CHudStatusBar :: ParseStatusString( int line_num )
 		if ( ((src - src_start) >= MAX_STATUSTEXT_LENGTH) || ((dst - dst_start) >= MAX_STATUSTEXT_LENGTH) )
 			break;
 
-		int index = atoi( src );
+		int index = std::atoi( src );
 		// should we draw this line?
 		if ( (index >= 0 && index < MAX_STATUSBAR_VALUES) && (m_iStatusValues[index] != 0) )
 		{  // parse this line and append result to the status bar
@@ -129,7 +129,7 @@ void CHudStatusBar :: ParseStatusString( int line_num )
 					}
 
 					// move over descriptor, then get and move over the index
-					index = atoi( ++src ); 
+					index = std::atoi( ++src ); 
 					while ( *src >= '0' && *src <= '9' )
 						src++;
 
@@ -145,17 +145,17 @@ void CHudStatusBar :: ParseStatusString( int line_num )
 							gEngfuncs.pfnGetPlayerInfo( indexval, &g_PlayerInfoList[indexval] );
 							if ( g_PlayerInfoList[indexval].name != NULL )
 							{
-								strncpy( szRepString, g_PlayerInfoList[indexval].name, MAX_PLAYER_NAME_LENGTH );
+								std::strncpy( szRepString, g_PlayerInfoList[indexval].name, MAX_PLAYER_NAME_LENGTH );
 								m_pflNameColors[line_num] = GetClientColor( indexval );
 							}
 							else
 							{
-								strcpy( szRepString, "******" );
+								std::strcpy( szRepString, "******" );
 							}
 
 							break;
 						case 'i':  // number
-							sprintf( szRepString, "%d", indexval );
+							std::sprintf( szRepString, "%d", indexval );
 							break;
 						default:
 							szRepString[0] = 0;
@@ -202,7 +202,7 @@ int CHudStatusBar :: Draw( float fTime )
 		// let user set status ID bar centering
 		if ( (i == STATUSBAR_ID_LINE) && CVAR_GET_FLOAT("hud_centerid") )
 		{
-			x = max( 0, max(2, (ScreenWidth - TextWidth)) / 2 );
+			x = std::max( 0, std::max(2, (ScreenWidth - TextWidth)) / 2 );
 			y = (ScreenHeight / 2) + (TextHeight*CVAR_GET_FLOAT("hud_centerid"));
 		}
 
@@ -236,7 +236,7 @@ int CHudStatusBar :: MsgFunc_StatusText( const char *pszName, int iSize, void *p
 	if ( line < 0 || line > MAX_STATUSBAR_LINES )
 		return 1;
 
-	strncpy( m_szStatusText[line], READ_STRING(), MAX_STATUSTEXT_LENGTH );
+	std::strncpy( m_szStatusText[line], READ_STRING(), MAX_STATUSTEXT_LENGTH );
 	m_szStatusText[line][MAX_STATUSTEXT_LENGTH-1] = 0;  // ensure it's null terminated ( strncpy() won't null terminate if read string too long)
 
 	m_iFlags |= HUD_ACTIVE;

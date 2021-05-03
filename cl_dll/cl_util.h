@@ -23,9 +23,11 @@
 #define FALSE 0
 #endif
 
-#include <stdio.h> // for safe_sprintf()
-#include <stdarg.h>  // "
-#include <string.h> // for strncpy()
+#include <cstdio> // for safe_sprintf()
+#include <cstdarg>  // "
+#include <cstring> // for strncpy()
+
+#include <algorithm> // For min/max
 
 // Macros to hook function calls into the HUD object
 #define HOOK_MESSAGE(x) gEngfuncs.pfnHookUserMsg(#x, __MsgFunc_##x );
@@ -132,7 +134,7 @@ inline char *safe_strcpy( char *dst, const char *src, int len_dst)
 		return NULL; // this is bad
 	}
 
-	strncpy(dst,src,len_dst);
+	std::strncpy(dst,src,len_dst);
 	dst[ len_dst - 1 ] = '\0';
 
 	return dst;
@@ -161,10 +163,6 @@ inline int safe_sprintf( char *dst, int len_dst, const char *format, ...)
 // sound functions
 inline void PlaySound( char *szSound, float vol ) { gEngfuncs.pfnPlaySoundByName( szSound, vol ); }
 inline void PlaySound( int iSound, float vol ) { gEngfuncs.pfnPlaySoundByIndex( iSound, vol ); }
-
-#define max(a, b)  (((a) > (b)) ? (a) : (b))
-#define min(a, b)  (((a) < (b)) ? (a) : (b))
-#define fabs(x)	   ((x) > 0 ? (x) : 0 - (x))
 
 void ScaleColors( int &r, int &g, int &b, int a );
 

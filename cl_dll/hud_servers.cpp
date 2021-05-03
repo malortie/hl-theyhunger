@@ -11,7 +11,7 @@
 #include "hud_servers_priv.h"
 #include "hud_servers.h"
 #include "net_api.h"
-#include <string.h>
+#include <cstring>
 #ifdef _WIN32
 #include "winsani_in.h"
 #include <winsock.h>
@@ -186,14 +186,14 @@ void CHudServers::ServerResponse( struct net_response_s *response )
 		if ( response->response )
 		{
 			szresponse = (char *)response->response;
-			len = strlen( szresponse ) + 100 + 1;
-			sprintf( sz, "%i", (int)( 1000.0 * response->ping ) );
+			len = std::strlen( szresponse ) + 100 + 1;
+			std::sprintf( sz, "%i", (int)( 1000.0 * response->ping ) );
 
 			browser = new server_t;
 			browser->remote_address = response->remote_address;
 			browser->info = new char[ len ];
 			browser->ping = (int)( 1000.0 * response->ping );
-			strcpy( browser->info, szresponse );
+			std::strcpy( browser->info, szresponse );
 
 			NET_API->SetValueForKey( browser->info, "address", gEngfuncs.pNetAPI->AdrToString( &response->remote_address ), len );
 			NET_API->SetValueForKey( browser->info, "ping", sz, len );
@@ -222,7 +222,7 @@ void CHudServers::PingResponse( struct net_response_s *response )
 	switch ( response->type )
 	{
 	case NETAPI_REQUEST_PING:
-		sprintf( sz, "%.2f", 1000.0 * response->ping );
+		std::sprintf( sz, "%.2f", 1000.0 * response->ping );
 
 		gEngfuncs.Con_Printf( "ping == %s\n", sz );
 		break;
@@ -588,8 +588,8 @@ int CompareField( CHudServers::server_t *p1, CHudServers::server_t *p2, const ch
 	sz1 = NET_API->ValueForKey( p1->info, fieldname );
 	sz2 = NET_API->ValueForKey( p2->info, fieldname );
 
-	fv1 = atof( sz1 );
-	fv2 = atof( sz2 );
+	fv1 = std::atof( sz1 );
+	fv2 = std::atof( sz2 );
 
 	if ( fv1 && fv2 )
 	{
@@ -637,7 +637,7 @@ void CHudServers::SortServers( const char *fieldname )
 	if ( !m_pServers )
 		return;
 
-	strcpy( g_fieldname, fieldname );
+	std::strcpy( g_fieldname, fieldname );
 
 	int i;
 	int c = 0;
@@ -652,7 +652,7 @@ void CHudServers::SortServers( const char *fieldname )
 	server_t **pSortArray;
 	
 	pSortArray = new server_t *[ c ];
-	memset( pSortArray, 0, c  * sizeof( server_t * ) );
+	std::memset( pSortArray, 0, c  * sizeof( server_t * ) );
 
 	// Now copy the list into the pSortArray:
 	p = m_pServers;
@@ -667,7 +667,7 @@ void CHudServers::SortServers( const char *fieldname )
 	size_t nCount = c;
 	size_t nSize  = sizeof( server_t * );
 
-	qsort(
+	std::qsort(
 		pSortArray,
 		(size_t)nCount,
 		(size_t)nSize,
@@ -765,14 +765,14 @@ int CHudServers::LoadMasterAddresses( int maxservers, int *count, netadr_t *padr
 	int			nDefaultPort;
 
 	// Assume default master and master file
-	strcpy( szMaster, VALVE_MASTER_ADDRESS );    // IP:PORT string
-	strcpy( szMasterFile, MASTER_PARSE_FILE );
+	std::strcpy( szMaster, VALVE_MASTER_ADDRESS );    // IP:PORT string
+	std::strcpy( szMasterFile, MASTER_PARSE_FILE );
 
 	// See if there is a command line override
 	i = gEngfuncs.CheckParm( "-comm", &pstart );
 	if ( i && pstart )
 	{
-		strcpy (szMasterFile, pstart );
+		std::strcpy (szMasterFile, pstart );
 	}
 
 	// Read them in from proper file
@@ -788,7 +788,7 @@ int CHudServers::LoadMasterAddresses( int maxservers, int *count, netadr_t *padr
 	{
 		pstart = gEngfuncs.COM_ParseFile( pstart, m_szToken );
 
-		if ( strlen(m_szToken) <= 0)
+		if ( std::strlen(m_szToken) <= 0)
 			break;
 
 		bIgnore = true;
@@ -801,7 +801,7 @@ int CHudServers::LoadMasterAddresses( int maxservers, int *count, netadr_t *padr
 
 		// Now parse all addresses between { }
 		pstart = gEngfuncs.COM_ParseFile( pstart, m_szToken );
-		if ( strlen(m_szToken) <= 0 )
+		if ( std::strlen(m_szToken) <= 0 )
 			break;
 
 		if ( stricmp ( m_szToken, "{" ) )
@@ -815,17 +815,17 @@ int CHudServers::LoadMasterAddresses( int maxservers, int *count, netadr_t *padr
 			// Now parse all addresses between { }
 			pstart = gEngfuncs.COM_ParseFile( pstart, m_szToken );
 			
-			if (strlen(m_szToken) <= 0)
+			if (std::strlen(m_szToken) <= 0)
 				break;
 
 			if ( !stricmp ( m_szToken, "}" ) )
 				break;
 			
-			sprintf( base, "%s", m_szToken );
+			std::sprintf( base, "%s", m_szToken );
 				
 			pstart = gEngfuncs.COM_ParseFile( pstart, m_szToken );
 			
-			if (strlen(m_szToken) <= 0)
+			if (std::strlen(m_szToken) <= 0)
 				break;
 
 			if ( stricmp( m_szToken, ":" ) )
@@ -833,14 +833,14 @@ int CHudServers::LoadMasterAddresses( int maxservers, int *count, netadr_t *padr
 
 			pstart = gEngfuncs.COM_ParseFile( pstart, m_szToken );
 			
-			if (strlen(m_szToken) <= 0)
+			if (std::strlen(m_szToken) <= 0)
 				break;
 
-			nPort = atoi ( m_szToken );
+			nPort = std::atoi ( m_szToken );
 			if ( !nPort )
 				nPort = nDefaultPort;
 
-			sprintf( szAdr, "%s:%i", base, nPort );
+			std::sprintf( szAdr, "%s:%i", base, nPort );
 
 			// Can we resolve it any better
 			if ( !NET_API->StringToAdr( szAdr, &adr ) )
@@ -856,7 +856,7 @@ int CHudServers::LoadMasterAddresses( int maxservers, int *count, netadr_t *padr
 finish_master:
 	if ( !nCount )
 	{
-		sprintf( szMaster, VALVE_MASTER_ADDRESS );    // IP:PORT string
+		std::sprintf( szMaster, VALVE_MASTER_ADDRESS );    // IP:PORT string
 
 		// Convert to netadr_t
 		if ( NET_API->StringToAdr ( szMaster, &adr ) )
@@ -921,7 +921,7 @@ void CHudServers::RequestBroadcastList( int clearpending )
 	m_dStarted		= m_fElapsed;
 
 	netadr_t		adr;
-	memset( &adr, 0, sizeof( adr ) );
+	std::memset( &adr, 0, sizeof( adr ) );
 
 	if ( clearpending )
 	{

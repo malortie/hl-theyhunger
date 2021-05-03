@@ -20,8 +20,8 @@
 #include "const.h"
 #include "entity_state.h"
 #include "cl_entity.h"
-#include <string.h>
-#include <stdio.h>
+#include <cstring>
+#include <cstdio>
 #include "parsemsg.h"
 #include "event_api.h"
 
@@ -46,7 +46,7 @@ int CHudStatusIcons::VidInit( void )
 
 void CHudStatusIcons::Reset( void )
 {
-	memset( m_IconList, 0, sizeof m_IconList );
+	std::memset( m_IconList, 0, sizeof m_IconList );
 	m_iFlags &= ~HUD_ACTIVE;
 }
 
@@ -138,10 +138,10 @@ void CHudStatusIcons::EnableIcon( char *pszIconName, unsigned char red, unsigned
 	m_IconList[i].r = red;
 	m_IconList[i].g = green;
 	m_IconList[i].b = blue;
-	strcpy( m_IconList[i].szSpriteName, pszIconName );
+	std::strcpy( m_IconList[i].szSpriteName, pszIconName );
 
 	// Hack: Play Timer sound when a grenade icon is played (in 0.8 seconds)
-	if ( strstr(m_IconList[i].szSpriteName, "grenade") )
+	if ( std::strstr(m_IconList[i].szSpriteName, "grenade") )
 	{
 		cl_entity_t *pthisplayer = gEngfuncs.GetLocalPlayer();
 		gEngfuncs.pEventAPI->EV_PlaySound( pthisplayer->index, pthisplayer->origin, CHAN_STATIC, "weapons/timer.wav", 1.0, ATTN_NORM, 0, PITCH_NORM );
@@ -156,7 +156,7 @@ void CHudStatusIcons::DisableIcon( char *pszIconName )
 		if ( !stricmp( m_IconList[i].szSpriteName, pszIconName ) )
 		{
 			// clear the item from the list
-			memset( &m_IconList[i], 0, sizeof(icon_sprite_t) );
+			std::memset( &m_IconList[i], 0, sizeof(icon_sprite_t) );
 			return;
 		}
 	}

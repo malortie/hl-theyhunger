@@ -17,9 +17,9 @@
 #endif
 
 #include "cl_util.h"
-#include <assert.h>
-#include <string.h>
-#include <stdio.h>
+#include <cassert>
+#include <cstring>
+#include <cstdio>
 #include "parsemsg.h"
 #include "hud_servers.h"
 #include "demo.h"
@@ -90,7 +90,7 @@ int g_BannedPlayerPrintCount;
 void ForEachBannedPlayer(char id[16])
 {
 	char str[256];
-	sprintf(str, "Ban %d: %2x%2x%2x%2x%2x%2x%2x%2x%2x%2x%2x%2x%2x%2x%2x%2x\n",
+	std::sprintf(str, "Ban %d: %2x%2x%2x%2x%2x%2x%2x%2x%2x%2x%2x%2x%2x%2x%2x%2x\n",
 		g_BannedPlayerPrintCount++,
 		id[0], id[1], id[2], id[3], 
 		id[4], id[5], id[6], id[7], 
@@ -138,7 +138,7 @@ CVoiceStatus::CVoiceStatus()
 
 	m_bTalking = m_bServerAcked = false;
 
-	memset(m_pBanButtons, 0, sizeof(m_pBanButtons));
+	std::memset(m_pBanButtons, 0, sizeof(m_pBanButtons));
 
 	m_pParentPanel = NULL;
 
@@ -176,7 +176,7 @@ CVoiceStatus::~CVoiceStatus()
 			m_BanMgr.SaveState(m_pchGameDir);
 		}
 
-		free(m_pchGameDir);
+		std::free(m_pchGameDir);
 	}
 }
 
@@ -203,7 +203,7 @@ int CVoiceStatus::Init(
 
 	m_BlinkTimer = 0;
 	m_VoiceHeadModel = NULL;
-	memset(m_Labels, 0, sizeof(m_Labels));
+	std::memset(m_Labels, 0, sizeof(m_Labels));
 	
 	for(int i=0; i < MAX_VOICE_SPEAKERS; i++)
 	{
@@ -242,8 +242,8 @@ int CVoiceStatus::Init(
 
 	// Cache the game directory for use when we shut down
 	const char *pchGameDirT = gEngfuncs.pfnGetGameDirectory();
-	m_pchGameDir = (char *)malloc(strlen(pchGameDirT) + 1);
-	strcpy(m_pchGameDir, pchGameDirT);
+	m_pchGameDir = (char *)std::malloc(std::strlen(pchGameDirT) + 1);
+	std::strcpy(m_pchGameDir, pchGameDirT);
 
 	return 1;
 }
@@ -298,7 +298,7 @@ int CVoiceStatus::VidInit()
 		gEngfuncs.COM_ParseFile(pFile, token);
 		if(token[0] >= '0' && token[0] <= '9')
 		{
-			m_VoiceHeadModelHeight = (float)atof(token);
+			m_VoiceHeadModelHeight = (float)std::atof(token);
 		}
 
 		gEngfuncs.COM_FreeFile(pFile);
@@ -366,7 +366,7 @@ void CVoiceStatus::CreateEntities()
 		cl_entity_s *pEnt = &m_VoiceHeadModels[iOutModel];
 		++iOutModel;
 
-		memset(pEnt, 0, sizeof(*pEnt));
+		std::memset(pEnt, 0, sizeof(*pEnt));
 
 		pEnt->curstate.rendermode = kRenderTransAdd;
 		pEnt->curstate.renderamt = 255;
@@ -452,7 +452,7 @@ void CVoiceStatus::UpdateSpeakerStatus( int entindex, qboolean bTalking )
 					{
 						// Get the name from the engine.
 						hud_player_info_t info;
-						memset( &info, 0, sizeof( info ) );
+						std::memset( &info, 0, sizeof( info ) );
 						gEngfuncs.pfnGetPlayerInfo( entindex, &info );
 
 						char paddedName[512];
@@ -523,13 +523,13 @@ void CVoiceStatus::UpdateServerState(bool bForce)
 		if(gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
 		{
 			char msg[256];
-			sprintf(msg, "CVoiceStatus::UpdateServerState: Sending '%s'\n", str);
+			std::sprintf(msg, "CVoiceStatus::UpdateServerState: Sending '%s'\n", str);
 			gEngfuncs.pfnConsolePrint(msg);
 		}
 	}
 
 	char str[2048];
-	sprintf(str, "vban");
+	std::sprintf(str, "vban");
 	bool bChange = false;
 
 	for(unsigned long dw=0; dw < VOICE_MAX_PLAYERS_DW; dw++)
@@ -554,8 +554,8 @@ void CVoiceStatus::UpdateServerState(bool bForce)
 
 		// Ok, the server needs to be updated.
 		char numStr[512];
-		sprintf(numStr, " %x", banMask);
-		strcat(str, numStr);
+		std::sprintf(numStr, " %x", banMask);
+		std::strcat(str, numStr);
 	}
 
 	if(bChange || bForce)
@@ -563,7 +563,7 @@ void CVoiceStatus::UpdateServerState(bool bForce)
 		if(gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
 		{
 			char msg[256];
-			sprintf(msg, "CVoiceStatus::UpdateServerState: Sending '%s'\n", str);
+			std::sprintf(msg, "CVoiceStatus::UpdateServerState: Sending '%s'\n", str);
 			gEngfuncs.pfnConsolePrint(msg);
 		}
 
@@ -599,7 +599,7 @@ void CVoiceStatus::UpdateBanButton(int iClient)
 		return;
 
 	// Figure out if it's blinking or not.
-	bool bBlink   = fmod(m_BlinkTimer, SCOREBOARD_BLINK_FREQUENCY*2) < SCOREBOARD_BLINK_FREQUENCY;
+	bool bBlink   = std::fmod(m_BlinkTimer, SCOREBOARD_BLINK_FREQUENCY*2) < SCOREBOARD_BLINK_FREQUENCY;
 	bool bTalking = !!m_VoicePlayers[iClient];
 	bool bBanned  = m_BanMgr.GetPlayerBan(playerID);
 	bool bNeverSpoken = !m_VoiceEnabledPlayers[iClient];
@@ -648,10 +648,10 @@ void CVoiceStatus::HandleVoiceMaskMsg(int iSize, void *pbuf)
 			char str[256];
 			gEngfuncs.pfnConsolePrint("CVoiceStatus::HandleVoiceMaskMsg\n");
 			
-			sprintf(str, "    - m_AudiblePlayers[%d] = %lu\n", dw, m_AudiblePlayers.GetDWord(dw));
+			std::sprintf(str, "    - m_AudiblePlayers[%d] = %lu\n", dw, m_AudiblePlayers.GetDWord(dw));
 			gEngfuncs.pfnConsolePrint(str);
 			
-			sprintf(str, "    - m_ServerBannedPlayers[%d] = %lu\n", dw, m_ServerBannedPlayers.GetDWord(dw));
+			std::sprintf(str, "    - m_ServerBannedPlayers[%d] = %lu\n", dw, m_ServerBannedPlayers.GetDWord(dw));
 			gEngfuncs.pfnConsolePrint(str);
 		}
 	}
@@ -741,7 +741,7 @@ void CVoiceStatus::RepositionLabels()
 		// Setup the background label to fit everything in.
 		int border = 2;
 		int bgWide = textWide + iconWide + border*3;
-		int bgTall = max( textTall, iconTall ) + border*2;
+		int bgTall = std::max( textTall, iconTall ) + border*2;
 		pLabel->m_pBackground->setBounds( ScreenWidth - bgWide - 8, y, bgWide, bgTall );
 
 		// Put the text at the left.
@@ -876,7 +876,7 @@ void CVoiceStatus::SetPlayerBlockedState(int iPlayer, bool blocked)
 	if (gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
 	{
 		char str[256];
-		sprintf(str, "CVoiceStatus::SetPlayerBlockedState: setting player %d ban to %d\n", iPlayer, !m_BanMgr.GetPlayerBan(playerID));
+		std::sprintf(str, "CVoiceStatus::SetPlayerBlockedState: setting player %d ban to %d\n", iPlayer, !m_BanMgr.GetPlayerBan(playerID));
 		gEngfuncs.pfnConsolePrint(str);
 	}
 

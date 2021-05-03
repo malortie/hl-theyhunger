@@ -15,7 +15,7 @@
 
 // Com_Weapons.cpp
 // Shared weapons common/shared functions
-#include <stdarg.h>
+#include <cstdarg>
 #include "hud.h"
 #include "cl_util.h"
 #include "com_weapons.h"
@@ -58,14 +58,14 @@ void COM_Log( char *pszFile, char *fmt, ...)
 	}
 
 	va_start (argptr,fmt);
-	vsprintf (string, fmt,argptr);
+	std::vsprintf (string, fmt,argptr);
 	va_end (argptr);
 
-	fp = fopen( pfilename, "a+t");
+	fp = std::fopen( pfilename, "a+t");
 	if (fp)
 	{
-		fprintf(fp, "%s", string);
-		fclose(fp);
+		std::fprintf(fp, "%s", string);
+		std::fclose(fp);
 	}
 }
 

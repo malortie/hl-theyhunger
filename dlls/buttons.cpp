@@ -73,9 +73,9 @@ void CEnvGlobal::KeyValue( KeyValueData *pkvd )
 	if ( FStrEq(pkvd->szKeyName, "globalstate") )		// State name
 		m_globalstate = ALLOC_STRING( pkvd->szValue );
 	else if ( FStrEq(pkvd->szKeyName, "triggermode") )
-		m_triggermode = atoi( pkvd->szValue );
+		m_triggermode = std::atoi( pkvd->szValue );
 	else if ( FStrEq(pkvd->szKeyName, "initialstate") )
-		m_initialstate = atoi( pkvd->szValue );
+		m_initialstate = std::atoi( pkvd->szValue );
 	else 
 		CPointEntity::KeyValue( pkvd );
 }
@@ -241,7 +241,7 @@ void CMultiSource::Register(void)
 	edict_t *pentTarget	= NULL;
 
 	m_iTotal = 0;
-	memset( m_rgEntities, 0, MS_MAX_TARGETS * sizeof(EHANDLE) );
+	std::memset( m_rgEntities, 0, MS_MAX_TARGETS * sizeof(EHANDLE) );
 
 	SetThink(&CMultiSource::SUB_DoNothing);
 
@@ -364,27 +364,27 @@ void CBaseButton::KeyValue( KeyValueData *pkvd )
 	}	
 	else if (FStrEq(pkvd->szKeyName, "locked_sound"))
 	{
-		m_bLockedSound = atof(pkvd->szValue);
+		m_bLockedSound = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "locked_sentence"))
 	{
-		m_bLockedSentence = atof(pkvd->szValue);
+		m_bLockedSentence = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "unlocked_sound"))
 	{
-		m_bUnlockedSound = atof(pkvd->szValue);
+		m_bUnlockedSound = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "unlocked_sentence"))
 	{
-		m_bUnlockedSentence = atof(pkvd->szValue);
+		m_bUnlockedSentence = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "sounds"))
 	{
-		m_sounds = atoi(pkvd->szValue);
+		m_sounds = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else 
@@ -484,7 +484,7 @@ void CBaseButton::Spawn( )
 	m_toggle_state = TS_AT_BOTTOM;
 	m_vecPosition1 = pev->origin;
 	// Subtract 2 from size because the engine expands bboxes by 1 in all directions making the size too big
-	m_vecPosition2	= m_vecPosition1 + (pev->movedir * (fabs( pev->movedir.x * (pev->size.x-2) ) + fabs( pev->movedir.y * (pev->size.y-2) ) + fabs( pev->movedir.z * (pev->size.z-2) ) - m_flLip));
+	m_vecPosition2	= m_vecPosition1 + (pev->movedir * (std::abs( pev->movedir.x * (pev->size.x-2) ) + std::abs( pev->movedir.y * (pev->size.y-2) ) + std::abs( pev->movedir.z * (pev->size.z-2) ) - m_flLip));
 
 
 	// Is this a non-moving button?
@@ -964,12 +964,12 @@ void CMomentaryRotButton::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "returnspeed"))
 	{
-		m_returnSpeed = atof(pkvd->szValue);
+		m_returnSpeed = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "sounds"))
 	{
-		m_sounds = atoi(pkvd->szValue);
+		m_sounds = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else
@@ -1194,7 +1194,7 @@ void CEnvSpark::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "MaxDelay"))
 	{
-		m_flDelay = atof(pkvd->szValue);
+		m_flDelay = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;	
 	}
 	else if (	FStrEq(pkvd->szKeyName, "style") ||

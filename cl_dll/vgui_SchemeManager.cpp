@@ -20,7 +20,7 @@
 #include "vgui_SchemeManager.h"
 #include "cvardef.h"
 
-#include <string.h>
+#include <cstring>
 
 
 cvar_t *g_CV_BitmapFonts;
@@ -127,7 +127,7 @@ static byte *LoadFileByResolution( const char *filePrefix, int xRes, const char 
 
 		// try load
 		char fname[256];
-		sprintf( fname, "%s%d%s", filePrefix, g_ResArray[resNum], filePostfix );
+		std::sprintf( fname, "%s%d%s", filePrefix, g_ResArray[resNum], filePostfix );
 		pFile = gEngfuncs.COM_LoadFile( fname, 5, NULL );
 
 		if ( pFile )
@@ -145,7 +145,7 @@ static byte *LoadFileByResolution( const char *filePrefix, int xRes, const char 
 static void ParseRGBAFromString( byte colorArray[4], const char *colorVector )
 {
 	int r, g, b, a;
-	sscanf( colorVector, "%d %d %d %d", &r, &g, &b, &a );
+	std::sscanf( colorVector, "%d %d %d %d", &r, &g, &b, &a );
 	colorArray[0] = r;
 	colorArray[1] = g;
 	colorArray[2] = b;
@@ -185,7 +185,7 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 
 	const static int numTmpSchemes = 64;
 	static CScheme tmpSchemes[numTmpSchemes];
-	memset( tmpSchemes, 0, sizeof(tmpSchemes) );
+	std::memset( tmpSchemes, 0, sizeof(tmpSchemes) );
 	int currentScheme = -1;
 	CScheme *pScheme = NULL;
 
@@ -199,13 +199,13 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 	bool hasFgColor, hasBgColor, hasArmedFgColor, hasArmedBgColor, hasMouseDownFgColor, hasMouseDownBgColor;
 
 	pFile = gEngfuncs.COM_ParseFile( pFile, token );
-	while ( strlen(token) > 0 && (currentScheme < numTmpSchemes) )
+	while ( std::strlen(token) > 0 && (currentScheme < numTmpSchemes) )
 	{
 		// get the paramName name
 		static const int tokenSize = 64;
 		char paramName[tokenSize], paramValue[tokenSize];
 
-		strncpy( paramName, token, tokenSize );
+		std::strncpy( paramName, token, tokenSize );
 		paramName[tokenSize-1] = 0; // ensure null termination
 
 		// get the '=' character
@@ -225,7 +225,7 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 
 		// get paramValue
 		pFile = gEngfuncs.COM_ParseFile( pFile, token );
-		strncpy( paramValue, token, tokenSize );
+		std::strncpy( paramValue, token, tokenSize );
 		paramValue[tokenSize-1] = 0; // ensure null termination
 		
 		// is this a new scheme?
@@ -241,11 +241,11 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 				}
 				if ( !hasArmedFgColor )
 				{
-					memcpy( pScheme->armedFgColor, pScheme->fgColor, sizeof(pScheme->armedFgColor) );
+					std::memcpy( pScheme->armedFgColor, pScheme->fgColor, sizeof(pScheme->armedFgColor) );
 				}
 				if ( !hasMouseDownFgColor )
 				{
-					memcpy( pScheme->mousedownFgColor, pScheme->armedFgColor, sizeof(pScheme->mousedownFgColor) );
+					std::memcpy( pScheme->mousedownFgColor, pScheme->armedFgColor, sizeof(pScheme->mousedownFgColor) );
 				}
 
 				// background color (normal -> armed -> mouse down)
@@ -255,11 +255,11 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 				}
 				if ( !hasArmedBgColor )
 				{
-					memcpy( pScheme->armedBgColor, pScheme->bgColor, sizeof(pScheme->armedBgColor) );
+					std::memcpy( pScheme->armedBgColor, pScheme->bgColor, sizeof(pScheme->armedBgColor) );
 				}
 				if ( !hasMouseDownBgColor )
 				{
-					memcpy( pScheme->mousedownBgColor, pScheme->armedBgColor, sizeof(pScheme->mousedownBgColor) );
+					std::memcpy( pScheme->mousedownBgColor, pScheme->armedBgColor, sizeof(pScheme->mousedownBgColor) );
 				}
 
 				// font size
@@ -269,7 +269,7 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 				}
 				if ( !pScheme->fontName[0] )
 				{
-					strcpy( pScheme->fontName, "Arial" );
+					std::strcpy( pScheme->fontName, "Arial" );
 				}
 			}
 
@@ -278,7 +278,7 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 			pScheme = &tmpSchemes[currentScheme];
 			hasFgColor = hasBgColor = hasArmedFgColor = hasArmedBgColor = hasMouseDownFgColor = hasMouseDownBgColor = false;
 
-			strncpy( pScheme->schemeName, paramValue, CScheme::SCHEME_NAME_LENGTH );
+			std::strncpy( pScheme->schemeName, paramValue, CScheme::SCHEME_NAME_LENGTH );
 			pScheme->schemeName[CScheme::SCHEME_NAME_LENGTH-1] = '\0'; // ensure null termination of string
 		}
 
@@ -291,16 +291,16 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 		// pull the data out into the scheme
 		if ( !stricmp(paramName, "FontName") )
 		{
-			strncpy( pScheme->fontName, paramValue, CScheme::FONT_NAME_LENGTH );
+			std::strncpy( pScheme->fontName, paramValue, CScheme::FONT_NAME_LENGTH );
 			pScheme->fontName[CScheme::FONT_NAME_LENGTH-1] = 0;
 		}
 		else if ( !stricmp(paramName, "FontSize") )
 		{
-			pScheme->fontSize = atoi( paramValue );
+			pScheme->fontSize = std::atoi( paramValue );
 		}
 		else if ( !stricmp(paramName, "FontWeight") )
 		{
-			pScheme->fontWeight = atoi( paramValue );
+			pScheme->fontWeight = std::atoi( paramValue );
 		}
 		else if ( !stricmp(paramName, "FgColor") )
 		{
@@ -352,8 +352,8 @@ buildDefaultFont:
 	if ( currentScheme < 0 )
 	{
 		currentScheme = 0;
-		strcpy( tmpSchemes[0].schemeName, "Default Scheme" );
-		strcpy( tmpSchemes[0].fontName, "Arial" );
+		std::strcpy( tmpSchemes[0].schemeName, "Default Scheme" );
+		std::strcpy( tmpSchemes[0].fontName, "Arial" );
 		tmpSchemes[0].fontSize = 0;
 		tmpSchemes[0].fgColor[0] = tmpSchemes[0].fgColor[1] = tmpSchemes[0].fgColor[2] = tmpSchemes[0].fgColor[3] = 255;
 		tmpSchemes[0].armedFgColor[0] = tmpSchemes[0].armedFgColor[1] = tmpSchemes[0].armedFgColor[2] = tmpSchemes[0].armedFgColor[3] = 255;
@@ -366,7 +366,7 @@ buildDefaultFont:
 	m_pSchemeList = new CScheme[ m_iNumSchemes ];
 
 	// copy in the data
-	memcpy( m_pSchemeList, tmpSchemes, sizeof(CScheme) * m_iNumSchemes );
+	std::memcpy( m_pSchemeList, tmpSchemes, sizeof(CScheme) * m_iNumSchemes );
 
 	// create the fonts
 	for ( int i = 0; i < m_iNumSchemes; i++ )
@@ -407,7 +407,7 @@ buildDefaultFont:
 				else if ( m_xRes >= 800 )
 					fontRes = 800;
 
-				sprintf(fontFilename, "gfx\\vgui\\fonts\\%d_%s.tga", fontRes, m_pSchemeList[i].schemeName);
+				std::sprintf(fontFilename, "gfx\\vgui\\fonts\\%d_%s.tga", fontRes, m_pSchemeList[i].schemeName);
 				pFontData = gEngfuncs.COM_LoadFile( fontFilename, 5, &fontFileLength );
 				if(!pFontData)
 					gEngfuncs.Con_Printf("Missing bitmap font: %s\n", fontFilename);

@@ -124,7 +124,7 @@ CTeamMenuPanel::CTeamMenuPanel(int iTrans, int iRemoveMe, int x,int y,int wide,i
 		}
 
 		// Create the Signals
-		sprintf(sz, "jointeam %d", i);
+		std::sprintf(sz, "jointeam %d", i);
 		m_pButtons[i]->addActionSignal( new CMenuHandler_StringCommandWatch( sz, true ) );
 		m_pButtons[i]->addInputSignal( new CHandler_MenuButtonOver(this, i) );
 
@@ -182,7 +182,7 @@ void CTeamMenuPanel::Update( void )
 
 				// bound key replacement
 				char sz[32]; 
-				sprintf( sz, "%d", i );
+				std::sprintf( sz, "%d", i );
 				m_pButtons[i]->setBoundKey( sz[0] );
 
 				m_pButtons[i]->setVisible( true );
@@ -194,7 +194,7 @@ void CTeamMenuPanel::Update( void )
 					SetActiveInfo( i );
 
 				char szPlayerList[ (MAX_PLAYER_NAME_LENGTH + 3) * 31 ];  // name + ", "
-				strcpy(szPlayerList, "\n");
+				std::strcpy(szPlayerList, "\n");
 				// Update the Team Info
 				// Now count the number of teammembers of this class
 				int iTotal = 0;
@@ -209,8 +209,8 @@ void CTeamMenuPanel::Update( void )
 
 					iTotal++;
 					if (iTotal > 1)
-						strncat( szPlayerList, ", ", sizeof(szPlayerList) - strlen(szPlayerList) );
-					strncat( szPlayerList, g_PlayerInfoList[j].name, sizeof(szPlayerList) - strlen(szPlayerList) );
+						std::strncat( szPlayerList, ", ", sizeof(szPlayerList) - std::strlen(szPlayerList) );
+					std::strncat( szPlayerList, g_PlayerInfoList[j].name, sizeof(szPlayerList) - std::strlen(szPlayerList) );
 					szPlayerList[ sizeof(szPlayerList) - 1 ] = '\0';
 				}
 
@@ -219,10 +219,10 @@ void CTeamMenuPanel::Update( void )
 					// Set the text of the info Panel
 					char szText[ ((MAX_PLAYER_NAME_LENGTH + 3) * 31) + 256 ]; 
 					if (iTotal == 1)
-						sprintf(szText, "%s: %d Player (%d points)", gViewPort->GetTeamName(i), iTotal, g_TeamInfo[i].frags );
+						std::sprintf(szText, "%s: %d Player (%d points)", gViewPort->GetTeamName(i), iTotal, g_TeamInfo[i].frags );
 					else
-						sprintf(szText, "%s: %d Players (%d points)", gViewPort->GetTeamName(i), iTotal, g_TeamInfo[i].frags );
-					strncat( szText, szPlayerList, sizeof(szText) - strlen(szText) );
+						std::sprintf(szText, "%s: %d Players (%d points)", gViewPort->GetTeamName(i), iTotal, g_TeamInfo[i].frags );
+					std::strncat( szText, szPlayerList, sizeof(szText) - std::strlen(szText) );
 					szText[ sizeof(szText) - 1 ] = '\0';
 
 					m_pTeamInfoPanel[i]->setText( szText );
@@ -279,21 +279,21 @@ void CTeamMenuPanel::Update( void )
 			char *ch;
 
 			// Update the level name
-			strcpy( sz, level );
-			ch = strchr( sz, '/' );
+			std::strcpy( sz, level );
+			ch = std::strchr( sz, '/' );
 			if (!ch)
-				ch = strchr( sz, '\\' );
-			strcpy( szTitle, ch+1 );
-			ch = strchr( szTitle, '.' );
+				ch = std::strchr( sz, '\\' );
+			std::strcpy( szTitle, ch+1 );
+			ch = std::strchr( szTitle, '.' );
 			*ch = '\0';
 			m_pMapTitle->setText( "%s", szTitle );
 			*ch = '.';
 
 			// Update the map briefing
-			strcpy( sz, level );
-			ch = strchr( sz, '.' );
+			std::strcpy( sz, level );
+			ch = std::strchr( sz, '.' );
 			*ch = '\0';
-			strcat( sz, ".txt" );
+			std::strcat( sz, ".txt" );
 			char *pfile = (char*)gEngfuncs.COM_LoadFile( sz, 5, NULL );
 			if (pfile)
 			{

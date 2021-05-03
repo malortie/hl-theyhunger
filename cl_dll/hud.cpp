@@ -20,8 +20,8 @@
 
 #include "hud.h"
 #include "cl_util.h"
-#include <string.h>
-#include <stdio.h>
+#include <cstring>
+#include <cstdio>
 #include "parsemsg.h"
 #include "hud_servers.h"
 #include "vgui_int.h"
@@ -342,7 +342,7 @@ void CHud :: Init( void )
 		{
 			pList = m_pHudList;
 			m_pHudList = m_pHudList->pNext;
-			free( pList );
+			std::free( pList );
 		}
 		m_pHudList = NULL;
 	}
@@ -391,7 +391,7 @@ CHud :: ~CHud()
 		{
 			pList = m_pHudList;
 			m_pHudList = m_pHudList->pNext;
-			free( pList );
+			std::free( pList );
 		}
 		m_pHudList = NULL;
 	}
@@ -408,7 +408,7 @@ int CHud :: GetSpriteIndex( const char *SpriteName )
 	// look through the loaded sprite name list for SpriteName
 	for ( int i = 0; i < m_iSpriteCount; i++ )
 	{
-		if ( strncmp( SpriteName, m_rgszSpriteNames + (i * MAX_SPRITE_NAME_LENGTH), MAX_SPRITE_NAME_LENGTH ) == 0 )
+		if ( std::strncmp( SpriteName, m_rgszSpriteNames + (i * MAX_SPRITE_NAME_LENGTH), MAX_SPRITE_NAME_LENGTH ) == 0 )
 			return i;
 	}
 
@@ -464,10 +464,10 @@ void CHud :: VidInit( void )
 				if ( p->iRes == m_iRes )
 				{
 					char sz[256];
-					sprintf(sz, "sprites/%s.spr", p->szSprite);
+					std::sprintf(sz, "sprites/%s.spr", p->szSprite);
 					m_rghSprites[index] = SPR_Load(sz);
 					m_rgrcRects[index] = p->rc;
-					strncpy( &m_rgszSpriteNames[index * MAX_SPRITE_NAME_LENGTH], p->szName, MAX_SPRITE_NAME_LENGTH );
+					std::strncpy( &m_rgszSpriteNames[index * MAX_SPRITE_NAME_LENGTH], p->szName, MAX_SPRITE_NAME_LENGTH );
 
 					index++;
 				}
@@ -487,7 +487,7 @@ void CHud :: VidInit( void )
 			if ( p->iRes == m_iRes )
 			{
 				char sz[256];
-				sprintf( sz, "sprites/%s.spr", p->szSprite );
+				std::sprintf( sz, "sprites/%s.spr", p->szSprite );
 				m_rghSprites[index] = SPR_Load(sz);
 				index++;
 			}
@@ -544,7 +544,7 @@ void COM_FileBase ( const char *in, char *out)
 {
 	int len, start, end;
 
-	len = strlen( in );
+	len = std::strlen( in );
 	
 	// scan backward for '.'
 	end = len - 1;
@@ -571,7 +571,7 @@ void COM_FileBase ( const char *in, char *out)
 	len = end - start + 1;
 
 	// Copy partial string
-	strncpy( out, &in[start], len );
+	std::strncpy( out, &in[start], len );
 	// Terminate it
 	out[len] = 0;
 }
@@ -675,11 +675,11 @@ void CHud::AddHudElem(CHudBase *phudelem)
 	if (!phudelem)
 		return;
 
-	pdl = (HUDLIST *)malloc(sizeof(HUDLIST));
+	pdl = (HUDLIST *)std::malloc(sizeof(HUDLIST));
 	if (!pdl)
 		return;
 
-	memset(pdl, 0, sizeof(HUDLIST));
+	std::memset(pdl, 0, sizeof(HUDLIST));
 	pdl->p = phudelem;
 
 	if (!m_pHudList)

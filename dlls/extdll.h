@@ -41,6 +41,7 @@
 #define NOSERVICE
 #define NOMCX
 #define NOIME
+#define NOMINMAX
 #include "winsani_in.h"
 #include "windows.h"
 #include "winsani_out.h"
@@ -64,9 +65,12 @@ typedef int BOOL;
 #endif //_WIN32
 
 // Misc C-runtime library headers
-#include "stdio.h"
-#include "stdlib.h"
-#include "math.h"
+#include <cstdio>
+#include <cstdlib>
+#include <cmath>
+
+#include <algorithm> // For min/max
+#include <cctype>
 
 // Header file containing definition of globalvars_t and entvars_t
 typedef unsigned int func_t;					//

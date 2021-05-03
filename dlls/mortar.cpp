@@ -82,17 +82,17 @@ void CFuncMortarField :: KeyValue( KeyValueData *pkvd )
 	}
 	else if (FStrEq(pkvd->szKeyName, "m_flSpread"))
 	{
-		m_flSpread = atof(pkvd->szValue);
+		m_flSpread = std::atof(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "m_fControl"))
 	{
-		m_fControl = atoi(pkvd->szValue);
+		m_fControl = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 	else if (FStrEq(pkvd->szKeyName, "m_iCount"))
 	{
-		m_iCount = atoi(pkvd->szValue);
+		m_iCount = std::atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
 }

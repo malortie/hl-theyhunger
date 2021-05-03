@@ -5,7 +5,8 @@
 // $NoKeywords: $
 //=============================================================================
 
-#include <assert.h>
+#include <cassert>
+#include <cstring> // For memset
 #include "vgui_grid.h"
 
 
@@ -68,7 +69,7 @@ bool CGrid::SetDimensions(int xCols, int yRows)
 		return false;
 	}
 
-	memset(m_Widths, 0, sizeof(int) * (xCols*2 + yRows*2));
+	std::memset(m_Widths, 0, sizeof(int) * (xCols*2 + yRows*2));
 
 	m_xCols = xCols;
 	m_yRows = yRows;

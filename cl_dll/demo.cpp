@@ -16,7 +16,7 @@
 #include "cl_util.h"
 #include "demo.h"
 #include "demo_api.h"
-#include <memory.h>
+#include <memory>
 #include "Exports.h"
 
 int g_demosniper = 0;
@@ -41,7 +41,7 @@ void Demo_WriteBuffer( int type, int size, unsigned char *buffer )
 	*( int * )&buf[pos] = type;
 	pos+=sizeof( int );
 
-	memcpy( &buf[pos], buffer, size );
+	std::memcpy( &buf[pos], buffer, size );
 
 	// Write full buffer out
 	gEngfuncs.pDemoAPI->WriteBuffer( size + sizeof( int ), buf );

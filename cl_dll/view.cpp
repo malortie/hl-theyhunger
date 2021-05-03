@@ -197,10 +197,10 @@ float V_CalcBob ( struct ref_params_s *pparams )
 	VectorCopy( pparams->simvel, vel );
 	vel[2] = 0;
 
-	bob = sqrt( vel[0] * vel[0] + vel[1] * vel[1] ) * cl_bob->value;
-	bob = bob * 0.3 + bob * 0.7 * sin(cycle);
-	bob = min( bob, 4 );
-	bob = max( bob, -7 );
+	bob = std::sqrt( vel[0] * vel[0] + vel[1] * vel[1] ) * cl_bob->value;
+	bob = bob * 0.3 + bob * 0.7 * std::sin(cycle);
+	bob = std::min( bob, 4.0f );
+	bob = std::max( bob, -7.0f );
 	return bob;
 	
 }
@@ -222,7 +222,7 @@ float V_CalcRoll (vec3_t angles, vec3_t velocity, float rollangle, float rollspe
     
 	side = DotProduct (velocity, right);
     sign = side < 0 ? -1 : 1;
-    side = fabs( side );
+    side = std::abs( side );
     
 	value = rollangle;
     if (side < rollspeed)
@@ -298,7 +298,7 @@ void V_DriftPitch ( struct ref_params_s *pparams )
 			// to move the view will be centered automatically if they move more than
 			// v_centermove units. 
 
-			if ( fabs( pparams->cmd->forwardmove ) < cl_forwardspeed->value )
+			if ( std::abs( pparams->cmd->forwardmove ) < cl_forwardspeed->value )
 				pd.driftmove = 0;
 			else
 				pd.driftmove += pparams->frametime;
@@ -369,11 +369,11 @@ void V_CalcGunAngle ( struct ref_params_s *pparams )
 
 	viewent->angles[YAW]   =  pparams->viewangles[YAW]   + pparams->crosshairangle[YAW];
 	viewent->angles[PITCH] = -pparams->viewangles[PITCH] + pparams->crosshairangle[PITCH] * 0.25;
-	viewent->angles[ROLL]  -= v_idlescale * sin(pparams->time*v_iroll_cycle.value) * v_iroll_level.value;
+	viewent->angles[ROLL]  -= v_idlescale * std::sin(pparams->time*v_iroll_cycle.value) * v_iroll_level.value;
 	
 	// don't apply all of the v_ipitch to prevent normally unseen parts of viewmodel from coming into view.
-	viewent->angles[PITCH] -= v_idlescale * sin(pparams->time*v_ipitch_cycle.value) * (v_ipitch_level.value * 0.5);
-	viewent->angles[YAW]   -= v_idlescale * sin(pparams->time*v_iyaw_cycle.value) * v_iyaw_level.value;
+	viewent->angles[PITCH] -= v_idlescale * std::sin(pparams->time*v_ipitch_cycle.value) * (v_ipitch_level.value * 0.5);
+	viewent->angles[YAW]   -= v_idlescale * std::sin(pparams->time*v_iyaw_cycle.value) * v_iyaw_level.value;
 
 	VectorCopy( viewent->angles, viewent->curstate.angles );
 	VectorCopy( viewent->angles, viewent->latched.prevangles );
@@ -388,9 +388,9 @@ Idle swaying
 */
 void V_AddIdle ( struct ref_params_s *pparams )
 {
-	pparams->viewangles[ROLL] += v_idlescale * sin(pparams->time*v_iroll_cycle.value) * v_iroll_level.value;
-	pparams->viewangles[PITCH] += v_idlescale * sin(pparams->time*v_ipitch_cycle.value) * v_ipitch_level.value;
-	pparams->viewangles[YAW] += v_idlescale * sin(pparams->time*v_iyaw_cycle.value) * v_iyaw_level.value;
+	pparams->viewangles[ROLL] += v_idlescale * std::sin(pparams->time*v_iroll_cycle.value) * v_iroll_level.value;
+	pparams->viewangles[PITCH] += v_idlescale * std::sin(pparams->time*v_ipitch_cycle.value) * v_ipitch_level.value;
+	pparams->viewangles[YAW] += v_idlescale * std::sin(pparams->time*v_iyaw_cycle.value) * v_iyaw_level.value;
 }
 
  
@@ -769,7 +769,7 @@ void V_CalcNormalRefdef ( struct ref_params_s *pparams )
 			if ( dt > 0.0 )
 			{
 				frac = ( t - ViewInterp.OriginTime[ foundidx & ORIGIN_MASK] ) / dt;
-				frac = min( 1.0, frac );
+				frac = std::min( 1.0, frac );
 				VectorSubtract( ViewInterp.Origins[ ( foundidx + 1 ) & ORIGIN_MASK ], ViewInterp.Origins[ foundidx & ORIGIN_MASK ], delta );
 				VectorMA( ViewInterp.Origins[ foundidx & ORIGIN_MASK ], frac, delta, neworg );
 
@@ -852,7 +852,7 @@ void V_SmoothInterpolateAngles( float * startAngle, float * endAngle, float * fi
 			d += 360.0f;
 		}
 
-		absd = fabs(d);
+		absd = std::abs(d);
 
 		if ( absd > 0.01f )
 		{
@@ -1079,7 +1079,7 @@ float MaxAngleBetweenAngles(  float * a1, float * a2 )
 			d += 360;
 		}
 
-		d = fabs(d);
+		d = std::abs(d);
 
 		if ( d > maxd )
 			maxd=d;
@@ -1440,7 +1440,7 @@ int V_FindViewModelByWeaponModel(int weaponindex)
 
 	if ( weaponModel )
 	{
-		int len = strlen( weaponModel->name );
+		int len = std::strlen( weaponModel->name );
 		int i = 0;
 
 		while ( modelmap[i] != NULL )
@@ -1690,7 +1690,7 @@ void V_DropPunchAngle ( float frametime, float *ev_punchangle )
 	
 	len = VectorNormalize ( ev_punchangle );
 	len -= (10.0 + len * 0.5) * frametime;
-	len = max( len, 0.0 );
+	len = std::max( len, 0.0f );
 	VectorScale ( ev_punchangle, len, ev_punchangle );
 }
 
