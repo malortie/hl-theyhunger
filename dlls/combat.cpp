@@ -1564,6 +1564,23 @@ Vector CBaseEntity::FireBulletsPlayer ( ULONG cShots, Vector vecSrc, Vector vecD
 			case BULLET_PLAYER_357:		
 				pEntity->TraceAttack(pevAttacker, gSkillData.plrDmg357, vecDir, &tr, DMG_BULLET); 
 				break;
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+			case BULLET_PLAYER_AP9:
+				pEntity->TraceAttack(pevAttacker, gSkillData.plrDmgAP9, vecDir, &tr, DMG_BULLET);
+				break;
+
+			case BULLET_PLAYER_CHAINGUN:
+				pEntity->TraceAttack(pevAttacker, gSkillData.plrDmgMP5, vecDir, &tr, DMG_BULLET);
+				break;
+
+			case BULLET_PLAYER_SNIPER:
+				pEntity->TraceAttack(pevAttacker, gSkillData.plrDmgSniper, vecDir, &tr, DMG_BULLET);
+				break;
+
+			case BULLET_PLAYER_TAURUS:
+				pEntity->TraceAttack(pevAttacker, gSkillData.plrDmgTaurus, vecDir, &tr, DMG_BULLET);
+				break;
+#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 				
 			case BULLET_NONE: // FIX 
 				pEntity->TraceAttack(pevAttacker, 50, vecDir, &tr, DMG_CLUB);

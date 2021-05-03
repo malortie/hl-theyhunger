@@ -41,6 +41,16 @@
 #include	"soundent.h"
 #include	"effects.h"
 #include	"customentity.h"
+#if defined ( HUNGER_DLL )
+#include	"hgrunt.h"
+#endif // defined ( HUNGER_DLL )
+
+#if defined ( HUNGER_DLL )
+//
+// Spawn flags
+//
+#define SF_HGRUNT_ZSOLDIER		64
+#endif // defined ( HUNGER_DLL )
 
 int g_fGruntQuestion;				// true if an idle grunt asked a question. Cleared when someone answers.
 
@@ -72,6 +82,11 @@ extern DLL_GLOBAL int		g_iSkillLevel;
 #define GUN_MP5						0
 #define GUN_SHOTGUN					1
 #define GUN_NONE					2
+#if defined ( HUNGER_DLL )
+#define PARACHUTE_GROUP				3
+#define PARACHUTE_OFF				0
+#define PARACHUTE_ON				1
+#endif // defined ( HUNGER_DLL )
 
 //=========================================================
 // Monster's Anim Events Go Here
@@ -120,6 +135,7 @@ enum
 //=========================================================
 #define bits_COND_GRUNT_NOFIRE	( bits_COND_SPECIAL1 )
 
+#if !defined ( HUNGER_DLL )
 class CHGrunt : public CSquadMonster
 {
 public:
@@ -186,6 +202,7 @@ public:
 
 	static const char *pGruntSentences[];
 };
+#endif // !defined ( HUNGER_DLL )
 
 LINK_ENTITY_TO_CLASS( monster_human_grunt, CHGrunt );
 
@@ -203,6 +220,9 @@ TYPEDESCRIPTION	CHGrunt::m_SaveData[] =
 //  DEFINE_FIELD( CShotgun, m_iBrassShell, FIELD_INTEGER ),
 //  DEFINE_FIELD( CShotgun, m_iShotgunShell, FIELD_INTEGER ),
 	DEFINE_FIELD( CHGrunt, m_iSentence, FIELD_INTEGER ),
+#if defined ( HUNGER_DLL )
+	DEFINE_FIELD( CHGrunt, m_iGruntFlags, FIELD_INTEGER ),
+#endif // defined ( HUNGER_DLL )
 };
 
 IMPLEMENT_SAVERESTORE( CHGrunt, CSquadMonster );
@@ -244,6 +264,11 @@ enum
 //=========================================================
 void CHGrunt :: SpeakSentence( void )
 {
+#if defined ( HUNGER_DLL )
+	// Prevent Cyberfranklin from emitting Grunt taunt sounds. 
+	if ( FClassnameIs( pev, "monster_th_cyberfranklin" ) )
+		return;
+#endif
 	if ( m_iSentence == HGRUNT_SENT_NONE )
 	{
 		// no sentence cued up.
@@ -330,6 +355,11 @@ int CHGrunt :: ISoundMask ( void )
 //=========================================================
 BOOL CHGrunt :: FOkToSpeak( void )
 {
+#if defined ( HUNGER_DLL )
+	// Zombie soldiers do not speak.
+	if ( IsZombieSoldier() )
+		return FALSE;
+#endif // defined ( HUNGER_DLL )
 // if someone else is talking, don't speak
 	if (gpGlobals->time <= CTalkMonster::g_talkWaitTime)
 		return FALSE;
@@ -636,6 +666,21 @@ int CHGrunt :: TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, floa
 	return CSquadMonster :: TakeDamage ( pevInflictor, pevAttacker, flDamage, bitsDamageType );
 }
 
+#if defined ( HUNGER_DLL )
+void CHGrunt::Killed(entvars_t *pevAttacker, int iGib)
+{
+	//
+	// If a grunt is killed while using a parachute, update
+	// bodygroup to make it invisible.
+	//
+	if (GetBodygroup(PARACHUTE_GROUP) == PARACHUTE_ON)
+	{
+		SetBodygroup(PARACHUTE_GROUP, PARACHUTE_OFF);
+	}
+
+	CSquadMonster::Killed( pevAttacker, iGib );
+}
+#endif // defined ( HUNGER_DLL )
 //=========================================================
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
@@ -740,6 +785,10 @@ void CHGrunt :: CheckAmmo ( void )
 //=========================================================
 int	CHGrunt :: Classify ( void )
 {
+#if defined ( HUNGER_DLL )
+	if (IsZombieSoldier())
+		return CLASS_ALIEN_MONSTER;
+#endif // defined ( HUNGER_DLL )
 	return	CLASS_HUMAN_MILITARY;
 }
 
@@ -980,7 +1029,36 @@ void CHGrunt :: Spawn()
 {
 	Precache( );
 
+#if defined ( HUNGER_DLL )
+	m_iGruntFlags = 0;
+
+	// Check if this is a zombie soldier.
+	if (pev->spawnflags & SF_HGRUNT_ZSOLDIER)
+	{
+		m_iGruntFlags |= GF_ZSOLDIER;
+	}
+
+	char* szModel = (char*)STRING(pev->model);
+
+	// If this is a zombie soldier with a regular grunt model,
+	// switch to appropriate model.
+	if (IsZombieSoldier() && !FStrEq(szModel, "models/zgrunt.mdl"))
+	{
+		szModel = "models/zgrunt.mdl";
+		pev->model = ALLOC_STRING(szModel);
+	}
+	else
+	{
+		// Pick regular grunt model.
+		szModel = "models/hgrunt.mdl";
+		pev->model = ALLOC_STRING(szModel);
+	}
+
+	// Set new model.
+	SET_MODEL(ENT(pev), (char*)STRING(pev->model));
+#else
 	SET_MODEL(ENT(pev), "models/hgrunt.mdl");
+#endif // defined ( HUNGER_DLL )
 	UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
 
 	pev->solid			= SOLID_SLIDEBOX;
@@ -1046,6 +1124,9 @@ void CHGrunt :: Spawn()
 void CHGrunt :: Precache()
 {
 	PRECACHE_MODEL("models/hgrunt.mdl");
+#if defined ( HUNGER_DLL )
+	PRECACHE_MODEL("models/zgrunt.mdl");
+#endif // defined ( HUNGER_DLL )
 
 	PRECACHE_SOUND( "hgrunt/gr_mgun1.wav" );
 	PRECACHE_SOUND( "hgrunt/gr_mgun2.wav" );
@@ -1217,6 +1298,12 @@ void CHGrunt :: DeathSound ( void )
 	}
 }
 
+#if defined ( HUNGER_DLL )
+BOOL CHGrunt::IsZombieSoldier(void) const
+{
+	return (m_iGruntFlags & GF_ZSOLDIER);
+}
+#endif // defined ( HUNGER_DLL )
 //=========================================================
 // AI Schedules Specific to this monster
 //=========================================================
@@ -1942,6 +2029,19 @@ void CHGrunt :: SetActivity ( Activity NewActivity )
 		}
 		iSequence = LookupActivity ( NewActivity );
 		break;
+#if defined ( HUNGER_DLL )
+	case ACT_LAND:
+		//
+		// If a grunt landed using a parachute, update
+		// bodygroup to make it invisible.
+		//
+		if (GetBodygroup(PARACHUTE_GROUP) == PARACHUTE_ON)
+		{
+			SetBodygroup(PARACHUTE_GROUP, PARACHUTE_OFF);
+		}
+		iSequence = LookupActivity(NewActivity);
+		break;
+#endif // defined ( HUNGER_DLL )
 	default:
 		iSequence = LookupActivity ( NewActivity );
 		break;
@@ -2244,6 +2344,34 @@ Schedule_t* CHGrunt :: GetScheduleOfType ( int Type )
 			}
 			else
 			{
+#if defined ( HUNGER_DLL )
+				// Zombie soldiers cannot use grenades.
+				if (IsZombieSoldier())
+				{
+					return &slGruntTakeCover[ 0 ];
+				}
+				else
+				{
+					// Regular cover.
+					if (RANDOM_LONG(0, 1))
+					{
+						return &slGruntTakeCover[ 0 ];
+					}
+					else
+					{
+						if (!FClassnameIs(pev,"monster_th_cyberfranklin"))
+						{
+							// Regular grenade cover.
+							return &slGruntGrenadeCover[ 0 ];
+						}
+						else
+						{
+							// Prevent Cyber franklin from dropping grenades down.
+							return &slGruntTakeCover[ 0 ];
+						}
+					}
+				}
+#else
 				if ( RANDOM_LONG(0,1) )
 				{
 					return &slGruntTakeCover[ 0 ];
@@ -2252,6 +2380,7 @@ Schedule_t* CHGrunt :: GetScheduleOfType ( int Type )
 				{
 					return &slGruntGrenadeCover[ 0 ];
 				}
+#endif // defined ( HUNGER_DLL )
 			}
 		}
 	case SCHED_TAKE_COVER_FROM_BEST_SOUND:
@@ -2376,7 +2505,11 @@ Schedule_t* CHGrunt :: GetScheduleOfType ( int Type )
 // CHGruntRepel - when triggered, spawns a monster_human_grunt
 // repelling down a line.
 //=========================================================
+#if defined ( HUNGER_DLL )
+#define SF_REPEL_PARACHUTE		32
+#endif // defined ( HUNGER_DLL )
 
+#if !defined ( HUNGER_DLL )
 class CHGruntRepel : public CBaseMonster
 {
 public:
@@ -2385,6 +2518,7 @@ public:
 	void EXPORT RepelUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	int m_iSpriteTexture;	// Don't save, precache
 };
+#endif // !defined ( HUNGER_DLL )
 
 LINK_ENTITY_TO_CLASS( monster_grunt_repel, CHGruntRepel );
 
@@ -2418,6 +2552,24 @@ void CHGruntRepel::RepelUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE
 	pGrunt->SetActivity( ACT_GLIDE );
 	// UNDONE: position?
 	pGrunt->m_vecLastPosition = tr.vecEndPos;
+#if defined ( HUNGER_DLL )
+	//
+	// Fix trigger condition targets.
+	//
+	pGrunt->m_iszTriggerTarget = m_iszTriggerTarget;
+	pGrunt->m_iTriggerCondition = m_iTriggerCondition;
+
+	// If this is a parachuted grunt, set parachute
+	// bodygroup visible.
+	if (pev->spawnflags & SF_REPEL_PARACHUTE)
+	{
+		pGrunt->SetBodygroup( PARACHUTE_GROUP, PARACHUTE_ON );
+
+		// Do not spawn beam. Return.
+		UTIL_Remove(this);
+		return;
+	}
+#endif // defined ( HUNGER_DLL )
 
 	CBeam *pBeam = CBeam::BeamCreate( "sprites/rope.spr", 10 );
 	pBeam->PointEntInit( pev->origin + Vector(0,0,112), pGrunt->entindex() );
@@ -2434,6 +2586,7 @@ void CHGruntRepel::RepelUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE
 //=========================================================
 // DEAD HGRUNT PROP
 //=========================================================
+#if !defined ( HUNGER_DLL )
 class CDeadHGrunt : public CBaseMonster
 {
 public:
@@ -2445,6 +2598,7 @@ public:
 	int	m_iPose;// which sequence to display	-- temporary, don't need to save
 	static char *m_szPoses[3];
 };
+#endif // !defined ( HUNGER_DLL )
 
 char *CDeadHGrunt::m_szPoses[] = { "deadstomach", "deadside", "deadsitting" };
 
@@ -2467,7 +2621,32 @@ LINK_ENTITY_TO_CLASS( monster_hgrunt_dead, CDeadHGrunt );
 void CDeadHGrunt :: Spawn( void )
 {
 	PRECACHE_MODEL("models/hgrunt.mdl");
+#if defined ( HUNGER_DLL )
+	PRECACHE_MODEL("models/zgrunt.mdl");
+
+	char* szModel = (char*)STRING(pev->model);
+
+	//
+	// Pick regular grunt model.
+	//
+	if (!szModel || !*szModel)
+	{
+		szModel = "models/hgrunt.mdl";
+		pev->model = ALLOC_STRING(szModel);
+	} 
+	// If this is a zombie soldier with a regular grunt model,
+	// switch to appropriate model.
+	else if ( ( pev->spawnflags & SF_HGRUNT_ZSOLDIER ) && !FStrEq(szModel, "models/zgrunt.mdl"))
+	{
+		szModel = "models/zgrunt.mdl";
+		pev->model = ALLOC_STRING(szModel);
+	}
+
+	// Set new model.
+	SET_MODEL(ENT(pev), (char*)STRING(pev->model));
+#else
 	SET_MODEL(ENT(pev), "models/hgrunt.mdl");
+#endif // defined ( HUNGER_DLL )
 
 	pev->effects		= 0;
 	pev->yaw_speed		= 8;

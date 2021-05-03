@@ -55,6 +55,16 @@ public:
 	BOOL m_fRegisteredSound;// whether or not this grenade has issued its DANGER sound to the world sound list yet.
 };
 
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+// Timed Tnt
+class CTnt : public CGrenade
+{
+public:
+	void Spawn(void);
+
+	static CGrenade *ShootTimed(entvars_t *pevOwner, Vector vecStart, Vector vecVelocity, float time);
+};
+#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 
 // constant items
 #define ITEM_HEALTHKIT		1
@@ -78,6 +88,15 @@ public:
 #define WEAPON_TRIPMINE			13
 #define	WEAPON_SATCHEL			14
 #define	WEAPON_SNARK			15
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+#define WEAPON_SHOVEL			16
+#define WEAPON_SPANNER			17
+#define WEAPON_AP9				18
+#define WEAPON_TAURUS			19
+#define WEAPON_EINAR1			20
+#define WEAPON_HKG36			21
+#define WEAPON_MEDKIT			22
+#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 
 #define WEAPON_ALLWEAPONS		(~(1<<WEAPON_SUIT))
 
@@ -105,6 +124,15 @@ public:
 #define SATCHEL_WEIGHT		-10
 #define TRIPMINE_WEIGHT		-10
 
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+#define SHOVEL_WEIGHT			0
+#define SPANNER_WEIGHT			0
+#define AP9_WEIGHT				10
+#define TAURUS_WEIGHT			10
+#define SNIPER_WEIGHT			10
+#define CHAINGUN_WEIGHT			20
+#define MEDKIT_WEIGHT			-1
+#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 
 // weapon clip/carry ammo capacities
 #define URANIUM_MAX_CARRY		100
@@ -119,6 +147,13 @@ public:
 #define SNARK_MAX_CARRY			15
 #define HORNET_MAX_CARRY		8
 #define M203_GRENADE_MAX_CARRY	10
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+#define AP9_MAX_CARRY			200
+#define TAURUS_MAX_CARRY		80
+#define SNIPER_MAX_CARRY		50
+#define CHAINGUN_MAX_CARRY		200
+#define MEDKIT_MAX_CARRY		12
+#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 
 // the maximum amount of ammo each weapon's clip can hold
 #define WEAPON_NOCLIP			-1
@@ -138,6 +173,13 @@ public:
 #define SATCHEL_MAX_CLIP		WEAPON_NOCLIP
 #define TRIPMINE_MAX_CLIP		WEAPON_NOCLIP
 #define SNARK_MAX_CLIP			WEAPON_NOCLIP
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+#define AP9_MAX_CLIP			40
+#define TAURUS_MAX_CLIP			20
+#define SNIPER_MAX_CLIP			5
+#define CHAINGUN_MAX_CLIP		100
+#define MEDKIT_MAX_CLIP			WEAPON_NOCLIP
+#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 
 
 // the default amount of ammo that comes with each gun when it spawns
@@ -156,6 +198,13 @@ public:
 #define TRIPMINE_DEFAULT_GIVE		1
 #define SNARK_DEFAULT_GIVE			5
 #define HIVEHAND_DEFAULT_GIVE		8
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+#define AP9_DEFAULT_GIVE			40
+#define TAURUS_DEFAULT_GIVE			20
+#define SNIPER_DEFAULT_GIVE			5
+#define CHAINGUN_DEFAULT_GIVE		100
+#define MEDKIT_DEFAULT_GIVE			12
+#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 
 // The amount of ammo given to a player by an ammo item.
 #define AMMO_URANIUMBOX_GIVE	20
@@ -169,6 +218,12 @@ public:
 #define AMMO_RPGCLIP_GIVE		RPG_MAX_CLIP
 #define AMMO_URANIUMBOX_GIVE	20
 #define AMMO_SNARKBOX_GIVE		5
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+#define AMMO_AP9_GIVE			AP9_MAX_CLIP
+#define AMMO_TAURUS_GIVE		TAURUS_MAX_CLIP
+#define AMMO_SNIPER_GIVE		SNIPER_MAX_CLIP
+#define AMMO_CHAINGUN_GIVE		CHAINGUN_MAX_CLIP
+#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 
 // bullet types
 typedef	enum
@@ -179,6 +234,12 @@ typedef	enum
 	BULLET_PLAYER_357, // python
 	BULLET_PLAYER_BUCKSHOT, // shotgun
 	BULLET_PLAYER_CROWBAR, // crowbar swipe
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+	BULLET_PLAYER_AP9,
+	BULLET_PLAYER_CHAINGUN,
+	BULLET_PLAYER_SNIPER,
+	BULLET_PLAYER_TAURUS,
+#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 
 	BULLET_MONSTER_9MM,
 	BULLET_MONSTER_MP5,
@@ -384,6 +445,9 @@ extern DLL_GLOBAL	short	g_sModelIndexBubbles;// holds the index for the bubbles 
 extern DLL_GLOBAL	short	g_sModelIndexBloodDrop;// holds the sprite index for blood drops
 extern DLL_GLOBAL	short	g_sModelIndexBloodSpray;// holds the sprite index for blood spray (bigger)
 
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+extern DLL_GLOBAL	short	g_sModelIndexFThrow; // holds the index for the flamethrower
+#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 extern void ClearMultiDamage(void);
 extern void ApplyMultiDamage(entvars_t* pevInflictor, entvars_t* pevAttacker );
 extern void AddMultiDamage( entvars_t *pevInflictor, CBaseEntity *pEntity, float flDamage, int bitsDamageType);
@@ -491,6 +555,18 @@ public:
 #endif
 	}
 
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+	void Holster(int skiplocal = 0);
+	BOOL ShouldWeaponIdle(void);
+
+#ifndef CLIENT_DLL
+	int		Save(CSave &save);
+	int		Restore(CRestore &restore);
+	static	TYPEDESCRIPTION m_SaveData[];
+#endif
+
+	BOOL m_fSilencerOn;
+#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 private:
 	int m_iShell;
 	
@@ -555,6 +631,14 @@ public:
 #endif
 	}
 
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+#ifndef CLIENT_DLL
+	int		Save(CSave &save);
+	int		Restore(CRestore &restore);
+	static	TYPEDESCRIPTION m_SaveData[];
+#endif
+	float m_flSoundDelay;
+#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 private:
 	unsigned short m_usFirePython;
 };
@@ -1015,5 +1099,308 @@ private:
 	unsigned short m_usSnarkFire;
 };
 
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+class CShovel : public CCrowbar
+{
+public:
+	void Spawn( void );
+	void Precache( void );
+	int GetItemInfo(ItemInfo *p);
+
+	void PrimaryAttack( void );
+	int Swing( int fFirst );
+	BOOL Deploy( void );
+	void Holster( int skiplocal = 0 );
+private:
+	unsigned short m_usShovel;
+};
+
+class CSpanner : public CCrowbar
+{
+public:
+	void Spawn(void);
+	void Precache(void);
+	int GetItemInfo(ItemInfo *p);
+
+	void PrimaryAttack(void);
+	int Swing(int fFirst);
+	BOOL Deploy(void);
+	void Holster(int skiplocal = 0);
+
+private:
+	unsigned short m_usSpanner;
+};
+
+class CAP9 : public CBasePlayerWeapon
+{
+public:
+
+#ifndef CLIENT_DLL
+	int		Save(CSave &save);
+	int		Restore(CRestore &restore);
+	static	TYPEDESCRIPTION m_SaveData[];
+#endif
+
+	void Spawn(void);
+	void Precache(void);
+	int iItemSlot(void) { return 2; }
+	int GetItemInfo(ItemInfo *p);
+	int AddToPlayer(CBasePlayer *pPlayer);
+
+	void PrimaryAttack(void);
+	void SecondaryAttack(void);
+	void AP9Fire(float flSpread, float flCycleTime, BOOL fUseAutoAim, BOOL fBurstShot);
+	BOOL Deploy(void);
+	void Reload(void);
+	void WeaponIdle(void);
+	BOOL ShouldWeaponIdle(void) { return TRUE; }
+	int m_iShell;
+
+	virtual BOOL UseDecrement(void)
+	{
+#if defined( CLIENT_WEAPONS )
+		return TRUE;
+#else
+		return FALSE;
+#endif
+	}
+
+	int		m_iBurstShots;
+
+private:
+	unsigned short m_usFireAP9;
+};
+
+class CTaurus : public CGlock
+{
+public:
+	void Spawn( void );
+	void Precache( void );
+	int GetItemInfo(ItemInfo *p);
+
+	void PrimaryAttack( void );
+	void SecondaryAttack( void ) {}
+	BOOL Deploy( void );
+	void Reload( void );
+	void WeaponIdle( void );
+private:
+	int m_iShell;
+	
+	unsigned short m_usFireTaurus;
+};
+
+class CSniper : public CBasePlayerWeapon
+{
+public:
+
+#ifndef CLIENT_DLL
+	int		Save(CSave &save);
+	int		Restore(CRestore &restore);
+	static	TYPEDESCRIPTION m_SaveData[];
+#endif
+
+	virtual int GetPrimaryAttackActivity(void) = 0;
+	virtual int GetZoomedAttackActivity(void) = 0;
+
+	int iItemSlot(void) { return 3; }
+	int AddToPlayer(CBasePlayer *pPlayer);
+	void PrimaryAttack(void);
+	void SecondaryAttack(void);
+	void SniperFire(float flSpread, float flCycleTime, BOOL fUseAutoAim, int iActivity);
+	void Holster(int skiplocal = 0);
+	void Reload(void);
+	void WeaponIdle(void);
+
+	virtual BOOL UseDecrement(void)
+	{
+#if defined( CLIENT_WEAPONS )
+		return TRUE;
+#else
+		return FALSE;
+#endif
+	}
+
+	void SetZoomState(BOOL bState);
+	void ToggleZoom(void);
+
+	BOOL m_fInZoom;
+
+protected:
+	unsigned short m_usFireSniper;
+};
+
+class CHKG36 : public CSniper
+{
+public:
+	void Spawn(void);
+	void Precache(void);
+	int GetItemInfo(ItemInfo *p);
+	BOOL Deploy(void);
+	void Reload(void);
+	void WeaponIdle(void);
+
+	int GetPrimaryAttackActivity(void);
+	int GetZoomedAttackActivity(void);
+};
+
+#if 0
+class CEinar1 : public CSniper
+{
+public:
+
+	void Spawn(void);
+	void Precache(void);
+	int GetItemInfo(ItemInfo *p);
+	void PrimaryAttack(void);
+	void SecondaryAttack(void);
+	BOOL Deploy(void);
+	void Holster(int skiplocal = 0);
+	void Reload(void);
+	void WeaponIdle(void);
+	BOOL ShouldWeaponIdle(void);
+	int GetPrimaryAttackActivity(void);
+	int GetZoomedAttackActivity(void);
+
+private:
+	unsigned short m_usFireSniper2;
+};
+#endif
+
+#if 0
+class CEinar1 : public CBasePlayerWeapon
+{
+public:
+
+#ifndef CLIENT_DLL
+	int		Save(CSave &save);
+	int		Restore(CRestore &restore);
+	static	TYPEDESCRIPTION m_SaveData[];
+#endif
+
+	void Spawn(void);
+	void Precache(void);
+	int GetItemInfo(ItemInfo *p);
+	int iItemSlot(void) { return 3; }
+	int AddToPlayer(CBasePlayer *pPlayer);
+	void PrimaryAttack(void);
+	void SecondaryAttack(void);
+	BOOL Deploy(void);
+	void Holster(int skiplocal = 0);
+	void Reload(void);
+	void WeaponIdle(void);
+	BOOL ShouldWeaponIdle(void);
+
+	virtual BOOL UseDecrement(void)
+	{
+#if defined( CLIENT_WEAPONS )
+		return TRUE;
+#else
+		return FALSE;
+#endif
+	}
+
+	void SetZoomState(BOOL bState);
+	void ToggleZoom(void);
+
+	BOOL m_fInZoom;
+
+private:
+	unsigned short m_usFireSniper;
+	unsigned short m_usFireSniper2;
+};
+#endif
+
+#if 1
+class CEinar1 : public CSniper
+{
+public:
+
+	void Spawn(void);
+	void Precache(void);
+	int GetItemInfo(ItemInfo *p);
+	void PrimaryAttack(void);
+	void SecondaryAttack(void);
+	BOOL Deploy(void);
+	void Holster(int skiplocal = 0);
+	void Reload(void);
+	void WeaponIdle(void);
+	BOOL ShouldWeaponIdle(void);
+
+	int GetPrimaryAttackActivity(void);
+	int GetZoomedAttackActivity(void);
+};
+#endif
+
+class CChaingun : public CBasePlayerWeapon
+{
+public:
+
+	void Spawn(void);
+	void Precache(void);
+	int iItemSlot(void) { return 4; }
+	int GetItemInfo(ItemInfo *p);
+
+	void PrimaryAttack(void);
+	void SecondaryAttack(void);
+	BOOL Deploy(void);
+	void Holster(int skiplocal = 0);
+	void Reload(void);
+	void WeaponIdle(void);
+	BOOL ShouldWeaponIdle(void);
+
+	virtual BOOL UseDecrement(void)
+	{
+#if defined( CLIENT_WEAPONS )
+		return TRUE;
+#else
+		return FALSE;
+#endif
+	}
+
+	void SpinUp(void);
+	void SpinDown(void);
+	void Spin(void);
+	void Fire(float flSpread, float flCycleTime, BOOL fUseAutoAim);
+
+	void StopSounds(void);
+
+private:
+	int m_iShell;
+
+	unsigned short m_usFireChaingun1;
+	unsigned short m_usFireChaingun2;
+};
+
+class CMedkit : public CBasePlayerWeapon
+{
+public:
+	void Spawn(void);
+	void Precache(void);
+	int iItemSlot(void) { return 5; }
+	int GetItemInfo(ItemInfo *p);
+
+	void PrimaryAttack(void);
+	BOOL Deploy(void);
+	void Holster(int skiplocal = 0);
+	void WeaponIdle(void);
+	BOOL PlayEmptySound(void);
+	BOOL ShouldWeaponIdle(void) { return TRUE; }
+
+	virtual BOOL UseDecrement(void)
+	{
+#if defined( CLIENT_WEAPONS )
+		return TRUE;
+#else
+		return FALSE;
+#endif
+	}
+
+	float	m_flSoundDelay;
+
+private:
+
+	unsigned short m_usMedkit;
+};
+#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 
 #endif // WEAPONS_H

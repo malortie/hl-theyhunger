@@ -633,6 +633,7 @@ void CWorld :: Precache( void )
 	else
 		CVAR_SET_FLOAT( "sv_zmax", 4096 );
 
+#if !defined ( HUNGER_DLL )
 	if ( pev->netname )
 	{
 		ALERT( at_aiconsole, "Chapter title: %s\n", STRING(pev->netname) );
@@ -646,6 +647,7 @@ void CWorld :: Precache( void )
 			pEntity->pev->spawnflags = SF_MESSAGE_ONCE;
 		}
 	}
+#endif // !defined ( HUNGER_DLL )
 
 	if ( pev->spawnflags & SF_WORLD_DARK )
 		CVAR_SET_FLOAT( "v_dark", 1.0 );

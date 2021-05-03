@@ -25,6 +25,9 @@
 #include	"effects.h"
 #include	"weapons.h"
 #include	"soundent.h"
+#if defined ( HUNGER_DLL )
+#include	"islave.h"
+#endif // defined ( HUNGER_DLL )
 
 extern DLL_GLOBAL int		g_iSkillLevel;
 
@@ -37,6 +40,7 @@ extern DLL_GLOBAL int		g_iSkillLevel;
 #define		ISLAVE_AE_ZAP_SHOOT		( 4 )
 #define		ISLAVE_AE_ZAP_DONE		( 5 )
 
+#if !defined ( HUNGER_DLL )
 #define		ISLAVE_MAX_BEAMS	8
 
 class CISlave : public CSquadMonster
@@ -93,6 +97,7 @@ public:
 	static const char *pPainSounds[];
 	static const char *pDeathSounds[];
 };
+#endif // !defined ( HUNGER_DLL )
 LINK_ENTITY_TO_CLASS( monster_alien_slave, CISlave );
 LINK_ENTITY_TO_CLASS( monster_vortigaunt, CISlave );
 
@@ -147,7 +152,11 @@ const char *CISlave::pDeathSounds[] =
 //=========================================================
 int	CISlave :: Classify ( void )
 {
+#if defined ( HUNGER_DLL )
+	return CLASS_SKELETON;
+#else
 	return	CLASS_ALIEN_MILITARY;
+#endif
 }
 
 
@@ -542,6 +551,9 @@ void CISlave :: Spawn()
 	m_voicePitch		= RANDOM_LONG( 85, 110 );
 
 	MonsterInit();
+#if defined ( HUNGER_DLL )
+	m_bloodColor		= DONT_BLEED;
+#endif
 }
 
 //=========================================================

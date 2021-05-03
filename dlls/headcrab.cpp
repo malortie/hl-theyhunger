@@ -22,6 +22,9 @@
 #include	"monsters.h"
 #include	"schedule.h"
 #include	"game.h"
+#if defined ( HUNGER_DLL )
+#include	"headcrab.h"
+#endif // defined ( HUNGER_DLL )
 
 //=========================================================
 // Monster's Anim Events Go Here
@@ -70,6 +73,7 @@ Schedule_t	slHCRangeAttack1Fast[] =
 	},
 };
 
+#if !defined ( HUNGER_DLL )
 class CHeadCrab : public CBaseMonster
 {
 public:
@@ -106,6 +110,7 @@ public:
 	static const char *pDeathSounds[];
 	static const char *pBiteSounds[];
 };
+#endif // !defined ( HUNGER_DLL )
 LINK_ENTITY_TO_CLASS( monster_headcrab, CHeadCrab );
 
 DEFINE_CUSTOM_SCHEDULES( CHeadCrab )
@@ -257,9 +262,13 @@ void CHeadCrab :: HandleAnimEvent( MonsterEvent_t *pEvent )
 				vecJumpDir = Vector( gpGlobals->v_forward.x, gpGlobals->v_forward.y, gpGlobals->v_up.z ) * 350;
 			}
 
+#if defined ( HUNGER_DLL )
+			AttackSound();
+#else
 			int iSound = RANDOM_LONG(0,2);
 			if ( iSound != 0 )
 				EMIT_SOUND_DYN( edict(), CHAN_VOICE, pAttackSounds[iSound], GetSoundVolue(), ATTN_IDLE, 0, GetVoicePitch() );
+#endif // defined ( HUNGER_DLL )
 
 			pev->velocity = vecJumpDir;
 			m_flNextAttack = gpGlobals->time + 2;
@@ -284,7 +293,11 @@ void CHeadCrab :: Spawn()
 
 	pev->solid			= SOLID_SLIDEBOX;
 	pev->movetype		= MOVETYPE_STEP;
+#if defined ( HUNGER_DLL )
+	m_bloodColor		= BLOOD_COLOR_RED;
+#else
 	m_bloodColor		= BLOOD_COLOR_GREEN;
+#endif // defined ( HUNGER_DLL )
 	pev->effects		= 0;
 	pev->health			= gSkillData.headcrabHealth;
 	pev->view_ofs		= Vector ( 0, 0, 20 );// position of the eyes relative to monster's origin.
@@ -466,6 +479,17 @@ void CHeadCrab :: DeathSound ( void )
 	EMIT_SOUND_DYN( edict(), CHAN_VOICE, RANDOM_SOUND_ARRAY(pDeathSounds), GetSoundVolue(), ATTN_IDLE, 0, GetVoicePitch() );
 }
 
+#if defined ( HUNGER_DLL )
+//=========================================================
+// AttackSound 
+//=========================================================
+void CHeadCrab::AttackSound(void)
+{
+	int iSound = RANDOM_LONG(0, 2);
+	if (iSound != 0)
+		EMIT_SOUND_DYN(edict(), CHAN_VOICE, pAttackSounds[iSound], GetSoundVolue(), ATTN_IDLE, 0, GetVoicePitch());
+}
+#endif // defined ( HUNGER_DLL )
 Schedule_t* CHeadCrab :: GetScheduleOfType ( int Type )
 {
 	switch	( Type )

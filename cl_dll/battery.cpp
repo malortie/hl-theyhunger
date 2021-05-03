@@ -84,6 +84,9 @@ int CHudBattery:: MsgFunc_Battery(const char *pszName,  int iSize, void *pbuf )
 
 int CHudBattery::Draw(float flTime)
 {
+#if defined(HUNGER_CLIENT_DLL)
+	return 1;
+#endif // defined(HUNGER_CLIENT_DLL)
 	if ( gHUD.m_iHideHUDDisplay & HIDEHUD_HEALTH )
 		return 1;
 

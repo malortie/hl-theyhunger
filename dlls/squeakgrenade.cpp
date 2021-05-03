@@ -49,7 +49,11 @@ class CSqueakGrenade : public CGrenade
 	int  Classify( void );
 	void EXPORT SuperBounceTouch( CBaseEntity *pOther );
 	void EXPORT HuntThink( void );
+#if defined ( HUNGER_DLL )
+	int  BloodColor( void ) { return BLOOD_COLOR_RED; }
+#else
 	int  BloodColor( void ) { return BLOOD_COLOR_YELLOW; }
+#endif // defined ( HUNGER_DLL )
 	void Killed( entvars_t *pevAttacker, int iGib );
 	void GibMonster( void );
 

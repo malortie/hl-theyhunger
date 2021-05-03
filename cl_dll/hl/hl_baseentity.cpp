@@ -97,6 +97,11 @@ CGrenade * CGrenade:: ShootTimed( entvars_t *pevOwner, Vector vecStart, Vector v
 CGrenade *CGrenade::ShootContact( entvars_t *pevOwner, Vector vecStart, Vector vecVelocity ){ return 0; }
 void CGrenade::DetonateUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ){ }
 
+#if defined ( HUNGER_CLIENT_DLL )
+// CTnt Stubs
+void CTnt::Spawn(void) { }
+CGrenade * CTnt::ShootTimed(entvars_t *pevOwner, Vector vecStart, Vector vecVelocity, float time){ return 0; }
+#endif // defined ( HUNGER_CLIENT_DLL )
 void UTIL_Remove( CBaseEntity *pEntity ){ }
 struct skilldata_t  gSkillData;
 void UTIL_SetSize( entvars_t *pev, const Vector &vecMin, const Vector &vecMax ){ }

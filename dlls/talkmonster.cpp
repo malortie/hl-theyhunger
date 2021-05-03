@@ -22,6 +22,9 @@
 #include	"scripted.h"
 #include	"soundent.h"
 #include	"animation.h"
+#if defined ( HUNGER_DLL )
+#include	"barney.h"
+#endif // defined ( HUNGER_DLL )
 
 //=========================================================
 // Talking monster base class
@@ -681,6 +684,11 @@ CBaseEntity	*CTalkMonster::EnumFriends( CBaseEntity *pPrevious, int listNumber, 
 
 void CTalkMonster::AlertFriends( void )
 {
+#if defined ( HUNGER_DLL )
+	// Do not alert friends if this is a zombie cop.
+	if (FClassnameIs(pev, "monster_barney") && ((CBarney*)this)->IsZombieCop())
+		return;
+#endif // defined ( HUNGER_DLL )
 	CBaseEntity *pFriend = NULL;
 	int i;
 
@@ -690,7 +698,11 @@ void CTalkMonster::AlertFriends( void )
 		while (pFriend = EnumFriends( pFriend, i, TRUE ))
 		{
 			CBaseMonster *pMonster = pFriend->MyMonsterPointer();
+#if defined ( HUNGER_DLL )
+			if ( pMonster->IsAlive() && pMonster->Classify() == Classify() )
+#else
 			if ( pMonster->IsAlive() )
+#endif // defined ( HUNGER_DLL )
 			{
 				// don't provoke a friend that's playing a death animation. They're a goner
 				pMonster->m_afMemory |= bits_MEMORY_PROVOKED;
@@ -1197,9 +1209,18 @@ int CTalkMonster :: TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker,
 		// if player damaged this entity, have other friends talk about it
 		if (pevAttacker && m_MonsterState != MONSTERSTATE_PRONE && FBitSet(pevAttacker->flags, FL_CLIENT))
 		{
+#if defined ( HUNGER_DLL )
+			// Do not tell friends to stop shooting if this is a zombie cop.
+			if (FClassnameIs(pev, "monster_barney") && ((CBarney*)this)->IsZombieCop())
+				return CBaseMonster::TakeDamage(pevInflictor, pevAttacker, flDamage, bitsDamageType);
+#endif // defined ( HUNGER_DLL )
 			CBaseEntity *pFriend = FindNearestFriend(FALSE);
 
+#if defined ( HUNGER_DLL )
+			if (pFriend && pFriend->IsAlive() && pFriend->Classify() == Classify())
+#else
 			if (pFriend && pFriend->IsAlive())
+#endif // defined ( HUNGER_DLL )
 			{
 				// only if not dead or dying!
 				CTalkMonster *pTalkMonster = (CTalkMonster *)pFriend;
@@ -1245,8 +1266,15 @@ Schedule_t* CTalkMonster :: GetScheduleOfType ( int Type )
 			{
 				//SENTENCEG_PlayRndSz( ENT(pev), m_szGrp[TLK_WOUND], 1.0, ATTN_IDLE, 0, GetVoicePitch() );
 				//CTalkMonster::g_talkWaitTime = gpGlobals->time + RANDOM_FLOAT(2.8, 3.2);
+#if defined ( HUNGER_DLL )
+				if (FWoundSpeak())
+				{
+					SetBits(m_bitsSaid, bit_saidWoundLight);
+				}
+#else
 				PlaySentence( m_szGrp[TLK_WOUND], RANDOM_FLOAT(2.8, 3.2), VOL_NORM, ATTN_IDLE );
 				SetBits(m_bitsSaid, bit_saidWoundLight);
+#endif // defined ( HUNGER_DLL )
 				return slIdleStand;
 			}
 			// sustained heavy wounds?
@@ -1254,8 +1282,15 @@ Schedule_t* CTalkMonster :: GetScheduleOfType ( int Type )
 			{
 				//SENTENCEG_PlayRndSz( ENT(pev), m_szGrp[TLK_MORTAL], 1.0, ATTN_IDLE, 0, GetVoicePitch() );
 				//CTalkMonster::g_talkWaitTime = gpGlobals->time + RANDOM_FLOAT(2.8, 3.2);
+#if defined ( HUNGER_DLL )
+				if ( FMortalSpeak() )
+				{
+					SetBits(m_bitsSaid, bit_saidWoundHeavy);
+				}
+#else
 				PlaySentence( m_szGrp[TLK_MORTAL], RANDOM_FLOAT(2.8, 3.2), VOL_NORM, ATTN_IDLE );
 				SetBits(m_bitsSaid, bit_saidWoundHeavy);
+#endif // defined ( HUNGER_DLL )
 				return slIdleStand;
 			}
 
@@ -1470,3 +1505,24 @@ void CTalkMonster::Precache( void )
 		m_szGrp[TLK_UNUSE] = STRING( m_iszUnUse );
 }
 
+#if defined ( HUNGER_DLL )
+int CTalkMonster::FWoundSpeak(void)
+{
+	if (!FOkToSpeak())
+		return FALSE;
+
+	PlaySentence(m_szGrp[TLK_WOUND], RANDOM_FLOAT(2.8, 3.2), VOL_NORM, ATTN_IDLE);
+
+	return TRUE;
+}
+
+int CTalkMonster::FMortalSpeak(void)
+{
+	if (!FOkToSpeak())
+		return FALSE;
+
+	PlaySentence(m_szGrp[TLK_MORTAL], RANDOM_FLOAT(2.8, 3.2), VOL_NORM, ATTN_IDLE);
+
+	return TRUE;
+}
+#endif //  defined ( HUNGER_DLL )

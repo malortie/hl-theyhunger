@@ -24,6 +24,9 @@
 #include <stdio.h>
 #include "parsemsg.h"
 
+#if defined ( HUNGER_CLIENT_DLL )
+extern bool bIsMultiplayer(void);
+#endif // defined ( HUNGER_CLIENT_DLL )
 DECLARE_MESSAGE(m_Train, Train )
 
 
@@ -54,7 +57,18 @@ int CHudTrain::Draw(float fTime)
 	{
 		int r, g, b, x, y;
 
+#if defined ( HUNGER_CLIENT_DLL )
+		if (bIsMultiplayer())
+		{
+			UnpackRGB(r, g, b, RGB_YELLOWISH);
+		}
+		else
+		{
+			UnpackRGB(r, g, b, RGB_REDISH);
+		}
+#else
 		UnpackRGB(r,g,b, RGB_YELLOWISH);
+#endif // defined ( HUNGER_CLIENT_DLL )
 		SPR_Set(m_hSprite, r, g, b );
 
 		// This should show up to the right and part way up the armor number

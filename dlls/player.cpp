@@ -188,6 +188,9 @@ int gmsgTeamNames = 0;
 int gmsgStatusText = 0;
 int gmsgStatusValue = 0; 
 
+#if defined ( HUNGER_DLL )
+int gmsgZoom = 0;
+#endif
 
 
 void LinkUserMessages( void )
@@ -236,6 +239,9 @@ void LinkUserMessages( void )
 	gmsgStatusText = REG_USER_MSG("StatusText", -1);
 	gmsgStatusValue = REG_USER_MSG("StatusValue", 3); 
 
+#if defined ( HUNGER_DLL )
+	gmsgZoom = REG_USER_MSG("Zoom", 2);
+#endif
 }
 
 LINK_ENTITY_TO_CLASS( player, CBasePlayer );
@@ -1134,6 +1140,11 @@ void CBasePlayer::TabulateAmmo()
 	ammo_rockets = AmmoInventory( GetAmmoIndex( "rockets" ) );
 	ammo_uranium = AmmoInventory( GetAmmoIndex( "uranium" ) );
 	ammo_hornets = AmmoInventory( GetAmmoIndex( "Hornets" ) );
+#if defined ( HUNGER_DLL )
+	ammo_ap9 = AmmoInventory( GetAmmoIndex( "ap9" ) );
+	ammo_taurus = AmmoInventory( GetAmmoIndex( "taurus" ) );
+	ammo_sniper = AmmoInventory( GetAmmoIndex( "sniper" ) );
+#endif // defined ( HUNGER_DLL )
 }
 
 
@@ -1526,7 +1537,23 @@ void CBasePlayer::PlayerUse ( void )
 					m_afPhysicsFlags |= PFLAG_ONTRAIN;
 					m_iTrain = TrainSpeed(pTrain->pev->speed, pTrain->pev->impulse);
 					m_iTrain |= TRAIN_NEW;
+#if defined ( HUNGER_DLL )
+					char* usesound = "plats/train_use1.wav";
+
+					CFuncTrackTrain* pTrackTrain = (CFuncTrackTrain*)pTrain;
+
+					if (pTrackTrain && pTrackTrain->UseCustomSounds())
+					{
+						if (pTrackTrain->IsCar())
+							usesound = "plats/train_use2.wav";
+						else if (pTrackTrain->IsTrain())
+							usesound = "plats/train_use6.wav";
+					}
+
+					EMIT_SOUND(ENT(pev), CHAN_ITEM, usesound, 0.8, ATTN_NORM);
+#else
 					EMIT_SOUND( ENT(pev), CHAN_ITEM, "plats/train_use1.wav", 0.8, ATTN_NORM);
+#endif // defined ( HUNGER_DLL )
 					return;
 				}
 			}
@@ -2333,6 +2360,9 @@ void CBasePlayer::CheckSuitUpdate()
 
 void CBasePlayer::SetSuitUpdate(char *name, int fgroup, int iNoRepeatTime)
 {
+#if defined ( HUNGER_DLL )
+	return;
+#endif // defined ( HUNGER_DLL )
 	int i;
 	int isentence;
 	int iempty = -1;
@@ -3536,7 +3566,9 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 	case 101:
 		gEvilImpulse101 = TRUE;
 		GiveNamedItem( "item_suit" );
+#if !defined ( HUNGER_DLL )
 		GiveNamedItem( "item_battery" );
+#endif // !defined ( HUNGER_DLL )
 		GiveNamedItem( "weapon_crowbar" );
 		GiveNamedItem( "weapon_9mmhandgun" );
 		GiveNamedItem( "ammo_9mmclip" );
@@ -3559,8 +3591,23 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 		GiveNamedItem( "ammo_rpgclip" );
 		GiveNamedItem( "weapon_satchel" );
 		GiveNamedItem( "weapon_snark" );
+#if !defined ( HUNGER_DLL )
 		GiveNamedItem( "weapon_hornetgun" );
+#endif // !defined ( HUNGER_DLL )
 #endif
+#if defined ( HUNGER_DLL )
+		GiveNamedItem("weapon_th_ap9");
+		GiveNamedItem("ammo_th_ap9");
+		GiveNamedItem("weapon_th_chaingun");
+		GiveNamedItem("weapon_th_medkit");
+		GiveNamedItem("weapon_th_shovel");
+		GiveNamedItem("weapon_einar1");
+		GiveNamedItem("weapon_th_sniper");
+		GiveNamedItem("ammo_th_sniper");
+		GiveNamedItem("weapon_th_spanner");
+		GiveNamedItem("weapon_th_taurus");
+		GiveNamedItem("ammo_th_taurus");
+#endif // defined ( HUNGER_DLL )
 		gEvilImpulse101 = FALSE;
 		break;
 

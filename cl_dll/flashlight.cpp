@@ -26,6 +26,9 @@
 #include <stdio.h>
 
 
+#if defined ( HUNGER_CLIENT_DLL )
+extern bool bIsMultiplayer(void);
+#endif // defined ( HUNGER_CLIENT_DLL )
 
 DECLARE_MESSAGE(m_Flash, FlashBat)
 DECLARE_MESSAGE(m_Flash, Flashlight)
@@ -110,10 +113,24 @@ int CHudFlashlight::Draw(float flTime)
 	else
 		a = MIN_ALPHA;
 
+#if defined ( HUNGER_CLIENT_DLL )
+	if ( bIsMultiplayer() )
+	{
+		if (m_flBat < 0.20)
+			UnpackRGB(r, g, b, RGB_REDISH);
+		else
+			UnpackRGB(r, g, b, RGB_YELLOWISH);
+	}
+	else
+	{
+		UnpackRGB(r, g, b, RGB_REDISH);
+	}
+#else
 	if (m_flBat < 0.20)
 		UnpackRGB(r,g,b, RGB_REDISH);
 	else
 		UnpackRGB(r,g,b, RGB_YELLOWISH);
+#endif // defined ( HUNGER_CLIENT_DLL )
 
 	ScaleColors(r, g, b, a);
 

@@ -26,12 +26,16 @@
 #include	"decals.h"
 #include	"soundent.h"
 #include	"game.h"
+#if defined ( HUNGER_DLL )
+#include	"bullsquid.h"
+#endif // defined ( HUNGER_DLL )
 
 #define		SQUID_SPRINT_DIST	256 // how close the squid has to get before starting to sprint and refusing to swerve
 
 int			   iSquidSpitSprite;
 	
 
+#if !defined ( HUNGER_DLL )
 //=========================================================
 // monster-specific schedule types
 //=========================================================
@@ -71,6 +75,7 @@ public:
 
 	int  m_maxFrame;
 };
+#endif // !defined ( HUNGER_DLL )
 
 LINK_ENTITY_TO_CLASS( squidspit, CSquidSpit );
 
@@ -90,7 +95,11 @@ void CSquidSpit:: Spawn( void )
 	pev->rendermode = kRenderTransAlpha;
 	pev->renderamt = 255;
 
+#if defined ( HUNGER_DLL )
+	SET_MODEL(ENT(pev), "sprites/redbspit.spr");
+#else
 	SET_MODEL(ENT(pev), "sprites/bigspit.spr");
+#endif
 	pev->frame = 0;
 	pev->scale = 0.5;
 
@@ -186,6 +195,7 @@ void CSquidSpit :: Touch ( CBaseEntity *pOther )
 #define		BSQUID_AE_HOP		( 5 )
 #define		BSQUID_AE_THROW		( 6 )
 
+#if !defined ( HUNGER_DLL )
 class CBullsquid : public CBaseMonster
 {
 public:
@@ -225,6 +235,7 @@ public:
 	float m_flLastHurtTime;// we keep track of this, because if something hurts a squid, it will forget about its love of headcrabs for a while.
 	float m_flNextSpitTime;// last time the bullsquid used the spit attack.
 };
+#endif // !defined ( HUNGER_DLL )
 LINK_ENTITY_TO_CLASS( monster_bullchicken, CBullsquid );
 
 TYPEDESCRIPTION	CBullsquid::m_SaveData[] = 
@@ -675,7 +686,11 @@ void CBullsquid :: Spawn()
 
 	pev->solid			= SOLID_SLIDEBOX;
 	pev->movetype		= MOVETYPE_STEP;
+#if defined ( HUNGER_DLL )
+	m_bloodColor		= BLOOD_COLOR_RED;
+#else
 	m_bloodColor		= BLOOD_COLOR_GREEN;
+#endif // defined ( HUNGER_DLL )
 	pev->effects		= 0;
 	pev->health			= gSkillData.bullsquidHealth;
 	m_flFieldOfView		= 0.2;// indicates the width of this monster's forward view cone ( as a dotproduct result )
@@ -694,9 +709,17 @@ void CBullsquid :: Precache()
 {
 	PRECACHE_MODEL("models/bullsquid.mdl");
 	
+#if defined ( HUNGER_DLL )
+	PRECACHE_MODEL("sprites/redbspit.spr");// spit projectile.
+#else
 	PRECACHE_MODEL("sprites/bigspit.spr");// spit projectile.
+#endif
 	
+#if defined ( HUNGER_DLL )
+	iSquidSpitSprite = PRECACHE_MODEL("sprites/redtspit.spr");// client side spittle.
+#else
 	iSquidSpitSprite = PRECACHE_MODEL("sprites/tinyspit.spr");// client side spittle.
+#endif
 
 	PRECACHE_SOUND("zombie/claw_miss2.wav");// because we use the basemonster SWIPE animation event
 

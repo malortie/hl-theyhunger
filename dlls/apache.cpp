@@ -21,12 +21,16 @@
 #include "weapons.h"
 #include "nodes.h"
 #include "effects.h"
+#if defined ( HUNGER_DLL )
+#include "apache.h"
+#endif // defined ( HUNGER_DLL )
 
 extern DLL_GLOBAL int		g_iSkillLevel;
 
 #define SF_WAITFORTRIGGER	(0x04 | 0x40) // UNDONE: Fix!
 #define SF_NOWRECKAGE		0x08
 
+#if !defined ( HUNGER_DLL )
 class CApache : public CBaseMonster
 {
 	int		Save( CSave &save );
@@ -88,6 +92,7 @@ class CApache : public CBaseMonster
 	int m_iDoSmokePuff;
 	CBeam *m_pBeam;
 };
+#endif // !defined ( HUNGER_DLL )
 LINK_ENTITY_TO_CLASS( monster_apache, CApache );
 
 TYPEDESCRIPTION	CApache::m_SaveData[] = 
@@ -121,7 +126,11 @@ void CApache :: Spawn( void )
 	pev->movetype = MOVETYPE_FLY;
 	pev->solid = SOLID_BBOX;
 
+#if defined ( HUNGER_DLL )
+	SET_MODEL(ENT(pev), (char*)STRING(pev->model));
+#else
 	SET_MODEL(ENT(pev), "models/apache.mdl");
+#endif
 	UTIL_SetSize( pev, Vector( -32, -32, -64 ), Vector( 32, 32, 0 ) );
 	UTIL_SetOrigin( pev, pev->origin );
 
@@ -148,13 +157,22 @@ void CApache :: Spawn( void )
 		pev->nextthink = gpGlobals->time + 1.0;
 	}
 
+#if defined ( HUNGER_DLL )
+	m_iRockets = 0;
+#else
 	m_iRockets = 10;
+#endif
 }
 
 
 void CApache::Precache( void )
 {
+#if defined ( HUNGER_DLL )
+	PRECACHE_MODEL("models/apache2.mdl");
+	PRECACHE_MODEL("models/huey_apache.mdl");
+#else
 	PRECACHE_MODEL("models/apache.mdl");
+#endif
 
 	PRECACHE_SOUND("apache/ap_rotor1.wav");
 	PRECACHE_SOUND("apache/ap_rotor2.wav");
@@ -402,6 +420,16 @@ void CApache :: DyingThink( void )
 			WRITE_BYTE( BREAK_METAL );
 		MESSAGE_END();
 
+#if defined ( HUNGER_DLL )
+		//
+		// AI Trigger target on death.
+		//
+		if (m_iTriggerCondition == AITRIGGER_DEATH && !FStringNull(m_iszTriggerTarget))
+		{
+			FireTargets(STRING(m_iszTriggerTarget), this, this, USE_TOGGLE, 0);
+			m_iTriggerCondition = AITRIGGER_NONE;
+		}
+#endif // defined ( HUNGER_DLL )
 		SetThink( &CApache::SUB_Remove );
 		pev->nextthink = gpGlobals->time + 0.1;
 	}
@@ -927,8 +955,13 @@ void CApache::TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir
 	}
 	else
 	{
+#if defined ( HUNGER_DLL )
+		// do tenth damage in the body
+		AddMultiDamage( pevAttacker, this, flDamage / 10.0, bitsDamageType );
+#else
 		// do half damage in the body
 		// AddMultiDamage( pevAttacker, this, flDamage / 2.0, bitsDamageType );
+#endif
 		UTIL_Ricochet( ptr->vecEndPos, 2.0 );
 	}
 }

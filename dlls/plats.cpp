@@ -1109,7 +1109,21 @@ void CFuncTrackTrain :: StopSound( void )
 		/*
 		STOP_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noise));
 		*/
+#if defined ( HUNGER_DLL )
+		char *brake = "plats/ttrain_brake1.wav";
+
+		if (UseCustomSounds())
+		{
+			if (IsCar())
+				brake = "plats/ttrain_brake2.wav";
+			else if (IsTrain())
+				brake = "plats/ttrain_brake6.wav";
+		}
+
+		EMIT_SOUND_DYN(ENT(pev), CHAN_ITEM, brake, m_flVolume, ATTN_NORM, 0, 100);
+#else
 		EMIT_SOUND_DYN(ENT(pev), CHAN_ITEM, "plats/ttrain_brake1.wav", m_flVolume, ATTN_NORM, 0, 100);
+#endif // defined ( HUNGER_DLL )
 	}
 
 	m_soundPlaying = 0;
@@ -1131,7 +1145,21 @@ void CFuncTrackTrain :: UpdateSound( void )
 	if (!m_soundPlaying)
 	{
 		// play startup sound for train
+#if defined ( HUNGER_DLL )
+		char *start = "plats/ttrain_start1.wav";
+
+		if (UseCustomSounds())
+		{
+			if (IsCar())
+				start = "plats/ttrain_start2.wav";
+			else if (IsTrain())
+				start = "plats/ttrain_start6.wav";
+		}
+
+		EMIT_SOUND_DYN(ENT(pev), CHAN_ITEM, start, m_flVolume, ATTN_NORM, 0, 100);
+#else
 		EMIT_SOUND_DYN(ENT(pev), CHAN_ITEM, "plats/ttrain_start1.wav", m_flVolume, ATTN_NORM, 0, 100);
+#endif
 		EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noise), m_flVolume, ATTN_NORM, 0, (int) flpitch);
 		m_soundPlaying = 1;
 	} 
@@ -1545,9 +1573,32 @@ void CFuncTrackTrain :: Precache( void )
 	PRECACHE_SOUND("plats/ttrain_brake1.wav");
 	PRECACHE_SOUND("plats/ttrain_start1.wav");
 
+#if defined ( HUNGER_DLL )
+	PRECACHE_SOUND("plats/ttrain_brake2.wav");
+	PRECACHE_SOUND("plats/ttrain_start2.wav");
+
+	PRECACHE_SOUND("plats/ttrain_brake6.wav");
+	PRECACHE_SOUND("plats/ttrain_start6.wav");
+#endif // defined ( HUNGER_DLL )
 	m_usAdjustPitch = PRECACHE_EVENT( 1, "events/train.sc" );
 }
 
+#if defined ( HUNGER_DLL )
+BOOL CFuncTrackTrain::UseCustomSounds(void) const
+{
+	return (pev->spawnflags & SF_TRACKTRAIN_TH_SOUNDS);
+}
+
+BOOL CFuncTrackTrain::IsCar(void) const
+{
+	return FStrEq(STRING(pev->noise), "plats/ttrain2.wav");
+}
+
+BOOL CFuncTrackTrain::IsTrain(void) const
+{
+	return FStrEq(STRING(pev->noise), "plats/ttrain6.wav");
+}
+#endif // defined ( HUNGER_DLL )
 // This class defines the volume of space that the player must stand in to control the train
 class CFuncTrainControls : public CBaseEntity
 {

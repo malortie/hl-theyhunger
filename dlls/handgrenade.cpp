@@ -42,7 +42,11 @@ void CHandGrenade::Spawn( )
 {
 	Precache( );
 	m_iId = WEAPON_HANDGRENADE;
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+	SET_MODEL(ENT(pev), "models/w_tnt.mdl");
+#else
 	SET_MODEL(ENT(pev), "models/w_grenade.mdl");
+#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 
 #ifndef CLIENT_DLL
 	pev->dmg = gSkillData.plrDmgHandGrenade;
@@ -56,9 +60,15 @@ void CHandGrenade::Spawn( )
 
 void CHandGrenade::Precache( void )
 {
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+	PRECACHE_MODEL("models/w_tnt.mdl");
+	PRECACHE_MODEL("models/v_tnt.mdl");
+	PRECACHE_MODEL("models/p_tnt.mdl");
+#else
 	PRECACHE_MODEL("models/w_grenade.mdl");
 	PRECACHE_MODEL("models/v_grenade.mdl");
 	PRECACHE_MODEL("models/p_grenade.mdl");
+#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 }
 
 int CHandGrenade::GetItemInfo(ItemInfo *p)
@@ -82,7 +92,11 @@ int CHandGrenade::GetItemInfo(ItemInfo *p)
 BOOL CHandGrenade::Deploy( )
 {
 	m_flReleaseThrow = -1;
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+	return DefaultDeploy( "models/v_tnt.mdl", "models/p_tnt.mdl", HANDGRENADE_DRAW, "crowbar" );
+#else
 	return DefaultDeploy( "models/v_grenade.mdl", "models/p_grenade.mdl", HANDGRENADE_DRAW, "crowbar" );
+#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 }
 
 BOOL CHandGrenade::CanHolster( void )
@@ -155,7 +169,11 @@ void CHandGrenade::WeaponIdle( void )
 		if (time < 0)
 			time = 0;
 
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+		CTnt::ShootTimed( m_pPlayer->pev, vecSrc, vecThrow, time );
+#else
 		CGrenade::ShootTimed( m_pPlayer->pev, vecSrc, vecThrow, time );
+#endif
 
 		if ( flVel < 500 )
 		{

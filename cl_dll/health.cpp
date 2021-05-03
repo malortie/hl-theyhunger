@@ -27,6 +27,9 @@
 #include "parsemsg.h"
 #include <string.h>
 
+#if defined ( HUNGER_CLIENT_DLL )
+extern bool bIsMultiplayer(void); 
+#endif // defined ( HUNGER_CLIENT_DLL )
 
 DECLARE_MESSAGE(m_Health, Health )
 DECLARE_MESSAGE(m_Health, Damage )
@@ -156,7 +159,18 @@ void CHudHealth::GetPainColor( int &r, int &g, int &b )
 #else
 	if (m_iHealth > 25)
 	{
+#if defined ( HUNGER_CLIENT_DLL )
+		if (bIsMultiplayer())
+		{
+			UnpackRGB(r,g,b, RGB_YELLOWISH);
+		}
+		else
+		{
+			UnpackRGB(r, g, b, RGB_REDISH);
+		}
+#else
 		UnpackRGB(r,g,b, RGB_YELLOWISH);
+#endif // defined ( HUNGER_CLIENT_DLL )
 	}
 	else
 	{
@@ -220,11 +234,13 @@ int CHudHealth::Draw(float flTime)
 
 		x = gHUD.DrawHudNumber(x, y, DHN_3DIGITS | DHN_DRAWZERO, m_iHealth, r, g, b);
 
+#if !defined ( HUNGER_CLIENT_DLL )
 		x += HealthWidth/2;
 
 		int iHeight = gHUD.m_iFontHeight;
 		int iWidth = HealthWidth/10;
 		FillRGBA(x, y, iWidth, iHeight, 255, 160, 0, a);
+#endif // !defined ( HUNGER_CLIENT_DLL )
 	}
 
 	DrawDamage(flTime);
@@ -372,7 +388,18 @@ int CHudHealth::DrawDamage(float flTime)
 	if (!m_bitsDamage)
 		return 1;
 
+#if defined ( HUNGER_CLIENT_DLL )
+	if (bIsMultiplayer())
+	{
+		UnpackRGB(r, g, b, RGB_YELLOWISH);
+	}
+	else
+	{
+		UnpackRGB(r, g, b, RGB_REDISH);
+	}
+#else
 	UnpackRGB(r,g,b, RGB_YELLOWISH);
+#endif // defined ( HUNGER_CLIENT_DLL )
 	
 	a = (int)( fabs(sin(flTime*2)) * 256.0);
 

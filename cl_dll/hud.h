@@ -533,6 +533,24 @@ private:
 	int 	m_nCompositeScore;
 };
 
+#if defined ( HUNGER_CLIENT_DLL )
+//
+//-----------------------------------------------------
+//
+class CHudZoom : public CHudBase
+{
+public:
+	int Init(void);
+	int VidInit(void);
+	int Draw(float flTime);
+	void Reset(void);
+	int MsgFunc_Zoom(const char *pszName, int iSize, void *pbuf);
+
+private:
+	int	  m_fOn;
+	WEAPON* m_pWeapon;
+};
+#endif // defined ( HUNGER_CLIENT_DLL )
 //
 //-----------------------------------------------------
 //
@@ -611,6 +629,9 @@ public:
 	CHudTextMessage m_TextMessage;
 	CHudStatusIcons m_StatusIcons;
 	CHudBenchmark	m_Benchmark;
+#if defined ( HUNGER_CLIENT_DLL )
+	CHudZoom		m_Zoom;
+#endif
 
 	void Init( void );
 	void VidInit( void );

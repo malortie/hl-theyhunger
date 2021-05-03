@@ -185,6 +185,7 @@ class CItemSuit : public CItem
 	}
 	BOOL MyTouch( CBasePlayer *pPlayer )
 	{
+#if !defined ( HUNGER_DLL )
 		if ( pPlayer->pev->weapons & (1<<WEAPON_SUIT) )
 			return FALSE;
 
@@ -192,6 +193,7 @@ class CItemSuit : public CItem
 			EMIT_SOUND_SUIT(pPlayer->edict(), "!HEV_A0");		// short version of suit logon,
 		else
 			EMIT_SOUND_SUIT(pPlayer->edict(), "!HEV_AAx");	// long version of suit logon
+#endif // !defined ( HUNGER_DLL )
 
 		pPlayer->pev->weapons |= (1<<WEAPON_SUIT);
 		return TRUE;
@@ -217,6 +219,9 @@ class CItemBattery : public CItem
 	}
 	BOOL MyTouch( CBasePlayer *pPlayer )
 	{
+#if defined ( HUNGER_DLL )
+		return FALSE;
+#endif // defined ( HUNGER_DLL )
 		if ( pPlayer->pev->deadflag != DEAD_NO )
 		{
 			return FALSE;

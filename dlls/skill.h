@@ -135,6 +135,33 @@ struct skilldata_t
 	float plrStomach;
 	float plrLeg;
 	float plrArm;
+#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+// Monster Health & Damage
+	float babykellyhealth;
+
+	float bossHealth;
+
+	float cyberfranklinHealth;
+
+	float houndeyeDmgBite;
+
+	float megasquidHealth;
+
+	float zombiebullHealth;
+	float zombiebullDmgBite;
+	float zombiebullDmgWhip;
+
+// health/suit charge
+	float medkitHeal;
+
+// Player Weapons
+	float plrDmgShovel;
+	float plrDmgSpanner;
+	float plrDmgAP9;
+	float plrDmgTaurus;
+	float plrDmgSniper;
+	float plrDmgFlame;
+#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 };
 
 extern	DLL_GLOBAL	skilldata_t	gSkillData;
