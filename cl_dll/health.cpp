@@ -234,13 +234,15 @@ int CHudHealth::Draw(float flTime)
 
 		x = gHUD.DrawHudNumber(x, y, DHN_3DIGITS | DHN_DRAWZERO, m_iHealth, r, g, b);
 
-#if !defined ( HUNGER_CLIENT_DLL )
-		x += HealthWidth/2;
+		if (bIsMultiplayer())
+		{
+			// Only draw the vertical bar in multiplayer.
+			x += HealthWidth/2;
 
-		int iHeight = gHUD.m_iFontHeight;
-		int iWidth = HealthWidth/10;
-		FillRGBA(x, y, iWidth, iHeight, 255, 160, 0, a);
-#endif // !defined ( HUNGER_CLIENT_DLL )
+			int iHeight = gHUD.m_iFontHeight;
+			int iWidth = HealthWidth/10;
+			FillRGBA(x, y, iWidth, iHeight, 255, 160, 0, a);
+		}
 	}
 
 	DrawDamage(flTime);
