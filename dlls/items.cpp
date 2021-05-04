@@ -219,9 +219,10 @@ class CItemBattery : public CItem
 	}
 	BOOL MyTouch( CBasePlayer *pPlayer )
 	{
-#if defined ( HUNGER_DLL )
-		return FALSE;
-#endif // defined ( HUNGER_DLL )
+		// Only allow battery pickup in multiplayer.
+		if ( !g_pGameRules->IsMultiplayer() )
+			return FALSE;
+
 		if ( pPlayer->pev->deadflag != DEAD_NO )
 		{
 			return FALSE;
