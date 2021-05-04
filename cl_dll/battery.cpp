@@ -25,6 +25,8 @@
 #include <cstring>
 #include <cstdio>
 
+extern bool bIsMultiplayer(void);
+
 DECLARE_MESSAGE(m_Battery, Battery)
 
 int CHudBattery::Init(void)
@@ -84,10 +86,11 @@ int CHudBattery:: MsgFunc_Battery(const char *pszName,  int iSize, void *pbuf )
 
 int CHudBattery::Draw(float flTime)
 {
-#if defined(HUNGER_CLIENT_DLL)
-	return 1;
-#endif // defined(HUNGER_CLIENT_DLL)
 	if ( gHUD.m_iHideHUDDisplay & HIDEHUD_HEALTH )
+		return 1;
+
+	// Only draw hud battery in multiplayer.
+	if (!bIsMultiplayer())
 		return 1;
 
 	int r, g, b, x, y, a;
