@@ -1264,6 +1264,7 @@ public:
 	void Precache(void);
 	int iItemSlot(void) { return 4; }
 	int GetItemInfo(ItemInfo *p);
+	int AddToPlayer( CBasePlayer *pPlayer );
 
 	void PrimaryAttack(void);
 	void SecondaryAttack(void);
