@@ -566,6 +566,8 @@ public:
 	static	TYPEDESCRIPTION m_SaveData[];
 #endif
 
+	int GetViewModelBody(void) const;
+	void UpdateViewModelBody(void);
 	BOOL m_fSilencerOn;
 #endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 private:

@@ -45,6 +45,18 @@ enum glock_e {
 LINK_ENTITY_TO_CLASS( weapon_glock, CGlock );
 LINK_ENTITY_TO_CLASS( weapon_9mmhandgun, CGlock );
 
+int CGlock::GetViewModelBody(void) const
+{
+	return pev->body;
+}
+
+void CGlock::UpdateViewModelBody(void)
+{
+	if (m_fSilencerOn)
+		pev->body = SILENCER_ON;
+	else
+		pev->body = SILENCER_OFF;
+}
 
 void CGlock::Spawn( )
 {
@@ -55,14 +67,18 @@ void CGlock::Spawn( )
 	char* szModel = NULL;
 
 	if (pev->body == SILENCER_ON)
+	{
 		szModel = GLOCK_MODEL_SILENCER;
+		m_fSilencerOn = TRUE;
+	}
 	else
+	{
 		szModel = GLOCK_MODEL_DEFAULT;
+		m_fSilencerOn = FALSE;
+	}
 
 	SET_MODEL(ENT(pev), szModel);
 
-	// Always put the silencer on, for now.
-	m_fSilencerOn = TRUE;
 #else
 	SET_MODEL(ENT(pev), "models/w_9mmhandgun.mdl");
 #endif //  defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
@@ -127,14 +143,9 @@ int CGlock::AddToPlayer( CBasePlayer *pPlayer )
 BOOL CGlock::Deploy( )
 {
 #if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
-#ifdef CLIENT_DLL
-	pev->body = 1;
-#endif
-	return DefaultDeploy("models/v_9mmhandgun.mdl", "models/p_9mmhandgun.mdl", GLOCK_DRAW, "onehanded", UseDecrement(), pev->body);
-#else
-	// pev->body = 1;
-	return DefaultDeploy( "models/v_9mmhandgun.mdl", "models/p_9mmhandgun.mdl", GLOCK_DRAW, "onehanded", /*UseDecrement() ? 1 : 0*/ 0 );
-#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+	UpdateViewModelBody();
+
+	return DefaultDeploy("models/v_9mmhandgun.mdl", "models/p_9mmhandgun.mdl", GLOCK_DRAW, "onehanded", UseDecrement(), GetViewModelBody());
 }
 
 #if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
@@ -142,6 +153,7 @@ void CGlock::Holster(int skiplocal /*= 0*/)
 {
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.5;
 	SendWeaponAnim(GLOCK_HOLSTER);
+	SendWeaponAnim(GLOCK_HOLSTER, UseDecrement(), GetViewModelBody());
 
 	m_fInAttack = 0;
 }
@@ -165,6 +177,7 @@ void CGlock::SecondaryAttack( void )
 		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.0;
 
 		SendWeaponAnim(GLOCK_HOLSTER, 1, SILENCER_OFF);
+		SendWeaponAnim(GLOCK_HOLSTER, UseDecrement(), GetViewModelBody());
 
 		m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(2.0);
 	}
@@ -176,6 +189,7 @@ void CGlock::SecondaryAttack( void )
 		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 2.4; // 3.3
 
 		SendWeaponAnim( GLOCK_ADD_SILENCER, 1, SILENCER_ON);
+		SendWeaponAnim( GLOCK_ADD_SILENCER, UseDecrement(), GetViewModelBody());
 
 		m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(3.4);
 	}
@@ -233,6 +247,7 @@ void CGlock::GlockFire( float flSpread , float flCycleTime, BOOL fUseAutoAim )
 
 	// silenced
 	if (pev->body == 1)
+	if (m_fSilencerOn)
 	{
 		m_pPlayer->m_iWeaponVolume = QUIET_GUN_VOLUME;
 		m_pPlayer->m_iWeaponFlash = DIM_GUN_FLASH;
@@ -260,12 +275,7 @@ void CGlock::GlockFire( float flSpread , float flCycleTime, BOOL fUseAutoAim )
 	vecDir = m_pPlayer->FireBulletsPlayer( 1, vecSrc, vecAiming, Vector( flSpread, flSpread, flSpread ), 8192, BULLET_PLAYER_9MM, 0, 0, m_pPlayer->pev, m_pPlayer->random_seed );
 
 #if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
-	int body = m_fSilencerOn ? SILENCER_ON : SILENCER_OFF;
-
-	PLAYBACK_EVENT_FULL(flags, m_pPlayer->edict(), m_usFireGlock1, 0.0, (float *)&g_vecZero, (float *)&g_vecZero, vecDir.x, vecDir.y, body, 0, (m_iClip == 0) ? 1 : 0, m_fSilencerOn);
-#else
-	PLAYBACK_EVENT_FULL( flags, m_pPlayer->edict(), fUseAutoAim ? m_usFireGlock1 : m_usFireGlock2, 0.0, (float *)&g_vecZero, (float *)&g_vecZero, vecDir.x, vecDir.y, 0, 0, ( m_iClip == 0 ) ? 1 : 0, 0 );
-#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+	PLAYBACK_EVENT_FULL(flags, m_pPlayer->edict(), m_usFireGlock1, 0.0, (float *)&g_vecZero, (float *)&g_vecZero, vecDir.x, vecDir.y, GetViewModelBody(), 0, (m_iClip == 0) ? 1 : 0, m_fSilencerOn);
 
 	m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(flCycleTime);
 
@@ -284,13 +294,14 @@ void CGlock::Reload( void )
 		return;
 
 	int body = m_fSilencerOn ? SILENCER_ON : SILENCER_OFF;
-
 	int iResult;
 
 	if (m_iClip == 0)
 		iResult = DefaultReload(GLOCK_MAX_CLIP, GLOCK_RELOAD, 1.5, body);
+		iResult = DefaultReload(GLOCK_MAX_CLIP, GLOCK_RELOAD, 1.5, GetViewModelBody());
 	else
 		iResult = DefaultReload(GLOCK_MAX_CLIP, GLOCK_RELOAD_NOT_EMPTY, 1.5, body);
+		iResult = DefaultReload(GLOCK_MAX_CLIP, GLOCK_RELOAD_NOT_EMPTY, 1.5, GetViewModelBody());
 
 	if (iResult)
 	{
@@ -324,6 +335,7 @@ void CGlock::WeaponIdle( void )
 
 	m_pPlayer->GetAutoaimVector( AUTOAIM_10DEGREES );
 
+
 	if ( m_flTimeWeaponIdle > UTIL_WeaponTimeBase() )
 		return;
 
@@ -340,8 +352,10 @@ void CGlock::WeaponIdle( void )
 		}
 
 		int body = m_fSilencerOn ? SILENCER_ON : SILENCER_OFF;
+		UpdateViewModelBody();
 
 		SendWeaponAnim(GLOCK_DRAW, UseDecrement(), body);
+		SendWeaponAnim(GLOCK_DRAW, UseDecrement(), GetViewModelBody());
 
 		m_fInAttack = 0;
 
@@ -372,7 +386,6 @@ void CGlock::WeaponIdle( void )
 			}
 
 			SendWeaponAnim(iAnim, 1, m_fSilencerOn ? 1 : 0);
-		}
 	}
 #else
 	// only idle if the slid isn't back
