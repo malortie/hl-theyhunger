@@ -142,7 +142,6 @@ int CGlock::AddToPlayer( CBasePlayer *pPlayer )
 
 BOOL CGlock::Deploy( )
 {
-#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 	UpdateViewModelBody();
 
 	return DefaultDeploy("models/v_9mmhandgun.mdl", "models/p_9mmhandgun.mdl", GLOCK_DRAW, "onehanded", UseDecrement(), GetViewModelBody());
