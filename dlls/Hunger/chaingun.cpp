@@ -230,7 +230,7 @@ void CChaingun::Reload(void)
 	}
 	else
 	{
-		if ( DefaultReload(SNIPER_MAX_CLIP, CHAINGUN_DRAW, 0.53 ))
+		if ( DefaultReload(CHAINGUN_MAX_CLIP, CHAINGUN_DRAW, 0.53 ))
 		{
 			m_fInSpecialReload = 3;
 
