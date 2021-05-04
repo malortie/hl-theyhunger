@@ -1304,6 +1304,7 @@ public:
 	void Precache(void);
 	int iItemSlot(void) { return 5; }
 	int GetItemInfo(ItemInfo *p);
+	int AddToPlayer( CBasePlayer *pPlayer );
 
 	void PrimaryAttack(void);
 	BOOL Deploy(void);
