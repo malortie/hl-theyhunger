@@ -906,15 +906,15 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 #if defined ( HUNGER_CLIENT_DLL )
 	else if (player.m_pActiveItem->m_iId== WEAPON_AP9)
 	{
-		player.ammo_ap9 = (int)from->client.vuser1[1];
+		player.ammo_ap9 = (int)from->client.vuser2[1];
 	}
 	else if (player.m_pActiveItem->m_iId == WEAPON_TAURUS)
 	{
-		player.ammo_taurus = (int)from->client.vuser1[1];
+		player.ammo_taurus = (int)from->client.vuser2[1];
 	}
 	else if (player.m_pActiveItem->m_iId == WEAPON_EINAR1 || player.m_pActiveItem->m_iId == WEAPON_HKG36)
 	{
-		player.ammo_sniper = (int)from->client.vuser1[1];
+		player.ammo_sniper = (int)from->client.vuser2[1];
 	}
 #endif // defined ( HUNGER_CLIENT_DLL )
 	
@@ -988,15 +988,15 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 #if defined ( HUNGER_CLIENT_DLL )
 	else if (player.m_pActiveItem->m_iId == WEAPON_AP9)
 	{
-		from->client.vuser1[1] = player.ammo_ap9;
+		from->client.vuser2[1] = player.ammo_ap9;
 	}
 	else if (player.m_pActiveItem->m_iId == WEAPON_TAURUS)
 	{
-		from->client.vuser1[1] = player.ammo_taurus;
+		from->client.vuser2[1] = player.ammo_taurus;
 	}
 	else if (player.m_pActiveItem->m_iId == WEAPON_EINAR1 || player.m_pActiveItem->m_iId == WEAPON_HKG36)
 	{
-		from->client.vuser1[1] = player.ammo_sniper;
+		from->client.vuser2[1] = player.ammo_sniper;
 	}
 #endif // defined ( HUNGER_CLIENT_DLL )
 
