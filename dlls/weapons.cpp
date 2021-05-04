@@ -1666,12 +1666,6 @@ TYPEDESCRIPTION	CGlock::m_SaveData[] =
 };
 IMPLEMENT_SAVERESTORE(CGlock, CBasePlayerWeapon);
 
-TYPEDESCRIPTION	CPython::m_SaveData[] =
-{
-	DEFINE_FIELD(CPython, m_flSoundDelay, FIELD_TIME),
-};
-IMPLEMENT_SAVERESTORE(CPython, CBasePlayerWeapon);
-
 TYPEDESCRIPTION	CAP9::m_SaveData[] =
 {
 	DEFINE_FIELD(CAP9, m_iBurstShots, FIELD_INTEGER),
