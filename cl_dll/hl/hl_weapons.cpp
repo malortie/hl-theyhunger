@@ -904,6 +904,10 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 		 ( ( CRpg * )player.m_pActiveItem)->m_cActiveRockets = (int)from->client.vuser2[ 2 ];
 	}
 #if defined ( HUNGER_CLIENT_DLL )
+	else if (player.m_pActiveItem->m_iId== WEAPON_GLOCK)
+	{
+		( ( CGlock * )player.m_pActiveItem)->m_fSilencerOn = (int)from->client.vuser2[1];
+	}
 	else if (player.m_pActiveItem->m_iId== WEAPON_AP9)
 	{
 		player.ammo_ap9 = (int)from->client.vuser2[1];
@@ -986,6 +990,10 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 		 from->client.vuser2[ 2 ] = ( ( CRpg * )player.m_pActiveItem)->m_cActiveRockets;
 	}
 #if defined ( HUNGER_CLIENT_DLL )
+	else if (player.m_pActiveItem->m_iId == WEAPON_GLOCK)
+	{
+		from->client.vuser2[1] = ( ( CGlock * )player.m_pActiveItem)->m_fSilencerOn;
+	}
 	else if (player.m_pActiveItem->m_iId == WEAPON_AP9)
 	{
 		from->client.vuser2[1] = player.ammo_ap9;

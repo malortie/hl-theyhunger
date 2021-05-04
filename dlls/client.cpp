@@ -1767,6 +1767,10 @@ void UpdateClientData ( const edict_t *ent, int sendweapons, struct clientdata_s
 						cd->vuser2.z = ( ( CRpg * )pl->m_pActiveItem)->m_cActiveRockets;
 					}
 #if defined ( HUNGER_DLL )
+					else if (pl->m_pActiveItem->m_iId == WEAPON_GLOCK)
+					{
+						cd->vuser2.y = ( ( CGlock * )pl->m_pActiveItem)->m_fSilencerOn;
+					}
 					else if (pl->m_pActiveItem->m_iId == WEAPON_AP9)
 					{
 						cd->vuser2.y = pl->ammo_ap9;
