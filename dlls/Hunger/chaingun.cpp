@@ -375,7 +375,8 @@ void CChaingun::Fire(float flSpread, float flCycleTime, BOOL fUseAutoAim)
 	m_pPlayer->m_iWeaponFlash = NORMAL_GUN_FLASH;
 
 	// The chaingun fires 2 bullets at a time, so we need to ensure it only shoot one bullet m_iClip is 1. 
-	m_iClip -= std::min(m_iClip, CHAINGUN_BULLETS_PER_SHOT);
+	int nShot = std::min(m_iClip, CHAINGUN_BULLETS_PER_SHOT);
+	m_iClip -= nShot;
 
 	m_pPlayer->pev->effects = (int)(m_pPlayer->pev->effects) | EF_MUZZLEFLASH;
 
@@ -386,7 +387,7 @@ void CChaingun::Fire(float flSpread, float flCycleTime, BOOL fUseAutoAim)
 	Vector vecAiming = m_pPlayer->GetAutoaimVector(AUTOAIM_5DEGREES);
 	Vector vecDir;
 
-	vecDir = m_pPlayer->FireBulletsPlayer(CHAINGUN_BULLETS_PER_SHOT, vecSrc, vecAiming, Vector(flSpread, flSpread, flSpread), 8192, BULLET_PLAYER_CHAINGUN, 2, 0, m_pPlayer->pev, m_pPlayer->random_seed);
+	vecDir = m_pPlayer->FireBulletsPlayer(nShot, vecSrc, vecAiming, Vector(flSpread, flSpread, flSpread), 8192, BULLET_PLAYER_CHAINGUN, 2, 0, m_pPlayer->pev, m_pPlayer->random_seed);
 
 	int flags;
 #if defined( CLIENT_WEAPONS )
