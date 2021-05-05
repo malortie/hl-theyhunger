@@ -136,7 +136,7 @@ void CSniper::PrimaryAttack()
 
 	fUseAutoAim		= TRUE;
 	iAnim			= m_fInZoom ? GetZoomedAttackActivity() : GetPrimaryAttackActivity();
-	flSpread		= m_fInZoom ? 0.01 : 0.03;
+	flSpread		= m_fInZoom ? 0.01 : 0.08;
 	flCycleTime		= m_fInZoom ? 0.7 : 0.1;
 
 	SniperFire(flSpread, flCycleTime, fUseAutoAim, iAnim);
