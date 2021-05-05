@@ -134,6 +134,8 @@ void HUD_PrepEntity( CBaseEntity *pEntity, CBasePlayer *pWeaponOwner )
 		
 		((CBasePlayerWeapon *)pEntity)->GetItemInfo( &info );
 
+		CBasePlayerItem::ItemInfoArray[info.iId] = info;
+
 		g_pWpns[ info.iId ] = (CBasePlayerWeapon *)pEntity;
 	}
 }
