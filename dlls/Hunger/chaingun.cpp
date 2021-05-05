@@ -374,7 +374,8 @@ void CChaingun::Fire(float flSpread, float flCycleTime, BOOL fUseAutoAim)
 	m_pPlayer->m_iWeaponVolume = NORMAL_GUN_VOLUME;
 	m_pPlayer->m_iWeaponFlash = NORMAL_GUN_FLASH;
 
-	m_iClip -= CHAINGUN_BULLETS_PER_SHOT;
+	// The chaingun fires 2 bullets at a time, so we need to ensure it only shoot one bullet m_iClip is 1. 
+	m_iClip -= std::min(m_iClip, CHAINGUN_BULLETS_PER_SHOT);
 
 	m_pPlayer->pev->effects = (int)(m_pPlayer->pev->effects) | EF_MUZZLEFLASH;
 
