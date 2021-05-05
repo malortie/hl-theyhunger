@@ -1291,6 +1291,7 @@ public:
 	void Fire(float flSpread, float flCycleTime, BOOL fUseAutoAim);
 
 	void StopSounds(void);
+	void SetPlayerSlow(BOOL slowdown);
 
 private:
 	int m_iShell;

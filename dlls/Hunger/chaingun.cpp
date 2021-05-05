@@ -117,6 +117,9 @@ void CChaingun::Holster(int skiplocal /*= 0*/)
 	// Stop chaingun sounds.
 	StopSounds();
 
+	// Restore player speed.
+	SetPlayerSlow(FALSE);
+
 	m_fInAttack = 0;
 	m_fInSpecialReload = 0;
 }
@@ -309,7 +312,7 @@ void CChaingun::SpinUp(void)
 	SendWeaponAnim(CHAINGUN_SPINUP);
 
 	// Slowdown player.
-	PLAYBACK_EVENT_FULL(0, m_pPlayer->edict(), m_usFireChaingun2, 0.0, (float *)&g_vecZero, (float *)&g_vecZero, 0.0, 0.0, 0, 0, TRUE, 0);
+	SetPlayerSlow(TRUE);
 
 	m_fInAttack = 1;
 	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.5;
@@ -325,7 +328,7 @@ void CChaingun::SpinDown(void)
 	SendWeaponAnim(CHAINGUN_SPINDOWN);
 
 	// Restore player speed.
-	PLAYBACK_EVENT_FULL(0, m_pPlayer->edict(), m_usFireChaingun2, 0.0, (float *)&g_vecZero, (float *)&g_vecZero, 0.0, 0.0, 0, 0, FALSE, 0);
+	SetPlayerSlow(FALSE);
 
 	EMIT_SOUND_DYN(ENT(m_pPlayer->pev), CHAN_WEAPON, "weapons/asscan3.wav", 1.0, ATTN_NORM, 0, 80 + RANDOM_LONG(0, 0x3f));
 
@@ -407,4 +410,9 @@ void CChaingun::StopSounds(void)
 	STOP_SOUND(ENT(m_pPlayer->pev), CHAN_WEAPON, "weapons/asscan2.wav");
 	STOP_SOUND(ENT(m_pPlayer->pev), CHAN_WEAPON, "weapons/asscan3.wav");
 	STOP_SOUND(ENT(m_pPlayer->pev), CHAN_ITEM, "weapons/asscan4.wav");
+}
+
+void CChaingun::SetPlayerSlow(BOOL slowdown)
+{
+	PLAYBACK_EVENT_FULL(0, m_pPlayer->edict(), m_usFireChaingun2, 0.0, (float*)&g_vecZero, (float*)&g_vecZero, 0.0, 0.0, 0, 0, slowdown, 0);
 }
