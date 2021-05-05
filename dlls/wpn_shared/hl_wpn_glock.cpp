@@ -82,6 +82,7 @@ void CGlock::Spawn( )
 #else
 	SET_MODEL(ENT(pev), "models/w_9mmhandgun.mdl");
 #endif //  defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
+	m_fInAttack = 0;
 
 	m_iDefaultAmmo = GLOCK_DEFAULT_GIVE;
 
