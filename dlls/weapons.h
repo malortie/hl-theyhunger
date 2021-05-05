@@ -175,7 +175,7 @@ public:
 #define SNARK_MAX_CLIP			WEAPON_NOCLIP
 #if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 #define AP9_MAX_CLIP			40
-#define TAURUS_MAX_CLIP			20
+#define TAURUS_MAX_CLIP			10
 #define SNIPER_MAX_CLIP			5
 #define CHAINGUN_MAX_CLIP		100
 #define MEDKIT_MAX_CLIP			WEAPON_NOCLIP
