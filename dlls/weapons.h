@@ -1244,6 +1244,12 @@ class CEinar1 : public CSniper
 {
 public:
 
+#ifndef CLIENT_DLL
+	int		Save(CSave& save);
+	int		Restore(CRestore& restore);
+	static	TYPEDESCRIPTION m_SaveData[];
+#endif
+
 	void Spawn(void);
 	void Precache(void);
 	int GetItemInfo(ItemInfo *p);

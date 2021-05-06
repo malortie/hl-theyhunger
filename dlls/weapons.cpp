@@ -1679,11 +1679,10 @@ TYPEDESCRIPTION	CSniper::m_SaveData[] =
 };
 IMPLEMENT_SAVERESTORE(CSniper, CBasePlayerWeapon);
 
-#if 0
 TYPEDESCRIPTION	CEinar1::m_SaveData[] =
 {
-	DEFINE_FIELD(CEinar1, m_fInZoom, FIELD_BOOLEAN),
+	DEFINE_FIELD( CEinar1, m_fInAttack, FIELD_INTEGER ),
+	DEFINE_FIELD( CEinar1, m_fInSpecialReload, FIELD_INTEGER ),
 };
-IMPLEMENT_SAVERESTORE(CEinar1, CBasePlayerWeapon);
-#endif
 #endif // defined ( HUNGER_DLL )
+IMPLEMENT_SAVERESTORE(CEinar1, CSniper);
