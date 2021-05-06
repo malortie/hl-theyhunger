@@ -117,7 +117,7 @@ void CAP9::PrimaryAttack(void)
 {
 	m_fInAttack = 0;
 
-	AP9Fire(0.03, 0.13, TRUE, FALSE);
+	AP9Fire(0.07, 0.13, TRUE, FALSE);
 }
 
 void CAP9::SecondaryAttack(void)
