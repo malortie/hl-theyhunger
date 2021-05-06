@@ -226,7 +226,7 @@ void CAP9::WeaponIdle(void)
 	{
 		if (m_iBurstShots < 3 && m_iClip > 0)
 		{
-			AP9Fire(0.01, 0.05, FALSE, TRUE);
+			AP9Fire(0.04, 0.05, FALSE, TRUE);
 
 			m_iBurstShots++;
 
