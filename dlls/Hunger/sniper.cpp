@@ -45,32 +45,11 @@ void CSniper::Holster(int skiplocal /* = 0 */)
 	}
 
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1.0;
-	m_flTimeWeaponIdle = UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);
+	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);
 }
 
 void CSniper::SniperFire(float flSpread, float flCycleTime, BOOL fUseAutoAim, int iActivity)
 {
-	// don't fire underwater
-	if (m_pPlayer->pev->waterlevel == 3)
-	{
-		PlayEmptySound();
-		m_flNextPrimaryAttack = 0.15;
-		return;
-	}
-
-	if (m_iClip <= 0)
-	{
-		if (!m_fFireOnEmpty)
-			Reload();
-		else
-		{
-			EMIT_SOUND(ENT(m_pPlayer->pev), CHAN_WEAPON, "weapons/357_cock1.wav", 0.8, ATTN_NORM);
-			m_flNextPrimaryAttack = 0.15;
-		}
-
-		return;
-	}
-
 	m_pPlayer->m_iWeaponVolume = LOUD_GUN_VOLUME;
 	m_pPlayer->m_iWeaponFlash = BRIGHT_GUN_FLASH;
 
@@ -108,16 +87,7 @@ void CSniper::SniperFire(float flSpread, float flCycleTime, BOOL fUseAutoAim, in
 	PLAYBACK_EVENT_FULL(flags, m_pPlayer->edict(), m_usFireSniper, 0.0, (float *)&g_vecZero, (float *)&g_vecZero, vecDir.x, vecDir.y, iActivity, 0, 0, 0);
 
 	m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(flCycleTime);
-
-	m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(flCycleTime);
-
-	if (m_flNextPrimaryAttack < UTIL_WeaponTimeBase())
-		m_flNextPrimaryAttack = UTIL_WeaponTimeBase() + flCycleTime;
-
-	if (m_flNextSecondaryAttack < UTIL_WeaponTimeBase())
-		m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + flCycleTime;
-
-	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);
+	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + flCycleTime;
 }
 
 void CSniper::SecondaryAttack(void)

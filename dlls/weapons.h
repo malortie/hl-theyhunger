@@ -1200,12 +1200,12 @@ public:
 
 	int iItemSlot(void) { return 3; }
 	int AddToPlayer(CBasePlayer *pPlayer);
-	void PrimaryAttack(void);
-	void SecondaryAttack(void);
+	virtual void PrimaryAttack(void);
+	virtual void SecondaryAttack(void);
 	void SniperFire(float flSpread, float flCycleTime, BOOL fUseAutoAim, int iActivity);
-	void Holster(int skiplocal = 0);
-	void Reload(void);
-	void WeaponIdle(void);
+	virtual void Holster(int skiplocal = 0);
+	virtual void Reload(void);
+	virtual void WeaponIdle(void);
 
 	virtual BOOL UseDecrement(void)
 	{
@@ -1231,6 +1231,7 @@ public:
 	void Spawn(void);
 	void Precache(void);
 	int GetItemInfo(ItemInfo *p);
+	void PrimaryAttack(void);
 	BOOL Deploy(void);
 	void Reload(void);
 	void WeaponIdle(void);

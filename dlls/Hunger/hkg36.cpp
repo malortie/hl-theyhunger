@@ -113,6 +113,24 @@ void CHKG36::Reload(void)
 	}
 }
 
+void CHKG36::PrimaryAttack(void)
+{
+	// don't fire underwater, or if the clip is empty.
+	if (m_pPlayer->pev->waterlevel == 3 || m_iClip <= 0)
+	{
+		if (m_fFireOnEmpty)
+		{
+			PlayEmptySound();
+			m_flNextPrimaryAttack = GetNextAttackDelay(0.5f);
+		}
+		return;
+	}
+
+	CSniper::PrimaryAttack();
+
+	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 22.0 / 35.0;
+}
+
 void CHKG36::WeaponIdle(void)
 {
 	CSniper::WeaponIdle();
@@ -120,7 +138,7 @@ void CHKG36::WeaponIdle(void)
 	if (m_flTimeWeaponIdle > UTIL_WeaponTimeBase())
 		return;
 
-	m_flTimeWeaponIdle = 17.0 / 30.0;
+	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 17.0 / 30.0;
 
 	SendWeaponAnim(HKG36_IDLE, UseDecrement());
 }

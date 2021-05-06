@@ -21,6 +21,8 @@
 #include "player.h"
 #include "gamerules.h"
 
+#define EINAR1_REDRAW_DURATION  (16.0 / 30.0)
+
 enum einar1_e {
 	EINAR1_IDLE = 0,
 	EINAR1_AIM,
@@ -55,7 +57,7 @@ int CEinar1::GetItemInfo(ItemInfo *p)
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = SNIPER_MAX_CLIP;
-	p->iFlags = 0;
+	p->iFlags = ITEM_FLAG_NOAUTORELOAD; // Used to prevent automatic reload. WeaponIdle() takes care of it.
 	p->iSlot = 2;
 	p->iPosition = 4;
 	p->iId = m_iId = WEAPON_EINAR1;
@@ -114,28 +116,50 @@ void CEinar1::Holster(int skiplocal /* = 0 */)
 
 void CEinar1::PrimaryAttack()
 {
+	// Don't fire while in reload.
 	if (m_fInSpecialReload != 0)
 		return;
 
+	// don't fire underwater, or if the clip is empty.
+	if (m_pPlayer->pev->waterlevel == 3 || m_iClip <= 0)
+	{
+		if (m_fFireOnEmpty)
+		{
+			PlayEmptySound();
+			m_flNextPrimaryAttack = GetNextAttackDelay(0.5f);
+		}
+		return;
+	}
+
 	CSniper::PrimaryAttack();
 
-	m_fInAttack = 1;
-	m_fInSpecialReload = 0;
+	if (m_fInZoom)
+	{
+		// EINAR1_FIRE sequence duration
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 16.0 / 35.0;
+	}
+	else
+	{
+		// Must be soon enough because EINAR1_AUTOFIRE is a looping sequence,
+		// so the idle animation must play to make it stop.
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.1;
+	}
+
+	m_fInAttack = 1; // Used to update animation in WeaponIdle().
 }
 
 void CEinar1::SecondaryAttack(void)
 {
+	// Don't zoom while in reload.
 	if (m_fInSpecialReload != 0)
 		return;
 
 	CSniper::SecondaryAttack();
 
-	m_flNextPrimaryAttack = GetNextAttackDelay(1);
-	m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + 1;
-	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 5; // idle pretty soon after shooting.
+	m_fInAttack = 1; // Used to update animation in WeaponIdle().
 
-	m_fInAttack = 1;
-	m_fInSpecialReload = 0;
+	// To allow the weapon idle sequence to be updated now.
+	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() - 0.1f;
 }
 
 void CEinar1::Reload(void)
@@ -145,6 +169,10 @@ void CEinar1::Reload(void)
 
 	// don't reload until recoil is done
 	if (m_flNextPrimaryAttack > UTIL_WeaponTimeBase())
+		return;
+
+	// Do not allow reload if idle animation has not been reset.
+	if (m_fInAttack != 0)
 		return;
 
 	if (m_fInZoom)
@@ -157,10 +185,10 @@ void CEinar1::Reload(void)
 	{
 		SendWeaponAnim(EINAR1_AUTOHOLSTER);
 		m_fInSpecialReload = 1;
-		m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.0; // 0.5
+		m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.5;
 		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.6;
 		m_flNextPrimaryAttack = GetNextAttackDelay(0.6);
-		m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + 1.5;
+		m_flNextSecondaryAttack = GetNextAttackDelay(1.5);
 		return;
 	}
 	else if (m_fInSpecialReload == 1)
@@ -174,11 +202,19 @@ void CEinar1::Reload(void)
 
 		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.8;
 	}
-	else
+	else if (m_fInSpecialReload == 2)
 	{
-		DefaultReload( SNIPER_MAX_CLIP, EINAR1_AUTODRAW, 0.5);
+		DefaultReload( SNIPER_MAX_CLIP, EINAR1_AUTODRAW, EINAR1_REDRAW_DURATION);
 
 		m_fInSpecialReload = 0;
+
+		// Used to immediatly complete the reload.
+		m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() - 0.1;
+
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + EINAR1_REDRAW_DURATION;
+
+		// Delay next attack times to allow the draw sequence to complete.
+		m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(EINAR1_REDRAW_DURATION);
 	}
 }
 
@@ -186,32 +222,25 @@ void CEinar1::WeaponIdle(void)
 {
 	CSniper::WeaponIdle();
 
-	if (m_fInSpecialReload == 0 && m_fInAttack == 1 && (gpGlobals->time - m_flLastFireTime) > 0.1f)
-	{
-		SendWeaponAnim(m_fInZoom ? EINAR1_IDLE : EINAR1_AUTOIDLE);
-		m_fInAttack = 0;
-	}
-
 	if (m_flTimeWeaponIdle > UTIL_WeaponTimeBase())
 		return;
 
-	if (m_iClip == 0 && m_fInSpecialReload == 0 && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType])
+	if (m_fInAttack == 0)
 	{
-		Reload();
-	}
-	else if (m_fInSpecialReload != 0)
-	{
-		if (m_iClip != SNIPER_MAX_CLIP && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType])
+		// Only allow reload here if idle animation has been updated.
+		if (m_iClip == 0 && m_fInSpecialReload == 0 && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType])
 		{
 			Reload();
 		}
-		else
+		else if (m_fInSpecialReload != 0)
 		{
-			m_fInSpecialReload = 0;
-			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.5;
+			if (m_iClip != SNIPER_MAX_CLIP && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType])
+			{
+				Reload();
+			}
 		}
 	}
-	else if (m_fInSpecialReload == 0)
+	else
 	{
 		int iAnim;
 
@@ -227,10 +256,13 @@ void CEinar1::WeaponIdle(void)
 		}
 
 		SendWeaponAnim(iAnim, UseDecrement());
+
+		// Idle animation has been updated. Reset attack state.
+		m_fInAttack = 0;
 	}
 }
 
 BOOL CEinar1::ShouldWeaponIdle(void)
 {
-	return  (m_iClip == 0) || (m_fInSpecialReload != 0);
+	return TRUE;
 }
