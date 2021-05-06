@@ -2026,6 +2026,7 @@ void EV_FireTaurus( event_args_t *args )
 	vec3_t origin;
 	vec3_t angles;
 	vec3_t velocity;
+	int empty;
 
 	vec3_t vecSrc, vecAiming;
 	vec3_t up, right, forward;
@@ -2035,12 +2036,17 @@ void EV_FireTaurus( event_args_t *args )
 	VectorCopy( args->angles, angles );
 	VectorCopy( args->velocity, velocity );
 
+	empty = args->bparam1;
+
 	AngleVectors( angles, forward, right, up );
 
 	if ( EV_IsLocal( idx ) )
 	{
 		EV_MuzzleFlash();
-		gEngfuncs.pEventAPI->EV_WeaponAnimation(TAURUS_SHOOT + gEngfuncs.pfnRandomLong(0, 2), 1);
+		if (empty)
+			gEngfuncs.pEventAPI->EV_WeaponAnimation(TAURUS_SHOOT_EMPTY, 1);
+		else
+			gEngfuncs.pEventAPI->EV_WeaponAnimation(TAURUS_SHOOT + gEngfuncs.pfnRandomLong(0, 2), 1);
 
 		V_PunchAxis( 0, -2.0 );
 	}
