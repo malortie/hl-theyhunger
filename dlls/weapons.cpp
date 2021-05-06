@@ -1686,3 +1686,10 @@ TYPEDESCRIPTION	CEinar1::m_SaveData[] =
 };
 #endif // defined ( HUNGER_DLL )
 IMPLEMENT_SAVERESTORE(CEinar1, CSniper);
+
+TYPEDESCRIPTION	CChaingun::m_SaveData[] =
+{
+	DEFINE_FIELD( CChaingun, m_fInAttack, FIELD_INTEGER ),
+	DEFINE_FIELD( CChaingun, m_fInSpecialReload, FIELD_INTEGER ),
+};
+IMPLEMENT_SAVERESTORE(CChaingun, CBasePlayerWeapon);
