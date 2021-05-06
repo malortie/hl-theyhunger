@@ -1693,3 +1693,9 @@ TYPEDESCRIPTION	CChaingun::m_SaveData[] =
 	DEFINE_FIELD( CChaingun, m_fInSpecialReload, FIELD_INTEGER ),
 };
 IMPLEMENT_SAVERESTORE(CChaingun, CBasePlayerWeapon);
+
+TYPEDESCRIPTION	CMedkit::m_SaveData[] =
+{
+	DEFINE_FIELD( CMedkit, m_flSoundDelay, FIELD_TIME ),
+};
+IMPLEMENT_SAVERESTORE( CMedkit, CBasePlayerWeapon );

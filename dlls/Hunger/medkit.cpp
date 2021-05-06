@@ -21,6 +21,9 @@
 #include "nodes.h"
 #include "player.h"
 
+#define MEDKIT_DRAW_SEQUENCE_DURATION	(16.0 / 30.0)
+#define MEDKIT_HEAL_SEQUENCE_DURATION	(72.0 / 30.0)
+
 enum medkit_e {
 	MEDKIT_IDLE = 0,
 	MEDKIT_LONGIDLE,
@@ -91,13 +94,20 @@ int CMedkit::AddToPlayer( CBasePlayer *pPlayer )
 
 BOOL CMedkit::Deploy()
 {
-	m_flSoundDelay = 0;
+	BOOL bResult = DefaultDeploy("models/v_tfc_medkit.mdl", "models/p_tfc_medkit.mdl", MEDKIT_DRAW, "medkit");
 
-	return DefaultDeploy("models/v_tfc_medkit.mdl", "models/p_tfc_medkit.mdl", MEDKIT_DRAW, "medkit");
+	if (bResult)
+	{
+		m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + MEDKIT_DRAW_SEQUENCE_DURATION;
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.0;
+	}
+
+	return bResult;
 }
 
 void CMedkit::Holster(int skiplocal /*= 0*/)
 {
+	// Cancel heal sound.
 	m_flSoundDelay = 0;
 
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.5;
@@ -112,18 +122,14 @@ void CMedkit::PrimaryAttack(void)
 	if (m_pPlayer->ammo_hornets <= 0)
 	{
 		PlayEmptySound();
-		m_flNextPrimaryAttack = 1.0;
+		m_flNextPrimaryAttack = GetNextAttackDelay(1.0);
 		return;
 	} 
 	
 	PLAYBACK_EVENT(0, m_pPlayer->edict(), m_usMedkit);
 
-	m_flNextPrimaryAttack = GetNextAttackDelay(2.4);
-
-	if (m_flNextPrimaryAttack < UTIL_WeaponTimeBase())
-		m_flNextPrimaryAttack = UTIL_WeaponTimeBase() + 2.4;
-
-	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);
+	m_flNextPrimaryAttack = GetNextAttackDelay(MEDKIT_HEAL_SEQUENCE_DURATION);
+	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + MEDKIT_HEAL_SEQUENCE_DURATION;
 
 	m_flSoundDelay = gpGlobals->time + (38.0 / 30.0);
 }
@@ -152,21 +158,8 @@ void CMedkit::WeaponIdle(void)
 	if (m_flTimeWeaponIdle > UTIL_WeaponTimeBase())
 		return;
 
-	int iAnim;
-	float flRand = UTIL_SharedRandomFloat(m_pPlayer->random_seed, 0.0, 1.0);
-
-	if (flRand <= 0.75)
-	{
-		iAnim = MEDKIT_LONGIDLE;
-		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 72.0 / 30.0;
-	}
-	else
-	{
-		iAnim = MEDKIT_IDLE;
-		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 36.0 / 30.0;
-	}
-
-	SendWeaponAnim(iAnim, 1);
+	SendWeaponAnim(MEDKIT_IDLE, 1);
+	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 36.0 / 30.0;
 }
 
 BOOL CMedkit::PlayEmptySound(void)
