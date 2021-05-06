@@ -87,7 +87,15 @@ int CTaurus::GetItemInfo(ItemInfo *p)
 
 BOOL CTaurus::Deploy()
 {
-	return DefaultDeploy("models/v_taurus.mdl", "models/p_taurus.mdl", TAURUS_DRAW2, "taurus", 0);
+	BOOL bResult = DefaultDeploy("models/v_taurus.mdl", "models/p_taurus.mdl", TAURUS_DRAW2, "taurus", 0);
+
+	if (bResult)
+	{
+		m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.5f;
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 46.0 / 45.0;
+	}
+
+	return bResult;
 }
 
 void CTaurus::PrimaryAttack(void)
@@ -97,7 +105,7 @@ void CTaurus::PrimaryAttack(void)
 		if (m_fFireOnEmpty)
 		{
 			PlayEmptySound();
-			m_flNextPrimaryAttack = GetNextAttackDelay(0.28);
+			m_flNextPrimaryAttack = GetNextAttackDelay(0.5);
 		}
 
 		return;
@@ -153,7 +161,7 @@ void CTaurus::Reload(void)
 
 	if (iResult)
 	{
-		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 61.0 / 30.0;
 	}
 }
 
