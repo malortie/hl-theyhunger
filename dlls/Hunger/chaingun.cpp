@@ -23,6 +23,7 @@
 #include "gamerules.h"
 
 #define CHAINGUN_BULLETS_PER_SHOT 2
+#define CHAINGUN_REDRAW_DURATION  (17.0 / 32.0)
 
 enum chaingun_e {
 	CHAINGUN_IDLE = 0,
@@ -81,7 +82,7 @@ int CChaingun::GetItemInfo(ItemInfo *p)
 	p->iMaxClip = CHAINGUN_MAX_CLIP;
 	p->iSlot = 3;
 	p->iPosition = 3;
-	p->iFlags = 0;
+	p->iFlags = ITEM_FLAG_NOAUTORELOAD; // Used to prevent automatic reload. WeaponIdle() takes care of it.
 	p->iId = m_iId = WEAPON_CHAINGUN;
 	p->iWeight = CHAINGUN_WEIGHT;
 
@@ -102,7 +103,6 @@ int CChaingun::AddToPlayer( CBasePlayer *pPlayer )
 
 BOOL CChaingun::Deploy()
 {
-	// pev->body = 1;
 	return DefaultDeploy("models/v_tfac.mdl", "models/p_tfac.mdl", CHAINGUN_DRAW, "chaingun", UseDecrement());
 }
 
@@ -111,7 +111,7 @@ void CChaingun::Holster(int skiplocal /*= 0*/)
 	m_fInReload = FALSE;
 
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1.0;
-	m_flTimeWeaponIdle = UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);
+	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);
 	SendWeaponAnim(CHAINGUN_HOLSTER);
 
 	// Stop chaingun sounds.
@@ -129,34 +129,22 @@ void CChaingun::PrimaryAttack(void)
 	// Don't fire while in reload.
 	if (m_fInSpecialReload != 0)
 	{
-		WeaponIdle();
 		return;
 	}
 
-	// don't fire underwater
-	if (m_pPlayer->pev->waterlevel == 3)
+	// don't fire underwater, or if the clip is empty.
+	if (m_pPlayer->pev->waterlevel == 3 || m_iClip <= 0)
 	{
 		if (m_fInAttack != 0)
 		{
 			// spin down
 			SpinDown();
-
-			m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1;
 		}
-		else
+		else if (m_fFireOnEmpty)
 		{
 			PlayEmptySound();
+			m_flNextSecondaryAttack = m_flNextPrimaryAttack = GetNextAttackDelay(0.5);
 		}
-
-		m_flNextSecondaryAttack = m_flNextPrimaryAttack = GetNextAttackDelay(0.5);
-		return;
-	}
-
-	if (m_iClip <= 0)
-	{
-		Reload();
-		if (m_iClip == 0)
-			PlayEmptySound();
 		return;
 	}
 
@@ -165,27 +153,19 @@ void CChaingun::PrimaryAttack(void)
 		// Spin up
 		SpinUp();
 	}
-	else if (m_fInAttack == 1)
-	{
-		if (m_flTimeWeaponIdle < UTIL_WeaponTimeBase())
-		{
-			// fire
-			SendWeaponAnim(CHAINGUN_FIRE);
-			m_fInAttack = 2;
-		}
-	}
 	else
 	{
 		// Spin
 		Spin();
 	}
-
-	m_fInSpecialReload = 0;
 }
 
 void CChaingun::SecondaryAttack(void)
 {
-	WeaponIdle();
+	if (m_fInAttack != 0)
+	{
+		SpinDown();
+	}
 }
 
 void CChaingun::Reload(void)
@@ -199,15 +179,6 @@ void CChaingun::Reload(void)
 
 	if (m_fInAttack != 0)
 		return;
-
-	// Stop sounds.
-	StopSounds();
-
-	// Stop spin up or firing.
-	m_fInAttack = 0;
-
-	// Restore player speed.
-	PLAYBACK_EVENT_FULL(0, m_pPlayer->edict(), m_usFireChaingun2, 0.0, (float *)&g_vecZero, (float *)&g_vecZero, 0.0, 0.0, 0, 0, FALSE, 0);
 
 	// check to see if we're ready to reload
 	if (m_fInSpecialReload == 0)
@@ -231,16 +202,19 @@ void CChaingun::Reload(void)
 
 		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.8;
 	}
-	else
+	else if (m_fInSpecialReload == 2)
 	{
-		if ( DefaultReload(CHAINGUN_MAX_CLIP, CHAINGUN_DRAW, 0.53 ))
-		{
-			m_fInSpecialReload = 3;
+		DefaultReload( CHAINGUN_MAX_CLIP, CHAINGUN_DRAW, CHAINGUN_REDRAW_DURATION );
 
-			m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() - 0.1;
+		m_fInSpecialReload = 0;
 
-			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.5;
-		}
+		// Used to immediatly complete the reload.
+		m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() - 0.1;
+
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + CHAINGUN_REDRAW_DURATION;
+
+		// Delay next attack times to allow the draw sequence to complete.
+		m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(CHAINGUN_REDRAW_DURATION);
 	}
 }
 
@@ -255,10 +229,11 @@ void CChaingun::WeaponIdle(void)
 
 	if (m_fInAttack != 0)
 	{
-		// Spin down
-		SpinDown();
-
-		m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1;
+		if (!((m_pPlayer->pev->button & IN_ATTACK) || (m_pPlayer->pev->button & IN_ATTACK2)))
+		{
+			// Spin down
+			SpinDown();
+		}
 	}
 	else
 	{
@@ -271,13 +246,6 @@ void CChaingun::WeaponIdle(void)
 			if (m_iClip != CHAINGUN_MAX_CLIP && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType])
 			{
 				Reload();
-			}
-			else
-			{
-				m_fInSpecialReload = 0;
-
-				m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.5;
-				m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(0.0);
 			}
 		}
 		else
@@ -301,7 +269,7 @@ void CChaingun::WeaponIdle(void)
 
 BOOL CChaingun::ShouldWeaponIdle(void)
 {
-	return m_iClip == 0 || m_fInSpecialReload != 0;
+	return TRUE;
 }
 
 void CChaingun::SpinUp(void)
@@ -315,6 +283,7 @@ void CChaingun::SpinUp(void)
 	SetPlayerSlow(TRUE);
 
 	m_fInAttack = 1;
+	m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(0.5f);
 	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.5;
 
 	EMIT_SOUND_DYN(ENT(m_pPlayer->pev), CHAN_WEAPON, "weapons/asscan1.wav", 1.0, ATTN_NORM, 0, 80 + RANDOM_LONG(0, 0x3f));
@@ -333,22 +302,13 @@ void CChaingun::SpinDown(void)
 	EMIT_SOUND_DYN(ENT(m_pPlayer->pev), CHAN_WEAPON, "weapons/asscan3.wav", 1.0, ATTN_NORM, 0, 80 + RANDOM_LONG(0, 0x3f));
 
 	m_fInAttack = 0;
-	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 2.0;
+	m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(1.0f);
+	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.0f;
 }
 
 void CChaingun::Spin(void)
 {
-	// out of ammo!
-	if (m_iClip <= 0)
-	{
-		// Spin down
-		SpinDown();
-
-		m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1;
-		return;
-	}
-
-	m_fInAttack = 2;
+	m_fInAttack = 1;
 
 	// Spin sound.
 	EMIT_SOUND(ENT(m_pPlayer->pev), CHAN_ITEM, "weapons/asscan4.wav", 0.8, ATTN_NORM);
@@ -398,12 +358,8 @@ void CChaingun::Fire(float flSpread, float flCycleTime, BOOL fUseAutoAim)
 
 	PLAYBACK_EVENT_FULL(flags, m_pPlayer->edict(), m_usFireChaingun1, 0.0, (float *)&g_vecZero, (float *)&g_vecZero, vecDir.x, vecDir.y, 0, 0, 0, 0);
 
-	m_flNextPrimaryAttack = GetNextAttackDelay(flCycleTime);
-
-	if (m_flNextPrimaryAttack < UTIL_WeaponTimeBase())
-		m_flNextPrimaryAttack = UTIL_WeaponTimeBase() + flCycleTime;
-
-	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.1;
+	m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(flCycleTime);
+	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + flCycleTime;
 }
 
 void CChaingun::StopSounds(void)
