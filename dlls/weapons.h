@@ -1147,10 +1147,13 @@ public:
 	void SecondaryAttack(void);
 	void AP9Fire(float flSpread, float flCycleTime, BOOL fUseAutoAim, BOOL fBurstShot);
 	BOOL Deploy(void);
+	void Holster(int skiplocal = 0);
 	void Reload(void);
 	void WeaponIdle(void);
 	BOOL ShouldWeaponIdle(void) { return TRUE; }
 	int m_iShell;
+
+	BOOL IsBurstFiring() const;
 
 	virtual BOOL UseDecrement(void)
 	{
@@ -1160,8 +1163,6 @@ public:
 		return FALSE;
 #endif
 	}
-
-	int		m_iBurstShots;
 
 private:
 	unsigned short m_usFireAP9;

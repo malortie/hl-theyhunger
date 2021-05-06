@@ -23,6 +23,10 @@
 #include "soundent.h"
 #include "gamerules.h"
 
+#define AP9_NUM_BURST_SHOTS		3
+#define AP9_RELOAD_SEQUENCE_DURATION	(101.0 / 35.0)
+#define AP9_SHOOT_SEQUENCE_DURATION		(23.0 / 22.0)
+
 enum ap9_e
 {
 	AP9_IDLE = 0,
@@ -35,6 +39,10 @@ enum ap9_e
 
 LINK_ENTITY_TO_CLASS(weapon_th_ap9, CAP9);
 
+BOOL CAP9::IsBurstFiring() const
+{
+	return m_fInAttack > 0;
+}
 
 void CAP9::Spawn()
 {
@@ -44,7 +52,7 @@ void CAP9::Spawn()
 
 	m_iDefaultAmmo = AP9_DEFAULT_GIVE;
 
-	m_iBurstShots = 0;
+	m_fInAttack = 0;
 
 	FallInit();// get ready to fall down.
 }
@@ -106,45 +114,63 @@ BOOL CAP9::Deploy()
 
 	if (bResult)
 	{
-		m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.7;
+		m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1.0;
 	}
 
 	return bResult;
 }
 
+void CAP9::Holster(int skiplocal /*= 0*/)
+{
+	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.5;
+
+	// Cancel burst firing.
+	m_fInAttack = 0;
+}
 
 void CAP9::PrimaryAttack(void)
 {
-	m_fInAttack = 0;
-
-	AP9Fire(0.07, 0.13, TRUE, FALSE);
-}
-
-void CAP9::SecondaryAttack(void)
-{
-	if (m_fInAttack != 0)
+	// Do not fire if we are firing in burst.
+	if (IsBurstFiring())
 		return;
 
-	m_fInAttack = 1;
-	m_iBurstShots = 0;
-
-	m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(2.0);
-
-	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() - 0.1;
-}
-
-void CAP9::AP9Fire(float flSpread, float flCycleTime, BOOL fUseAutoAim, BOOL fBurstShot)
-{
 	if (m_iClip <= 0)
 	{
 		if (m_fFireOnEmpty)
 		{
 			PlayEmptySound();
-			m_flNextPrimaryAttack = GetNextAttackDelay(0.2);
+			m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(0.5);
 		}
-
 		return;
 	}
+
+	AP9Fire(0.07, 0.13, TRUE, FALSE);
+
+	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + AP9_SHOOT_SEQUENCE_DURATION;
+}
+
+void CAP9::SecondaryAttack(void)
+{
+	// Do not fire if we are firing in burst.
+	if (IsBurstFiring())
+		return;
+
+	// Do not fire if the clip is empty.
+	if (m_iClip <= 0)
+		return;
+
+	// Set the attack state to the number of bullets to fire in burst.
+	m_fInAttack = std::min(m_iClip, AP9_NUM_BURST_SHOTS);
+
+	// To allow WeaponIdle() to update burst fire now.
+	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() - 0.1;
+}
+
+void CAP9::AP9Fire(float flSpread, float flCycleTime, BOOL fUseAutoAim, BOOL fBurstShot)
+{
+	// Do not fire if the clip is empty.
+	if (m_iClip <= 0)
+		return;
 
 	m_iClip--;
 
@@ -201,14 +227,15 @@ void CAP9::Reload(void)
 	if (m_pPlayer->ammo_ap9 <= 0)
 		return;
 
-	int iResult = DefaultReload(AP9_MAX_CLIP, AP9_RELOAD, 2.9);
+	// Do not reload if we are firing in burst.
+	if (IsBurstFiring())
+		return;
+
+	int iResult = DefaultReload(AP9_MAX_CLIP, AP9_RELOAD, AP9_RELOAD_SEQUENCE_DURATION);
 
 	if (iResult)
 	{
-		m_fInAttack = 0;
-		m_iBurstShots = 0;
-
-		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + AP9_RELOAD_SEQUENCE_DURATION;
 	}
 }
 
@@ -222,31 +249,31 @@ void CAP9::WeaponIdle(void)
 	if (m_flTimeWeaponIdle > UTIL_WeaponTimeBase())
 		return;
 
-	if (m_fInAttack != 0)
+	// Burst fire.
+	if (IsBurstFiring())
 	{
-		if (m_iBurstShots < 3 && m_iClip > 0)
+		AP9Fire(0.04, 0.05, FALSE, TRUE);
+
+		m_fInAttack--;
+
+		m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(0.5f);
+
+		if (m_fInAttack > 0)
 		{
-			AP9Fire(0.04, 0.05, FALSE, TRUE);
-
-			m_iBurstShots++;
-
-			m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(2.0f);
+			// Must burst again soon.
 			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.05;
 		}
 		else
 		{
-			m_fInAttack = 0;
-			m_iBurstShots = 0;
-
-			m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(0.5f);
-			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);
+			// This is the last bullet, so set a longer delay to allow the firing animation to finish.
+			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + AP9_SHOOT_SEQUENCE_DURATION;
 		}
 	}
 	else
 	{
 		SendWeaponAnim(AP9_IDLE);
 
-		m_flTimeWeaponIdle = UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15); // how long till we do this again.
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 11.0 / 12.0; // how long till we do this again.
 	}
 }
 
