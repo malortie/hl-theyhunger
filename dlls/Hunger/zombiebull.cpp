@@ -129,7 +129,7 @@ int	CZombieBull::Classify(void)
 //=========================================================
 BOOL CZombieBull::CheckMeleeAttack1(float flDot, float flDist)
 {
-	if (m_hEnemy->pev->health <= gSkillData.bullsquidDmgWhip && flDist <= 95 && flDot >= 0.7)
+	if (m_hEnemy->pev->health <= gSkillData.zombiebullDmgWhip && flDist <= 95 && flDot >= 0.7)
 	{
 		return TRUE;
 	}
