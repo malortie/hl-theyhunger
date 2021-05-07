@@ -129,7 +129,7 @@ void CBabyKelly::Spawn()
 	pev->movetype = MOVETYPE_STEP;
 	m_bloodColor = DONT_BLEED;
 	pev->effects = 0;
-	pev->health = gSkillData.slaveHealth;
+	pev->health = gSkillData.babykellyhealth;
 	pev->view_ofs = Vector(0, 0, 32);// position of the eyes relative to monster's origin.
 	m_flFieldOfView = VIEW_FIELD_WIDE; // NOTE: we need a wide field of view so npc will notice player and say hello
 	m_MonsterState = MONSTERSTATE_NONE;
