@@ -106,6 +106,8 @@ void CChicken::Precache()
 	PRECACHE_SOUND_ARRAY(pDeathSounds);
 
 	PRECACHE_MODEL("models/chicken.mdl");
+
+	CHeadCrab::Precache();
 }
 
 void CChicken::StartTask(Task_t *pTask)
