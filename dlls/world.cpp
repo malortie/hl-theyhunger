@@ -633,21 +633,6 @@ void CWorld :: Precache( void )
 	else
 		CVAR_SET_FLOAT( "sv_zmax", 4096 );
 
-#if !defined ( HUNGER_DLL )
-	if ( pev->netname )
-	{
-		ALERT( at_aiconsole, "Chapter title: %s\n", STRING(pev->netname) );
-		CBaseEntity *pEntity = CBaseEntity::Create( "env_message", g_vecZero, g_vecZero, NULL );
-		if ( pEntity )
-		{
-			pEntity->SetThink( &CBaseEntity::SUB_CallUseToggle );
-			pEntity->pev->message = pev->netname;
-			pev->netname = 0;
-			pEntity->pev->nextthink = gpGlobals->time + 0.3;
-			pEntity->pev->spawnflags = SF_MESSAGE_ONCE;
-		}
-	}
-#endif // !defined ( HUNGER_DLL )
 
 	if ( pev->spawnflags & SF_WORLD_DARK )
 		CVAR_SET_FLOAT( "v_dark", 1.0 );

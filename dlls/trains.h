@@ -20,9 +20,7 @@
 #define SF_TRACKTRAIN_NOCONTROL		0x0002
 #define SF_TRACKTRAIN_FORWARDONLY	0x0004
 #define SF_TRACKTRAIN_PASSABLE		0x0008
-#if defined ( HUNGER_DLL )
 #define SF_TRACKTRAIN_TH_SOUNDS		0x0020
-#endif // defined ( HUNGER_DLL )
 
 // Spawnflag for CPathTrack
 #define SF_PATH_DISABLED		0x00000001
@@ -123,11 +121,9 @@ public:
 	float		m_flBank;
 	float		m_oldSpeed;
 
-#if defined ( HUNGER_DLL )
 	BOOL		UseCustomSounds(void) const;
 	BOOL		IsCar(void) const;
 	BOOL		IsTrain(void) const;
-#endif // defined ( HUNGER_DLL )
 private:
 	unsigned short m_usAdjustPitch;
 };

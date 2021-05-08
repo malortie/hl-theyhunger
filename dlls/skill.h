@@ -135,7 +135,6 @@ struct skilldata_t
 	float plrStomach;
 	float plrLeg;
 	float plrArm;
-#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 // Monster Health & Damage
 	float babykellyhealth;
 
@@ -161,7 +160,6 @@ struct skilldata_t
 	float plrDmgTaurus;
 	float plrDmgSniper;
 	float plrDmgFlame;
-#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 };
 
 extern	DLL_GLOBAL	skilldata_t	gSkillData;

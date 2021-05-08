@@ -21,14 +21,12 @@
 #include "nodes.h"
 #include "player.h"
 
-#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 #define GLOCK_MODEL_DEFAULT		"models/w_9mmhandgun.mdl"
 #define GLOCK_MODEL_SILENCER	"models/w_silencer.mdl"
 
 #define SILENCER_GROUP	2
 #define SILENCER_OFF	0
 #define SILENCER_ON		1
-#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 enum glock_e {
 	GLOCK_IDLE1 = 0,
 	GLOCK_IDLE2,
@@ -63,7 +61,6 @@ void CGlock::Spawn( )
 	pev->classname = MAKE_STRING("weapon_9mmhandgun"); // hack to allow for old names
 	Precache( );
 	m_iId = WEAPON_GLOCK;
-#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 	char* szModel = NULL;
 
 	if (pev->body == SILENCER_ON)
@@ -79,9 +76,6 @@ void CGlock::Spawn( )
 
 	SET_MODEL(ENT(pev), szModel);
 
-#else
-	SET_MODEL(ENT(pev), "models/w_9mmhandgun.mdl");
-#endif //  defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 	m_fInAttack = 0;
 
 	m_iDefaultAmmo = GLOCK_DEFAULT_GIVE;
@@ -94,9 +88,7 @@ void CGlock::Precache( void )
 {
 	PRECACHE_MODEL("models/v_9mmhandgun.mdl");
 	PRECACHE_MODEL("models/w_9mmhandgun.mdl");
-#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 	PRECACHE_MODEL("models/w_silencer.mdl");
-#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 	PRECACHE_MODEL("models/p_9mmhandgun.mdl");
 
 	m_iShell = PRECACHE_MODEL ("models/shell.mdl");// brass shell
@@ -148,7 +140,6 @@ BOOL CGlock::Deploy( )
 	return DefaultDeploy("models/v_9mmhandgun.mdl", "models/p_9mmhandgun.mdl", GLOCK_DRAW, "onehanded", UseDecrement(), GetViewModelBody());
 }
 
-#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 void CGlock::Holster(int skiplocal /*= 0*/)
 {
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.5;
@@ -161,10 +152,8 @@ BOOL CGlock::ShouldWeaponIdle(void)
 {
 	return m_fInAttack != 0;
 }
-#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 void CGlock::SecondaryAttack( void )
 {
-#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 	if (m_fInAttack != 0)
 		return;
 
@@ -190,14 +179,10 @@ void CGlock::SecondaryAttack( void )
 
 		m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(3.4);
 	}
-#else
-	GlockFire( 0.1, 0.2, FALSE );
-#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 }
 
 void CGlock::PrimaryAttack( void )
 {
-#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 	if (m_fInAttack != 0)
 		return;
 
@@ -209,9 +194,6 @@ void CGlock::PrimaryAttack( void )
 	{
 		GlockFire(0.1, 0.2, FALSE);
 	}
-#else
-	GlockFire( 0.01, 0.3, TRUE );
-#endif
 }
 
 void CGlock::GlockFire( float flSpread , float flCycleTime, BOOL fUseAutoAim )
@@ -284,7 +266,6 @@ void CGlock::GlockFire( float flSpread , float flCycleTime, BOOL fUseAutoAim )
 
 void CGlock::Reload( void )
 {
-#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 	if ( m_pPlayer->ammo_9mm <= 0 )
 		return;
 
@@ -301,22 +282,6 @@ void CGlock::Reload( void )
 
 		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat( m_pPlayer->random_seed, 10, 15 );
 	}
-#else
-	if ( m_pPlayer->ammo_9mm <= 0 )
-		 return;
-
-	int iResult;
-
-	if (m_iClip == 0)
-		iResult = DefaultReload( 17, GLOCK_RELOAD, 1.5 );
-	else
-		iResult = DefaultReload( 17, GLOCK_RELOAD_NOT_EMPTY, 1.5 );
-
-	if (iResult)
-	{
-		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat( m_pPlayer->random_seed, 10, 15 );
-	}
-#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 }
 
 
@@ -332,7 +297,6 @@ void CGlock::WeaponIdle( void )
 	if ( m_flTimeWeaponIdle > UTIL_WeaponTimeBase() )
 		return;
 
-#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 	if (m_fInAttack != 0)
 	{
 		if (m_fInAttack == 1)
@@ -376,32 +340,9 @@ void CGlock::WeaponIdle( void )
 				m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 40.0 / 16.0;
 			}
 
-	}
-#else
-	// only idle if the slid isn't back
-	if (m_iClip != 0)
-	{
-		int iAnim;
-		float flRand = UTIL_SharedRandomFloat( m_pPlayer->random_seed, 0.0, 1.0 );
-
-		if (flRand <= 0.3 + 0 * 0.75)
-		{
-			iAnim = GLOCK_IDLE3;
-			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 49.0 / 16;
-		}
-		else if (flRand <= 0.6 + 0 * 0.875)
-		{
-			iAnim = GLOCK_IDLE1;
-			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 60.0 / 16.0;
-		}
-		else
-		{
-			iAnim = GLOCK_IDLE2;
-			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 40.0 / 16.0;
 			SendWeaponAnim(iAnim, UseDecrement(), GetViewModelBody());
 		}
 	}
-#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 }
 
 

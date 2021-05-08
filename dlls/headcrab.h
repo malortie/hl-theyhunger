@@ -16,7 +16,6 @@
 #ifndef HEADCRAB_H
 #define HEADCRAB_H
 
-#if defined ( HUNGER_DLL )
 class CHeadCrab : public CBaseMonster
 {
 public:
@@ -28,18 +27,11 @@ public:
 	void EXPORT LeapTouch ( CBaseEntity *pOther );
 	Vector Center( void );
 	Vector BodyTarget( const Vector &posSrc );
-#if defined ( HUNGER_DLL )
 	virtual void PainSound( void );
 	virtual void DeathSound( void );
 	virtual void IdleSound( void );
 	virtual void AlertSound( void );
 	virtual void AttackSound( void );
-#else
-	void PainSound( void );
-	void DeathSound( void );
-	void IdleSound( void );
-	void AlertSound( void );
-#endif // defined ( HUNGER_DLL )
 	void PrescheduleThink( void );
 	int  Classify ( void );
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
@@ -61,5 +53,4 @@ public:
 	static const char *pDeathSounds[];
 	static const char *pBiteSounds[];
 };
-#endif // defined ( HUNGER_DLL )
 #endif // HEADCRAB_H

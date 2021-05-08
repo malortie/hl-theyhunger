@@ -32,11 +32,7 @@ extern CGraph WorldGraph;
 // houndeye does 20 points of damage spread over a sphere 384 units in diameter, and each additional 
 // squad member increases the BASE damage by 110%, per the spec.
 #define HOUNDEYE_MAX_SQUAD_SIZE			4
-#if defined ( HUNGER_DLL )
 #define	HOUNDEYE_MAX_ATTACK_RADIUS		96
-#else
-#define	HOUNDEYE_MAX_ATTACK_RADIUS		384
-#endif
 #define	HOUNDEYE_SQUAD_BONUS			(float)1.1
 
 #define HOUNDEYE_EYE_FRAMES 4 // how many different switchable maps for the eye
@@ -286,7 +282,6 @@ void CHoundeye :: HandleAnimEvent( MonsterEvent_t *pEvent )
 			break;
 
 		case HOUND_AE_STARTATTACK:
-#if defined ( HUNGER_DLL )
 			{
 				// SOUND HERE!
 
@@ -305,9 +300,6 @@ void CHoundeye :: HandleAnimEvent( MonsterEvent_t *pEvent )
 
 				WarmUpSound();
 			}
-#else
-			WarmUpSound();
-#endif // defined ( HUNGER_DLL )
 			break;
 
 		case HOUND_AE_HOPBACK:
@@ -323,10 +315,6 @@ void CHoundeye :: HandleAnimEvent( MonsterEvent_t *pEvent )
 			}
 
 		case HOUND_AE_THUMP:
-#if !defined ( HUNGER_DLL )
-			// emit the shockwaves
-			SonicAttack();
-#endif // !defined ( HUNGER_DLL )
 			break;
 
 		case HOUND_AE_ANGERSOUND1:
@@ -362,11 +350,7 @@ void CHoundeye :: Spawn()
 
 	pev->solid			= SOLID_SLIDEBOX;
 	pev->movetype		= MOVETYPE_STEP;
-#if defined ( HUNGER_DLL )
 	m_bloodColor		= BLOOD_COLOR_RED;
-#else
-	m_bloodColor		= BLOOD_COLOR_YELLOW;
-#endif // defined ( HUNGER_DLL )
 	pev->effects		= 0;
 	pev->health			= gSkillData.houndeyeHealth;
 	pev->yaw_speed		= 5;//!!! should we put this in the monster's changeanim function since turn rates may vary with state/anim?
@@ -408,9 +392,7 @@ void CHoundeye :: Precache()
 	PRECACHE_SOUND("houndeye/he_pain5.wav");
 
 	PRECACHE_SOUND("houndeye/he_attack1.wav");
-#if defined ( HUNGER_DLL )
 	PRECACHE_SOUND("houndeye/he_attack2.wav");
-#endif // defined ( HUNGER_DLL )
 	PRECACHE_SOUND("houndeye/he_attack3.wav");
 
 	PRECACHE_SOUND("houndeye/he_blast1.wav");
@@ -444,11 +426,7 @@ void CHoundeye :: IdleSound ( void )
 //=========================================================
 void CHoundeye :: WarmUpSound ( void )
 {
-#if defined ( HUNGER_DLL )
 	switch ( RANDOM_LONG(0,2) )
-#else
-	switch ( RANDOM_LONG(0,1) )
-#endif // defined ( HUNGER_DLL )
 	{
 	case 0:
 		EMIT_SOUND( ENT(pev), CHAN_WEAPON, "houndeye/he_attack1.wav", 0.7, ATTN_NORM );	
@@ -456,11 +434,9 @@ void CHoundeye :: WarmUpSound ( void )
 	case 1:
 		EMIT_SOUND( ENT(pev), CHAN_WEAPON, "houndeye/he_attack3.wav", 0.7, ATTN_NORM );	
 		break;
-#if defined ( HUNGER_DLL )
 	case 2:
 		EMIT_SOUND(ENT(pev), CHAN_WEAPON, "houndeye/he_attack2.wav", 0.7, ATTN_NORM);
 		break;
-#endif // defined ( HUNGER_DLL )
 	}
 }
 

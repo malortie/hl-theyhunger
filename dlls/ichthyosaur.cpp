@@ -481,11 +481,7 @@ void CIchthyosaur :: Spawn()
 
 	pev->solid			= SOLID_BBOX;
 	pev->movetype		= MOVETYPE_FLY;
-#if defined ( HUNGER_DLL )
 	m_bloodColor		= BLOOD_COLOR_RED;
-#else
-	m_bloodColor		= BLOOD_COLOR_GREEN;
-#endif // defined ( HUNGER_DLL )
 	pev->health			= gSkillData.ichthyosaurHealth;
 	pev->view_ofs		= Vector ( 0, 0, 16 );
 	m_flFieldOfView		= VIEW_FIELD_WIDE;

@@ -533,7 +533,6 @@ private:
 	int 	m_nCompositeScore;
 };
 
-#if defined ( HUNGER_CLIENT_DLL )
 //
 //-----------------------------------------------------
 //
@@ -550,7 +549,6 @@ private:
 	int	  m_fOn;
 	WEAPON* m_pWeapon;
 };
-#endif // defined ( HUNGER_CLIENT_DLL )
 //
 //-----------------------------------------------------
 //
@@ -629,9 +627,7 @@ public:
 	CHudTextMessage m_TextMessage;
 	CHudStatusIcons m_StatusIcons;
 	CHudBenchmark	m_Benchmark;
-#if defined ( HUNGER_CLIENT_DLL )
 	CHudZoom		m_Zoom;
-#endif
 
 	void Init( void );
 	void VidInit( void );

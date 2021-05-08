@@ -24,9 +24,7 @@
 #include "effects.h"
 #include "customentity.h"
 #include "gamerules.h"
-#if defined ( HUNGER_DLL )
 #include "flame.h"
-#endif // defined ( HUNGER_DLL )
 
 #define	EGON_PRIMARY_VOLUME		450
 #define EGON_BEAM_SPRITE		"sprites/xbeam1.spr"
@@ -84,11 +82,9 @@ void CEgon::Precache( void )
 
 	PRECACHE_SOUND ("weapons/357_cock1.wav");
 
-#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 	PRECACHE_SOUND("weapons/flmfire2.wav");
 
 	UTIL_PrecacheOther( "flame" );
-#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 	m_usEgonFire = PRECACHE_EVENT ( 1, "events/egon_fire.sc" );
 	m_usEgonStop = PRECACHE_EVENT ( 1, "events/egon_stop.sc" );
 }
@@ -247,7 +243,6 @@ void CEgon::Attack( void )
 
 void CEgon::PrimaryAttack( void )
 {
-#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 	// don't fire underwater
 	if (m_pPlayer->pev->waterlevel == 3)
 	{
@@ -303,11 +298,6 @@ void CEgon::PrimaryAttack( void )
 
 	m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay( 0.2f );
 	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.1;
-#else
-	m_fireMode = FIRE_WIDE;
-	Attack();
-
-#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 }
 
 void CEgon::Fire( const Vector &vecOrigSrc, const Vector &vecDir )
@@ -560,16 +550,8 @@ void CEgon::WeaponIdle( void )
 {
 	ResetEmptySound( );
 
-#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 	if ( m_flTimeWeaponIdle > UTIL_WeaponTimeBase() )
 		return;
-#else
-	if ( m_flTimeWeaponIdle > gpGlobals->time )
-		return;
-
-	if ( m_fireState != FIRE_OFF )
-		 EndAttack();
-#endif // !defined ( HUNGER_DLL ) && !defined ( HUNGER_CLIENT_DLL )
 	
 	int iAnim;
 
@@ -616,20 +598,12 @@ class CEgonAmmo : public CBasePlayerAmmo
 	void Spawn( void )
 	{ 
 		Precache( );
-#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 		SET_MODEL(ENT(pev), "models/w_gas.mdl");
-#else
-		SET_MODEL(ENT(pev), "models/w_chainammo.mdl");
-#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 		CBasePlayerAmmo::Spawn( );
 	}
 	void Precache( void )
 	{
-#if defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 		PRECACHE_MODEL("models/w_gas.mdl");
-#else
-		PRECACHE_MODEL ("models/w_chainammo.mdl");
-#endif // defined ( HUNGER_DLL ) || defined ( HUNGER_CLIENT_DLL )
 		PRECACHE_SOUND("items/9mmclip1.wav");
 	}
 	BOOL AddAmmo( CBaseEntity *pOther ) 

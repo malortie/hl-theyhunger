@@ -19,9 +19,7 @@
 
 #define	SF_SQUADMONSTER_LEADER	32
 
-#if defined ( HUNGER_DLL )
 #define SF_SQUADMONSTER_NOZAP	256
-#endif // defined ( HUNGER_DLL )
 
 #define bits_NO_SLOT		0
 

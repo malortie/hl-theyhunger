@@ -302,7 +302,6 @@ void CGameRules::RefreshSkillData ( void )
 	gSkillData.plrStomach = GetSkillCvar( "sk_player_stomach" );
 	gSkillData.plrLeg = GetSkillCvar( "sk_player_leg" );
 	gSkillData.plrArm = GetSkillCvar( "sk_player_arm" );
-#if defined ( HUNGER_DLL )
 // MONSTERS
 
 	// Baby kelly
@@ -349,7 +348,6 @@ void CGameRules::RefreshSkillData ( void )
 
 	// Medkit
 	gSkillData.medkitHeal = GetSkillCvar("sk_medkit");
-#endif // defined ( HUNGER_DLL )
 }
 
 //=========================================================

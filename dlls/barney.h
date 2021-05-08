@@ -16,7 +16,6 @@
 #ifndef BARNEY_H
 #define BARNEY_H
 
-#if defined ( HUNGER_DLL )
 #include "talkmonster.h"
 
 class CBarney : public CTalkMonster
@@ -66,7 +65,6 @@ public:
 
 	CUSTOM_SCHEDULES;
 
-#if defined ( HUNGER_DLL )
 	void	IdleRespond(void);
 	int		FOkToSpeak(void);
 
@@ -76,7 +74,5 @@ public:
 	void	FixupBarneySkin( BOOL bZombieCop );
 
 	int		m_iBarneyFlags;
-#endif // defined ( HUNGER_DLL )
 };
-#endif // defined ( HUNGER_DLL )
 #endif // BARNEY_H

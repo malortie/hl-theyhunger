@@ -16,7 +16,6 @@
 #ifndef ZOMBIE_H
 #define ZOMBIE_H
 
-#if defined ( HUNGER_DLL )
 //
 // Zombie Flags
 //
@@ -54,7 +53,6 @@ public:
 	BOOL CheckRangeAttack2 ( float flDot, float flDist ) { return FALSE; }
 	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType );
 
-#if defined ( HUNGER_DLL )
 	int	Save(CSave &save);
 	int Restore(CRestore &restore);
 	static TYPEDESCRIPTION m_SaveData[];
@@ -87,7 +85,5 @@ public:
 	static const char *pNewPainSounds[];
 
 	int		m_iZombieFlags;
-#endif // defined ( HUNGER_DLL )
 };
-#endif // defined ( HUNGER_DLL )
 #endif // ZOMBIE_H

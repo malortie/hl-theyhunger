@@ -67,7 +67,6 @@ CSatchel g_Satchel;
 CTripmine g_Tripmine;
 CSqueak g_Snark;
 
-#if defined ( HUNGER_CLIENT_DLL )
 CShovel g_Shovel;
 CSpanner g_Spanner;
 CAP9 g_AP9;
@@ -76,7 +75,6 @@ CHKG36 g_HKG36;
 CEinar1 g_Einar1;
 CChaingun g_Chaingun;
 CMedkit g_Medkit;
-#endif // defined ( HUNGER_CLIENT_DLL )
 
 /*
 ======================
@@ -631,7 +629,6 @@ void HUD_InitClientWeapons( void )
 	HUD_PrepEntity( &g_Satchel	, &player );
 	HUD_PrepEntity( &g_Tripmine	, &player );
 	HUD_PrepEntity( &g_Snark	, &player );
-#if defined ( HUNGER_CLIENT_DLL )
 	HUD_PrepEntity( &g_Shovel	, &player );
 	HUD_PrepEntity( &g_Spanner	, &player );
 	HUD_PrepEntity( &g_AP9		, &player );
@@ -640,7 +637,6 @@ void HUD_InitClientWeapons( void )
 	HUD_PrepEntity( &g_Einar1	, &player );
 	HUD_PrepEntity( &g_Chaingun	, &player );
 	HUD_PrepEntity( &g_Medkit	, &player );
-#endif // defined ( HUNGER_CLIENT_DLL )
 }
 
 /*
@@ -761,7 +757,6 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 		case WEAPON_SNARK:
 			pWeapon = &g_Snark;
 			break;
-#if defined ( HUNGER_CLIENT_DLL )
 		case WEAPON_SHOVEL:
 			pWeapon = &g_Shovel;
 			break;
@@ -793,7 +788,6 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 		case WEAPON_MEDKIT:
 			pWeapon = &g_Medkit;
 			break;
-#endif // defined ( HUNGER_CLIENT_DLL )
 	}
 
 	// Store pointer to our destination entity_state_t so we can get our origin, etc. from it
@@ -905,7 +899,6 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 		 ( ( CRpg * )player.m_pActiveItem)->m_fSpotActive = (int)from->client.vuser2[ 1 ];
 		 ( ( CRpg * )player.m_pActiveItem)->m_cActiveRockets = (int)from->client.vuser2[ 2 ];
 	}
-#if defined ( HUNGER_CLIENT_DLL )
 	else if (player.m_pActiveItem->m_iId== WEAPON_GLOCK)
 	{
 		( ( CGlock * )player.m_pActiveItem)->m_fSilencerOn = (int)from->client.vuser2[1];
@@ -922,7 +915,6 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 	{
 		player.ammo_sniper = (int)from->client.vuser2[1];
 	}
-#endif // defined ( HUNGER_CLIENT_DLL )
 	
 	// Don't go firing anything if we have died or are spectating
 	// Or if we don't have a weapon model deployed
@@ -991,7 +983,6 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 		 from->client.vuser2[ 1 ] = ( ( CRpg * )player.m_pActiveItem)->m_fSpotActive;
 		 from->client.vuser2[ 2 ] = ( ( CRpg * )player.m_pActiveItem)->m_cActiveRockets;
 	}
-#if defined ( HUNGER_CLIENT_DLL )
 	else if (player.m_pActiveItem->m_iId == WEAPON_GLOCK)
 	{
 		from->client.vuser2[1] = ( ( CGlock * )player.m_pActiveItem)->m_fSilencerOn;
@@ -1008,7 +999,6 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 	{
 		from->client.vuser2[1] = player.ammo_sniper;
 	}
-#endif // defined ( HUNGER_CLIENT_DLL )
 
 	// Make sure that weapon animation matches what the game .dll is telling us
 	//  over the wire ( fixes some animation glitches )
@@ -1023,10 +1013,8 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 		//Show laser sight/scope combo
 		if ( pWeapon == &g_Python && bIsMultiplayer() )
 			 body = 1;
-#if defined ( HUNGER_CLIENT_DLL )
 		if ( pWeapon == &g_Glock && ((CGlock*)pWeapon)->m_fSilencerOn )
 			body = 1;
-#endif
 		
 		// Force a fixed anim down to viewmodel
 		HUD_SendWeaponAnim( to->client.weaponanim, body, 1 );

@@ -16,7 +16,6 @@
 #ifndef SCIENTIST_H
 #define SCIENTIST_H
 
-#if defined ( HUNGER_DLL )
 //=======================================================
 // Scientist
 //=======================================================
@@ -107,5 +106,4 @@ public:
 	int		m_headTurn;
 	float	m_flResponseDelay;
 };
-#endif // defined ( HUNGER_DLL )
 #endif // SCIENTIST_H

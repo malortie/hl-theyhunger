@@ -27,11 +27,8 @@
 #include	"scripted.h"
 #include	"weapons.h"
 #include	"soundent.h"
-#if defined ( HUNGER_DLL )
 #include	"barney.h"
-#endif // defined ( HUNGER_DLL )
 
-#if defined ( HUNGER_DLL )
 //
 // Barney special flags
 //
@@ -49,7 +46,6 @@ enum
 	SKIN_ASYLUM_GUARD,
 	SKIN_ZOMBIE_ASYLUM_GUARD,
 };
-#endif // defined ( HUNGER_DLL )
 
 //=========================================================
 // Monster's Anim Events Go Here
@@ -63,55 +59,6 @@ enum
 #define	BARNEY_BODY_GUNDRAWN		1
 #define BARNEY_BODY_GUNGONE			2
 
-#if !defined ( HUNGER_DLL )
-class CBarney : public CTalkMonster
-{
-public:
-	void Spawn( void );
-	void Precache( void );
-	void SetYawSpeed( void );
-	int  ISoundMask( void );
-	void BarneyFirePistol( void );
-	void AlertSound( void );
-	int  Classify ( void );
-	void HandleAnimEvent( MonsterEvent_t *pEvent );
-	
-	void RunTask( Task_t *pTask );
-	void StartTask( Task_t *pTask );
-	virtual int	ObjectCaps( void ) { return CTalkMonster :: ObjectCaps() | FCAP_IMPULSE_USE; }
-	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType);
-	BOOL CheckRangeAttack1 ( float flDot, float flDist );
-	
-	void DeclineFollowing( void );
-
-	// Override these to set behavior
-	Schedule_t *GetScheduleOfType ( int Type );
-	Schedule_t *GetSchedule ( void );
-	MONSTERSTATE GetIdealState ( void );
-
-	void DeathSound( void );
-	void PainSound( void );
-	
-	void TalkInit( void );
-
-	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
-	void Killed( entvars_t *pevAttacker, int iGib );
-	
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
-
-	BOOL	m_fGunDrawn;
-	float	m_painTime;
-	float	m_checkAttackTime;
-	BOOL	m_lastAttackCheck;
-
-	// UNDONE: What is this for?  It isn't used?
-	float	m_flPlayerDamage;// how much pain has the player inflicted on me?
-
-	CUSTOM_SCHEDULES;
-};
-#endif // !defined ( HUNGER_DLL )
 
 LINK_ENTITY_TO_CLASS( monster_barney, CBarney );
 
@@ -122,9 +69,7 @@ TYPEDESCRIPTION	CBarney::m_SaveData[] =
 	DEFINE_FIELD( CBarney, m_checkAttackTime, FIELD_TIME ),
 	DEFINE_FIELD( CBarney, m_lastAttackCheck, FIELD_BOOLEAN ),
 	DEFINE_FIELD( CBarney, m_flPlayerDamage, FIELD_FLOAT ),
-#if defined ( HUNGER_DLL )
 	DEFINE_FIELD( CBarney, m_iBarneyFlags, FIELD_INTEGER ),
-#endif // defined ( HUNGER_DLL )
 };
 
 IMPLEMENT_SAVERESTORE( CBarney, CTalkMonster );
@@ -289,10 +234,8 @@ int CBarney :: ISoundMask ( void)
 //=========================================================
 int	CBarney :: Classify ( void )
 {
-#if defined ( HUNGER_DLL )
 	if (IsZombieCop())
 		return CLASS_ALIEN_MONSTER;
-#endif // defined ( HUNGER_DLL )
 	return	CLASS_PLAYER_ALLY;
 }
 
@@ -384,7 +327,6 @@ void CBarney :: BarneyFirePistol ( void )
 	SetBlending( 0, angDir.x );
 	pev->effects = EF_MUZZLEFLASH;
 
-#if defined ( HUNGER_DLL )
 	Vector vecSpread;
 
 	if (m_hEnemy == NULL || !m_hEnemy->IsPlayer())
@@ -400,9 +342,6 @@ void CBarney :: BarneyFirePistol ( void )
 
 	// Fire bullet.
 	FireBullets(1, vecShootOrigin, vecShootDir, vecSpread, 1024, BULLET_MONSTER_9MM);
-#else
-	FireBullets(1, vecShootOrigin, vecShootDir, VECTOR_CONE_2DEGREES, 1024, BULLET_MONSTER_9MM );
-#endif // defined ( HUNGER_DLL )
 	
 	int pitchShift = RANDOM_LONG( 0, 20 );
 	
@@ -457,16 +396,12 @@ void CBarney :: Spawn()
 {
 	Precache( );
 
-#if defined ( HUNGER_DLL )
 	char* szModel = (char*)STRING(pev->model);
 	if ( !szModel || !*szModel )
 	{
 		szModel = "models/barney.mdl";
 	}
 	SET_MODEL(ENT(pev), szModel);
-#else
-	SET_MODEL(ENT(pev), "models/barney.mdl");
-#endif
 	UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
 
 	pev->solid			= SOLID_SLIDEBOX;
@@ -484,7 +419,6 @@ void CBarney :: Spawn()
 
 	MonsterInit();
 	SetUse( &CBarney::FollowerUse );
-#if defined ( HUNGER_DLL )
 	// Cops use a lower voice pitch.
 	m_voicePitch = RANDOM_LONG( 95, 96 );
 
@@ -538,7 +472,6 @@ void CBarney :: Spawn()
 	{
 		SetUse(NULL);
 	}
-#endif // defined ( HUNGER_DLL )
 }
 
 //=========================================================
@@ -547,9 +480,7 @@ void CBarney :: Spawn()
 void CBarney :: Precache()
 {
 	PRECACHE_MODEL("models/barney.mdl");
-#if defined ( HUNGER_DLL )
 	PRECACHE_MODEL("models/pilot.mdl");
-#endif // defined ( HUNGER_DLL )
 
 	PRECACHE_SOUND("barney/ba_attack1.wav" );
 	PRECACHE_SOUND("barney/ba_attack2.wav" );
@@ -630,11 +561,9 @@ int CBarney :: TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, floa
 	if ( !IsAlive() || pev->deadflag == DEAD_DYING )
 		return ret;
 
-#if defined ( HUNGER_DLL )
 	// Do not speak about players harming me if I am a zombie.
 	if ( IsZombieCop() )
 		return ret;
-#endif // defined ( HUNGER_DLL )
 	if ( m_MonsterState != MONSTERSTATE_PRONE && (pevAttacker->flags & FL_CLIENT) )
 	{
 		m_flPlayerDamage += flDamage;
@@ -707,17 +636,10 @@ void CBarney::TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir
 	{
 	case HITGROUP_CHEST:
 	case HITGROUP_STOMACH:
-#if defined ( HUNGER_DLL )
 		if ((bitsDamageType & (DMG_BULLET | DMG_SLASH | DMG_BLAST)) && HasKevlar())
 		{
 			flDamage = flDamage / 2;
 		}
-#else
-		if (bitsDamageType & (DMG_BULLET | DMG_SLASH | DMG_BLAST))
-		{
-			flDamage = flDamage / 2;
-		}
-#endif // defined ( HUNGER_DLL )
 		break;
 	case 10:
 		if (bitsDamageType & (DMG_BULLET | DMG_SLASH | DMG_CLUB))
@@ -902,7 +824,6 @@ void CBarney::DeclineFollowing( void )
 	PlaySentence( "BA_POK", 2, VOL_NORM, ATTN_NORM );
 }
 
-#if defined ( HUNGER_DLL )
 //=========================================================
 // IdleRespond
 // Respond to a previous question
@@ -950,7 +871,6 @@ void CBarney::FixupBarneySkin(BOOL bZombieCop)
 		}
 	}
 }
-#endif // defined ( HUNGER_DLL )
 
 
 

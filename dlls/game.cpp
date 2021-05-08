@@ -448,7 +448,6 @@ cvar_t	sk_player_leg1	= { "sk_player_leg1","1" };
 cvar_t	sk_player_leg2	= { "sk_player_leg2","1" };
 cvar_t	sk_player_leg3	= { "sk_player_leg3","1" };
 
-#if defined ( HUNGER_DLL )
 // MONSTERS
 
 // Baby Kelly
@@ -526,7 +525,6 @@ cvar_t	sk_plr_flame3 = { "sk_plr_flame3", "18" };
 // HEALTH/SUIT CHARGE DISTRIBUTION
 
 // Medkit
-#endif // defined ( HUNGER_DLL )
 cvar_t	sk_medkit1 = { "sk_medkit1", "25" };
 cvar_t	sk_medkit2 = { "sk_medkit2", "25" };
 cvar_t	sk_medkit3 = { "sk_medkit3", "25" };
@@ -965,7 +963,6 @@ void GameDLLInit( void )
 	CVAR_REGISTER ( &sk_player_leg1 );
 	CVAR_REGISTER ( &sk_player_leg2 );
 	CVAR_REGISTER ( &sk_player_leg3 );
-#if defined ( HUNGER_DLL )
 // MONSTERS
 
 // Baby Kelly
@@ -1046,7 +1043,6 @@ void GameDLLInit( void )
 	CVAR_REGISTER(&sk_medkit1);
 	CVAR_REGISTER(&sk_medkit2);
 	CVAR_REGISTER(&sk_medkit3);
-#endif // defined ( HUNGER_DLL )
 // END REGISTER CVARS FOR SKILL LEVEL STUFF
 
 	SERVER_COMMAND( "exec skill.cfg\n" );

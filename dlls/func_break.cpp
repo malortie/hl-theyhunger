@@ -58,7 +58,6 @@ const char *CBreakable::pSpawnObjects[] =
 	"weapon_satchel",	// 19
 	"weapon_snark",		// 20
 	"weapon_hornetgun",	// 21
-#if defined ( HUNGER_DLL )
 	"weapon_einar1",		// 22
 	"ammo_th_sniper",		// 23
 	"weapon_th_spanner",	// 24
@@ -71,7 +70,6 @@ const char *CBreakable::pSpawnObjects[] =
 	"weapon_th_medkit",		// 31
 	"weapon_th_sniper",		// 32
 	"ammo_th_sniper",		// 33
-#endif // defined ( HUNGER_DLL )
 };
 
 void CBreakable::KeyValue( KeyValueData* pkvd )

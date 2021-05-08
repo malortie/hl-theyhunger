@@ -27,17 +27,13 @@
 #include	"animation.h"
 #include	"soundent.h"
 
-#if defined ( HUNGER_DLL )
 #include	"scientist.h"
-#endif // defined ( HUNGER_DLL )
 
 #define		NUM_SCIENTIST_HEADS		4 // four heads available for scientist model
 enum { HEAD_GLASSES = 0, HEAD_EINSTEIN = 1, HEAD_LUTHER = 2, HEAD_SLICK = 3 };
 
-#if defined ( HUNGER_DLL )
 #define		NUM_SCIENTIST_SKINS		4
 enum { SKIN_GLASSES = 0, SKIN_DOCTOR = 1, SKIN_PREIST = 2, SKIN_PATIENT = 3 };
-#endif // defined ( HUNGER_DLL )
 enum
 {
 	SCHED_HIDE = LAST_TALKMONSTER_SCHEDULE + 1,
@@ -70,57 +66,6 @@ enum
 // Scientist
 //=======================================================
 
-#if !defined ( HUNGER_DLL )
-class CScientist : public CTalkMonster
-{
-public:
-	void Spawn( void );
-	void Precache( void );
-
-	void SetYawSpeed( void );
-	int  Classify ( void );
-	void HandleAnimEvent( MonsterEvent_t *pEvent );
-	void RunTask( Task_t *pTask );
-	void StartTask( Task_t *pTask );
-	int	ObjectCaps( void ) { return CTalkMonster :: ObjectCaps() | FCAP_IMPULSE_USE; }
-	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType);
-	virtual int FriendNumber( int arrayNumber );
-	void SetActivity ( Activity newActivity );
-	Activity GetStoppedActivity( void );
-	int ISoundMask( void );
-	void DeclineFollowing( void );
-
-	float	CoverRadius( void ) { return 1200; }		// Need more room for cover because scientists want to get far away!
-	BOOL	DisregardEnemy( CBaseEntity *pEnemy ) { return !pEnemy->IsAlive() || (gpGlobals->time - m_fearTime) > 15; }
-
-	BOOL	CanHeal( void );
-	void	Heal( void );
-	void	Scream( void );
-
-	// Override these to set behavior
-	Schedule_t *GetScheduleOfType ( int Type );
-	Schedule_t *GetSchedule ( void );
-	MONSTERSTATE GetIdealState ( void );
-
-	void DeathSound( void );
-	void PainSound( void );
-	
-	void TalkInit( void );
-
-	void			Killed( entvars_t *pevAttacker, int iGib );
-	
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
-
-	CUSTOM_SCHEDULES;
-
-private:	
-	float m_painTime;
-	float m_healTime;
-	float m_fearTime;
-};
-#endif // !defined ( HUNGER_DLL )
 
 LINK_ENTITY_TO_CLASS( monster_scientist, CScientist );
 
@@ -682,24 +627,10 @@ void CScientist :: Spawn( void )
 
 	m_afCapability		= bits_CAP_HEAR | bits_CAP_TURN_HEAD | bits_CAP_OPEN_DOORS | bits_CAP_AUTO_DOORS | bits_CAP_USE;
 
-#if defined ( HUNGER_DLL )
-	if (pev->body == -1)
-	{// -1 chooses a random head
-		pev->body = RANDOM_LONG(0, NUM_SCIENTIST_HEADS - 1);// pick a head, any head
-	}
-#else
-	// White hands
-	pev->skin = 0;
-
 	if ( pev->body == -1 )
 	{// -1 chooses a random head
 		pev->body = RANDOM_LONG(0, NUM_SCIENTIST_HEADS-1);// pick a head, any head
 	}
-
-	// Luther is black, make his hands black
-	if ( pev->body == HEAD_LUTHER )
-		pev->skin = 1;
-#endif // defined ( HUNGER_DLL )
 	
 	MonsterInit();
 	SetUse( &CScientist::FollowerUse );
@@ -1082,9 +1013,7 @@ MONSTERSTATE CScientist :: GetIdealState ( void )
 
 BOOL CScientist::CanHeal( void )
 { 
-#if defined ( HUNGER_DLL )
 	return FALSE;
-#endif // defined ( HUNGER_DLL )
 	if ( (m_healTime > gpGlobals->time) || (m_hTargetEnt == NULL) || (m_hTargetEnt->pev->health > (m_hTargetEnt->pev->max_health * 0.5)) )
 		return FALSE;
 
@@ -1117,18 +1046,6 @@ int CScientist::FriendNumber( int arrayNumber )
 //=========================================================
 // Dead Scientist PROP
 //=========================================================
-#if !defined ( HUNGER_DLL )
-class CDeadScientist : public CBaseMonster
-{
-public:
-	void Spawn( void );
-	int	Classify ( void ) { return	CLASS_HUMAN_PASSIVE; }
-
-	void KeyValue( KeyValueData *pkvd );
-	int	m_iPose;// which sequence to display
-	static char *m_szPoses[7];
-};
-#endif // !defined ( HUNGER_DLL )
 char *CDeadScientist::m_szPoses[] = { "lying_on_back", "lying_on_stomach", "dead_sitting", "dead_hang", "dead_table1", "dead_table2", "dead_table3" };
 
 void CDeadScientist::KeyValue( KeyValueData *pkvd )
@@ -1158,22 +1075,10 @@ void CDeadScientist :: Spawn( )
 	
 	m_bloodColor = BLOOD_COLOR_RED;
 
-#if defined ( HUNGER_DLL )
 	if ( pev->body == -1 )
 	{// -1 chooses a random head
 		pev->body = RANDOM_LONG(0, NUM_SCIENTIST_HEADS-1);// pick a head, any head
 	}
-#else
-	if ( pev->body == -1 )
-	{// -1 chooses a random head
-		pev->body = RANDOM_LONG(0, NUM_SCIENTIST_HEADS-1);// pick a head, any head
-	}
-	// Luther is black, make his hands black
-	if ( pev->body == HEAD_LUTHER )
-		pev->skin = 1;
-	else
-		pev->skin = 0;
-#endif // defined ( HUNGER_DLL )
 
 	pev->sequence = LookupSequence( m_szPoses[m_iPose] );
 	if (pev->sequence == -1)
@@ -1190,28 +1095,6 @@ void CDeadScientist :: Spawn( )
 // Sitting Scientist PROP
 //=========================================================
 
-#if !defined ( HUNGER_DLL )
-class CSittingScientist : public CScientist // kdb: changed from public CBaseMonster so he can speak
-{
-public:
-	void Spawn( void );
-	void  Precache( void );
-
-	void EXPORT SittingThink( void );
-	int	Classify ( void );
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
-
-	virtual void SetAnswerQuestion( CTalkMonster *pSpeaker );
-	int FriendNumber( int arrayNumber );
-
-	int FIdleSpeak ( void );
-	int		m_baseSequence;	
-	int		m_headTurn;
-	float	m_flResponseDelay;
-};
-#endif // !defined ( HUNGER_DLL )
 
 LINK_ENTITY_TO_CLASS( monster_sitting_scientist, CSittingScientist );
 TYPEDESCRIPTION	CSittingScientist::m_SaveData[] = 
@@ -1258,20 +1141,10 @@ void CSittingScientist :: Spawn( )
 
 	SetBits(pev->spawnflags, SF_MONSTER_PREDISASTER); // predisaster only!
 
-#if defined ( HUNGER_DLL )
 	if ( pev->body == -1 )
 	{// -1 chooses a random head
 		pev->body = RANDOM_LONG(0, NUM_SCIENTIST_HEADS-1);// pick a head, any head
 	}
-#else
-	if ( pev->body == -1 )
-	{// -1 chooses a random head
-		pev->body = RANDOM_LONG(0, NUM_SCIENTIST_HEADS-1);// pick a head, any head
-	}
-	// Luther is black, make his hands black
-	if ( pev->body == HEAD_LUTHER )
-		pev->skin = 1;
-#endif // defined ( HUNGER_DLL )
 	
 	m_baseSequence = LookupSequence( "sitlookleft" );
 	pev->sequence = m_baseSequence + RANDOM_LONG(0,4);

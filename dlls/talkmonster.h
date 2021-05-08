@@ -125,22 +125,14 @@ public:
 
 	// Conversations / communication
 	int				GetVoicePitch( void );
-#if defined ( HUNGER_DLL )
 	virtual void	IdleRespond( void );
-#else
-	void			IdleRespond( void );
-#endif // defined ( HUNGER_DLL )
 	int				FIdleSpeak( void );
 	int				FIdleStare( void );
 	int				FIdleHello( void );
 	void			IdleHeadTurn( Vector &vecFriend );
-#if defined ( HUNGER_DLL )
 	virtual int		FOkToSpeak( void );
 	int				FWoundSpeak( void );
 	int				FMortalSpeak( void );
-#else
-	int				FOkToSpeak( void );
-#endif // defined ( HUNGER_DLL )
 	void			TrySmellTalk( void );
 	CBaseEntity		*EnumFriends( CBaseEntity *pentPrevious, int listNumber, BOOL bTrace );
 	void			AlertFriends( void );

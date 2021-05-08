@@ -25,9 +25,7 @@
 #include	"weapons.h"
 #include	"soundent.h"
 #include	"hornet.h"
-#if defined ( HUNGER_DLL )
 #include	"hgrunt.h"
-#endif // defined ( HUNGER_DLL )
 
 //=========================================================
 // monster-specific schedule types
@@ -197,12 +195,6 @@ const char *CAGrunt::pAlertSounds[] =
 //=========================================================
 int CAGrunt::IRelationship ( CBaseEntity *pTarget )
 {
-#if !defined ( HUNGER_DLL )
-	if ( FClassnameIs( pTarget->pev, "monster_human_grunt" ) )
-	{
-		return R_NM;
-	}
-#endif // !defined ( HUNGER_DLL )
 
 	return CSquadMonster :: IRelationship( pTarget );
 }
@@ -223,51 +215,8 @@ int CAGrunt :: ISoundMask ( void )
 //=========================================================
 void CAGrunt :: TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType)
 {
-#if defined ( HUNGER_DLL )
 	SpawnBlood(ptr->vecEndPos, BloodColor(), flDamage); // a little surface blood.
 	TraceBleed( flDamage, vecDir, ptr, bitsDamageType );
-#else
-	if ( ptr->iHitgroup == 10 && (bitsDamageType & (DMG_BULLET | DMG_SLASH | DMG_CLUB)))
-	{
-		// hit armor
-		if ( pev->dmgtime != gpGlobals->time || (RANDOM_LONG(0,10) < 1) )
-		{
-			UTIL_Ricochet( ptr->vecEndPos, RANDOM_FLOAT( 1, 2) );
-			pev->dmgtime = gpGlobals->time;
-		}
-
-		if ( RANDOM_LONG( 0, 1 ) == 0 )
-		{
-			Vector vecTracerDir = vecDir;
-
-			vecTracerDir.x += RANDOM_FLOAT( -0.3, 0.3 );
-			vecTracerDir.y += RANDOM_FLOAT( -0.3, 0.3 );
-			vecTracerDir.z += RANDOM_FLOAT( -0.3, 0.3 );
-
-			vecTracerDir = vecTracerDir * -512;
-
-			MESSAGE_BEGIN( MSG_PVS, SVC_TEMPENTITY, ptr->vecEndPos );
-			WRITE_BYTE( TE_TRACER );
-				WRITE_COORD( ptr->vecEndPos.x );
-				WRITE_COORD( ptr->vecEndPos.y );
-				WRITE_COORD( ptr->vecEndPos.z );
-
-				WRITE_COORD( vecTracerDir.x );
-				WRITE_COORD( vecTracerDir.y );
-				WRITE_COORD( vecTracerDir.z );
-			MESSAGE_END();
-		}
-
-		flDamage -= 20;
-		if (flDamage <= 0)
-			flDamage = 0.1;// don't hurt the monster much, but allow bits_COND_LIGHT_DAMAGE to be generated
-	}
-	else
-	{
-		SpawnBlood(ptr->vecEndPos, BloodColor(), flDamage);// a little surface blood.
-		TraceBleed( flDamage, vecDir, ptr, bitsDamageType );
-	}
-#endif
 
 	AddMultiDamage( pevAttacker, this, flDamage, bitsDamageType );
 }
@@ -277,11 +226,7 @@ void CAGrunt :: TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecD
 //=========================================================
 void CAGrunt::StopTalking( void )
 {
-#if defined ( HUNGER_DLL )
 	m_flNextWordTime = m_flNextSpeakTime = gpGlobals->time + 50 + RANDOM_LONG(0, 10);
-#else
-	m_flNextWordTime = m_flNextSpeakTime = gpGlobals->time + 10 + RANDOM_LONG(0, 10);
-#endif
 }
 
 //=========================================================
@@ -340,11 +285,7 @@ void CAGrunt :: PrescheduleThink ( void )
 			}
 			else
 			{
-#if defined ( HUNGER_DLL )
 				m_flNextWordTime = gpGlobals->time + RANDOM_FLOAT( 20, 25 );
-#else
-				m_flNextWordTime = gpGlobals->time + RANDOM_FLOAT( 0.5, 1 );
-#endif // defined ( HUNGER_DLL )
 			}
 		}
 	}
@@ -505,37 +446,20 @@ void CAGrunt :: HandleAnimEvent( MonsterEvent_t *pEvent )
 		break;
 
 	case AGRUNT_AE_LEFT_FOOT:
-#if defined ( HUNGER_DLL )
 		switch (RANDOM_LONG(0,1))
 		{
 		// left foot
 		case 0:	EMIT_SOUND_DYN ( ENT(pev), CHAN_BODY, "zork/leftfoot2.wav", 1, ATTN_NORM, 0, 70 );	break;
 		case 1:	EMIT_SOUND_DYN ( ENT(pev), CHAN_BODY, "zork/leftfoot4.wav", 1, ATTN_NORM, 0, 70 );	break;
 		}
-#else
-		switch (RANDOM_LONG(0,1))
-		{
-		// left foot
-		case 0:	EMIT_SOUND_DYN ( ENT(pev), CHAN_BODY, "player/pl_ladder2.wav", 1, ATTN_NORM, 0, 70 );	break;
-		case 1:	EMIT_SOUND_DYN ( ENT(pev), CHAN_BODY, "player/pl_ladder4.wav", 1, ATTN_NORM, 0, 70 );	break;
-		}
-#endif // defined ( HUNGER_DLL )
 		break;
 	case AGRUNT_AE_RIGHT_FOOT:
 		// right foot
-#if defined ( HUNGER_DLL )
 		switch (RANDOM_LONG(0,1))
 		{
 		case 0:	EMIT_SOUND_DYN ( ENT(pev), CHAN_BODY, "zork/rightfoot1.wav", 1, ATTN_NORM, 0, 70 );	break;
 		case 1:	EMIT_SOUND_DYN ( ENT(pev), CHAN_BODY, "zork/rightfoot3.wav", 1, ATTN_NORM, 0 ,70);	break;
 		}
-#else
-		switch (RANDOM_LONG(0,1))
-		{
-		case 0:	EMIT_SOUND_DYN ( ENT(pev), CHAN_BODY, "player/pl_ladder1.wav", 1, ATTN_NORM, 0, 70 );	break;
-		case 1:	EMIT_SOUND_DYN ( ENT(pev), CHAN_BODY, "player/pl_ladder3.wav", 1, ATTN_NORM, 0 ,70);	break;
-		}
-#endif // defined ( HUNGER_DLL )
 		break;
 
 	case AGRUNT_AE_LEFT_PUNCH:
@@ -616,11 +540,7 @@ void CAGrunt :: Spawn()
 
 	pev->solid			= SOLID_SLIDEBOX;
 	pev->movetype		= MOVETYPE_STEP;
-#if defined ( HUNGER_DLL )
 	m_bloodColor		= BLOOD_COLOR_RED;
-#else
-	m_bloodColor		= BLOOD_COLOR_GREEN;
-#endif // defined ( HUNGER_DLL )
 	pev->effects		= 0;
 	pev->health			= gSkillData.agruntHealth;
 	m_flFieldOfView		= 0.2;// indicates the width of this monster's forward view cone ( as a dotproduct result )
@@ -630,11 +550,7 @@ void CAGrunt :: Spawn()
 
 	m_HackedGunPos		= Vector( 24, 64, 48 );
 
-#if defined ( HUNGER_DLL )
 	m_flNextSpeakTime	= m_flNextWordTime = gpGlobals->time + 50 + RANDOM_LONG(0, 10);
-#else
-	m_flNextSpeakTime	= m_flNextWordTime = gpGlobals->time + 10 + RANDOM_LONG(0, 10);
-#endif
 
 
 	MonsterInit();
@@ -676,12 +592,10 @@ void CAGrunt :: Precache()
 	iAgruntMuzzleFlash = PRECACHE_MODEL( "sprites/muz4.spr" );
 
 	UTIL_PrecacheOther( "hornet" );
-#if defined ( HUNGER_DLL )
 	PRECACHE_SOUND("zork/leftfoot2.wav");
 	PRECACHE_SOUND("zork/leftfoot4.wav");
 	PRECACHE_SOUND("zork/rightfoot1.wav");
 	PRECACHE_SOUND("zork/rightfoot3.wav");
-#endif // defined ( HUNGER_DLL )
 }	
 	
 //=========================================================
@@ -974,9 +888,7 @@ BOOL CAGrunt :: CheckMeleeAttack1 ( float flDot, float flDist )
 //=========================================================
 BOOL CAGrunt :: CheckRangeAttack1 ( float flDot, float flDist )
 {
-#if defined ( HUNGER_DLL )
 	return FALSE;
-#endif // defined ( HUNGER_DLL )
 	if ( gpGlobals->time < m_flNextHornetAttackCheck )
 	{
 		return m_fCanHornetAttack;

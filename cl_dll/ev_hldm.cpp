@@ -74,7 +74,6 @@ void EV_SnarkFire( struct event_args_s *args  );
 
 
 void EV_TrainPitchAdjust( struct event_args_s *args );
-#if defined ( HUNGER_CLIENT_DLL )
 void EV_Shovel( struct event_args_s *args );
 void EV_Spanner(struct event_args_s *args);
 void EV_Medkit(struct event_args_s *args);
@@ -84,7 +83,6 @@ void EV_FireChaingun2(struct event_args_s *args);
 void EV_FireSniper(struct event_args_s *args);
 void EV_FireSniper2(struct event_args_s *args);
 void EV_FireTaurus(struct event_args_s *args);
-#endif // defined ( HUNGER_CLIENT_DLL )
 }
 
 #define VECTOR_CONE_1DEGREES Vector( 0.00873, 0.00873, 0.00873 )
@@ -306,12 +304,10 @@ void EV_HLDM_DecalGunshot( pmtrace_t *pTrace, int iBulletType )
 		case BULLET_MONSTER_MP5:
 		case BULLET_PLAYER_BUCKSHOT:
 		case BULLET_PLAYER_357:
-#if defined ( HUNGER_CLIENT_DLL )
 		case BULLET_PLAYER_AP9:
 		case BULLET_PLAYER_CHAINGUN:
 		case BULLET_PLAYER_SNIPER:
 		case BULLET_PLAYER_TAURUS:
-#endif // defined ( HUNGER_CLIENT_DLL )
 		default:
 			// smoke and decal
 			EV_HLDM_GunshotDecalTrace( pTrace, EV_HLDM_DamageDecal( pe ) );
@@ -453,7 +449,6 @@ void EV_HLDM_FireBullets( int idx, float *forward, float *right, float *up, int 
 				
 				break;
 
-#if defined ( HUNGER_CLIENT_DLL )
 			case BULLET_PLAYER_AP9:
 				EV_HLDM_PlayTextureSound(idx, &tr, vecSrc, vecEnd, iBulletType);
 				EV_HLDM_DecalGunshot(&tr, iBulletType);
@@ -476,7 +471,6 @@ void EV_HLDM_FireBullets( int idx, float *forward, float *right, float *up, int 
 				EV_HLDM_DecalGunshot(&tr, iBulletType);
 
 				break;
-#endif // defined ( HUNGER_CLIENT_DLL )
 			}
 		}
 
@@ -489,7 +483,6 @@ void EV_HLDM_FireBullets( int idx, float *forward, float *right, float *up, int 
 //======================
 void EV_FireGlock1( event_args_t *args )
 {
-#if defined ( HUNGER_CLIENT_DLL )
 	int idx;
 	vec3_t origin;
 	vec3_t angles;
@@ -549,103 +542,15 @@ void EV_FireGlock1( event_args_t *args )
 	VectorCopy( forward, vecAiming );
 
 	EV_HLDM_FireBullets( idx, forward, right, up, 1, vecSrc, vecAiming, 8192, BULLET_PLAYER_9MM, 0, 0, args->fparam1, args->fparam2 );
-#else
-	int idx;
-	vec3_t origin;
-	vec3_t angles;
-	vec3_t velocity;
-	int empty;
-
-	vec3_t ShellVelocity;
-	vec3_t ShellOrigin;
-	int shell;
-	vec3_t vecSrc, vecAiming;
-	vec3_t up, right, forward;
-	
-	idx = args->entindex;
-	VectorCopy( args->origin, origin );
-	VectorCopy( args->angles, angles );
-	VectorCopy( args->velocity, velocity );
-
-	empty = args->bparam1;
-	AngleVectors( angles, forward, right, up );
-
-	shell = gEngfuncs.pEventAPI->EV_FindModelIndex ("models/shell.mdl");// brass shell
-
-	if ( EV_IsLocal( idx ) )
-	{
-		EV_MuzzleFlash();
-		gEngfuncs.pEventAPI->EV_WeaponAnimation( empty ? GLOCK_SHOOT_EMPTY : GLOCK_SHOOT, 2 );
-
-		V_PunchAxis( 0, -2.0 );
-	}
-
-	EV_GetDefaultShellInfo( args, origin, velocity, ShellVelocity, ShellOrigin, forward, right, up, 20, -12, 4 );
-
-	EV_EjectBrass ( ShellOrigin, ShellVelocity, angles[ YAW ], shell, TE_BOUNCE_SHELL ); 
-
-	gEngfuncs.pEventAPI->EV_PlaySound( idx, origin, CHAN_WEAPON, "weapons/pl_gun3.wav", gEngfuncs.pfnRandomFloat(0.92, 1.0), ATTN_NORM, 0, 98 + gEngfuncs.pfnRandomLong( 0, 3 ) );
-
-	EV_GetGunPosition( args, vecSrc, origin );
-	
-	VectorCopy( forward, vecAiming );
-
-	EV_HLDM_FireBullets( idx, forward, right, up, 1, vecSrc, vecAiming, 8192, BULLET_PLAYER_9MM, 0, 0, args->fparam1, args->fparam2 );
-#endif // defined ( HUNGER_CLIENT_DLL )
 }
 
 void EV_FireGlock2( event_args_t *args )
 {
-#if defined ( HUNGER_CLIENT_DLL )
 	cl_entity_t *viewent = gEngfuncs.GetViewModel();
 	if (!viewent)
 		return;
 
 	viewent->curstate.body = args->iparam1;
-#else
-	int idx;
-	vec3_t origin;
-	vec3_t angles;
-	vec3_t velocity;
-	
-	vec3_t ShellVelocity;
-	vec3_t ShellOrigin;
-	int shell;
-	vec3_t vecSrc, vecAiming;
-	vec3_t vecSpread;
-	vec3_t up, right, forward;
-
-	idx = args->entindex;
-	VectorCopy( args->origin, origin );
-	VectorCopy( args->angles, angles );
-	VectorCopy( args->velocity, velocity );
-
-	AngleVectors( angles, forward, right, up );
-
-	shell = gEngfuncs.pEventAPI->EV_FindModelIndex ("models/shell.mdl");// brass shell
-
-	if ( EV_IsLocal( idx ) )
-	{
-		// Add muzzle flash to current weapon model
-		EV_MuzzleFlash();
-		gEngfuncs.pEventAPI->EV_WeaponAnimation( GLOCK_SHOOT, 2 );
-
-		V_PunchAxis( 0, -2.0 );
-	}
-
-	EV_GetDefaultShellInfo( args, origin, velocity, ShellVelocity, ShellOrigin, forward, right, up, 20, -12, 4 );
-
-	EV_EjectBrass ( ShellOrigin, ShellVelocity, angles[ YAW ], shell, TE_BOUNCE_SHELL ); 
-
-	gEngfuncs.pEventAPI->EV_PlaySound( idx, origin, CHAN_WEAPON, "weapons/pl_gun3.wav", gEngfuncs.pfnRandomFloat(0.92, 1.0), ATTN_NORM, 0, 98 + gEngfuncs.pfnRandomLong( 0, 3 ) );
-
-	EV_GetGunPosition( args, vecSrc, origin );
-	
-	VectorCopy( forward, vecAiming );
-
-	EV_HLDM_FireBullets( idx, forward, right, up, 1, vecSrc, vecAiming, 8192, BULLET_PLAYER_9MM, 0, &tracerCount[idx-1], args->fparam1, args->fparam2 );
-	
-#endif // defined ( HUNGER_CLIENT_DLL )
 }
 //======================
 //	   GLOCK END
@@ -1500,7 +1405,6 @@ BEAM *pBeam2;
 
 void EV_EgonFire( event_args_t *args )
 {
-#if defined ( HUNGER_CLIENT_DLL )
 	int idx;
 	vec3_t origin;
 
@@ -1513,120 +1417,10 @@ void EV_EgonFire( event_args_t *args )
 	//Only play the weapon anims if I shot it.
 	if ( EV_IsLocal( idx ) )
 		gEngfuncs.pEventAPI->EV_WeaponAnimation ( g_fireAnims1[ gEngfuncs.pfnRandomLong( 0, 3 ) ], 1 );
-#else
-	int idx, iFireState, iFireMode;
-	vec3_t origin;
-
-	idx = args->entindex;
-	VectorCopy( args->origin, origin );
-	iFireState = args->iparam1;
-	iFireMode = args->iparam2;
-	int iStartup = args->bparam1;
-
-
-	if ( iStartup )
-	{
-		if ( iFireMode == FIRE_WIDE )
-			gEngfuncs.pEventAPI->EV_PlaySound( idx, origin, CHAN_WEAPON, EGON_SOUND_STARTUP, 0.98, ATTN_NORM, 0, 125 );
-		else
-			gEngfuncs.pEventAPI->EV_PlaySound( idx, origin, CHAN_WEAPON, EGON_SOUND_STARTUP, 0.9, ATTN_NORM, 0, 100 );
-	}
-	else
-	{
-		if ( iFireMode == FIRE_WIDE )
-			gEngfuncs.pEventAPI->EV_PlaySound( idx, origin, CHAN_STATIC, EGON_SOUND_RUN, 0.98, ATTN_NORM, 0, 125 );
-		else
-			gEngfuncs.pEventAPI->EV_PlaySound( idx, origin, CHAN_STATIC, EGON_SOUND_RUN, 0.9, ATTN_NORM, 0, 100 );
-	}
-
-	//Only play the weapon anims if I shot it.
-	if ( EV_IsLocal( idx ) )
-		gEngfuncs.pEventAPI->EV_WeaponAnimation ( g_fireAnims1[ gEngfuncs.pfnRandomLong( 0, 3 ) ], 1 );
-
-	if ( iStartup == 1 && EV_IsLocal( idx ) && !pBeam && !pBeam2 && cl_lw->value ) //Adrian: Added the cl_lw check for those lital people that hate weapon prediction.
-	{
-		vec3_t vecSrc, vecEnd, origin, angles, forward, right, up;
-		pmtrace_t tr;
-
-		cl_entity_t *pl = gEngfuncs.GetEntityByIndex( idx );
-
-		if ( pl )
-		{
-			VectorCopy( gHUD.m_vecAngles, angles );
-			
-			AngleVectors( angles, forward, right, up );
-
-			EV_GetGunPosition( args, vecSrc, pl->origin );
-
-			VectorMA( vecSrc, 2048, forward, vecEnd );
-
-			gEngfuncs.pEventAPI->EV_SetUpPlayerPrediction( false, true );	
-				
-			// Store off the old count
-			gEngfuncs.pEventAPI->EV_PushPMStates();
-			
-			// Now add in all of the players.
-			gEngfuncs.pEventAPI->EV_SetSolidPlayers ( idx - 1 );	
-
-			gEngfuncs.pEventAPI->EV_SetTraceHull( 2 );
-			gEngfuncs.pEventAPI->EV_PlayerTrace( vecSrc, vecEnd, PM_STUDIO_BOX, -1, &tr );
-
-			gEngfuncs.pEventAPI->EV_PopPMStates();
-
-			int iBeamModelIndex = gEngfuncs.pEventAPI->EV_FindModelIndex( EGON_BEAM_SPRITE );
-
-			float r = 50.0f;
-			float g = 50.0f;
-			float b = 125.0f;
-
-			if ( IEngineStudio.IsHardware() )
-			{
-				r /= 100.0f;
-				g /= 100.0f;
-			}
-				
-		
-			pBeam = gEngfuncs.pEfxAPI->R_BeamEntPoint ( idx | 0x1000, tr.endpos, iBeamModelIndex, 99999, 3.5, 0.2, 0.7, 55, 0, 0, r, g, b );
-
-			if ( pBeam )
-				 pBeam->flags |= ( FBEAM_SINENOISE );
- 
-			pBeam2 = gEngfuncs.pEfxAPI->R_BeamEntPoint ( idx | 0x1000, tr.endpos, iBeamModelIndex, 99999, 5.0, 0.08, 0.7, 25, 0, 0, r, g, b );
-		}
-	}
-#endif // !defined ( HUNGER_CLIENT_DLL )
 }
 
 void EV_EgonStop( event_args_t *args )
 {
-#if !defined ( HUNGER_CLIENT_DLL )
-	int idx;
-	vec3_t origin;
-
-	idx = args->entindex;
-	VectorCopy ( args->origin, origin );
-
-	gEngfuncs.pEventAPI->EV_StopSound( idx, CHAN_STATIC, EGON_SOUND_RUN );
-	
-	if ( args->iparam1 )
-		 gEngfuncs.pEventAPI->EV_PlaySound( idx, origin, CHAN_WEAPON, EGON_SOUND_OFF, 0.98, ATTN_NORM, 0, 100 );
-
-	if ( EV_IsLocal( idx ) ) 
-	{
-		if ( pBeam )
-		{
-			pBeam->die = 0.0;
-			pBeam = NULL;
-		}
-			
-		
-		if ( pBeam2 )
-		{
-			pBeam2->die = 0.0;
-			pBeam2 = NULL;
-		}
-	}
-#endif // !defined ( HUNGER_CLIENT_DLL )
 }
 //======================
 //	    EGON END 
@@ -1831,7 +1625,6 @@ int EV_TFC_IsAllyTeam( int iTeam1, int iTeam2 )
 	return 0;
 }
 
-#if defined ( HUNGER_CLIENT_DLL )
 //======================
 //	   SHOVEL START
 //======================
@@ -2258,4 +2051,3 @@ void EV_Medkit( event_args_t *args )
 //======================
 //	   MEDKIT END 
 //======================
-#endif // defined ( HUNGER_CLIENT_DLL )

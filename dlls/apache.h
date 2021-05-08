@@ -16,12 +16,9 @@
 #ifndef APACHE_H
 #define APACHE_H
 
-#if defined ( HUNGER_DLL )
 class CApache : public CBaseMonster
 {
-#if defined ( HUNGER_DLL )
 public:
-#endif // defined ( HUNGER_DLL )
 	int		Save( CSave &save );
 	int		Restore( CRestore &restore );
 	static	TYPEDESCRIPTION m_SaveData[];
@@ -49,11 +46,7 @@ public:
 	void ShowDamage( void );
 	void Flight( void );
 	void FireRocket( void );
-#if defined ( HUNGER_DLL )
 	virtual BOOL FireGun( void );
-#else
-	BOOL FireGun( void );
-#endif // defined ( HUNGER_DLL )
 	
 	int  TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
 	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
@@ -85,5 +78,4 @@ public:
 	int m_iDoSmokePuff;
 	CBeam *m_pBeam;
 };
-#endif // defined ( HUNGER_DLL )
 #endif // APACHE_H

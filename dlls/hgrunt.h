@@ -16,7 +16,6 @@
 #ifndef HGRUNT_H
 #define HGRUNT_H
 
-#if defined ( HUNGER_DLL )
 //
 // Special Grunt flags
 //
@@ -57,9 +56,7 @@ public:
 	Schedule_t  *GetScheduleOfType ( int Type );
 	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
 	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType );
-#if defined ( HUNGER_DLL )
 	void Killed(entvars_t *pevAttacker, int iGib);
-#endif // defined ( HUNGER_DLL )
 
 	int IRelationship ( CBaseEntity *pTarget );
 
@@ -91,11 +88,9 @@ public:
 
 	static const char *pGruntSentences[];
 
-#if defined ( HUNGER_DLL )
 	BOOL	IsZombieSoldier() const;
 
 	int		m_iGruntFlags;
-#endif // defined ( HUNGER_DLL )
 };
 
 //=========================================================
@@ -125,5 +120,4 @@ public:
 	int	m_iPose;// which sequence to display	-- temporary, don't need to save
 	static char *m_szPoses[3];
 };
-#endif // defined ( HUNGER_DLL )
 #endif // HGRUNT_H

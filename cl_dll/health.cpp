@@ -27,9 +27,7 @@
 #include "parsemsg.h"
 #include <cstring>
 
-#if defined ( HUNGER_CLIENT_DLL )
 extern bool bIsMultiplayer(void); 
-#endif // defined ( HUNGER_CLIENT_DLL )
 
 DECLARE_MESSAGE(m_Health, Health )
 DECLARE_MESSAGE(m_Health, Damage )
@@ -159,7 +157,6 @@ void CHudHealth::GetPainColor( int &r, int &g, int &b )
 #else
 	if (m_iHealth > 25)
 	{
-#if defined ( HUNGER_CLIENT_DLL )
 		if (bIsMultiplayer())
 		{
 			UnpackRGB(r,g,b, RGB_YELLOWISH);
@@ -168,9 +165,6 @@ void CHudHealth::GetPainColor( int &r, int &g, int &b )
 		{
 			UnpackRGB(r, g, b, RGB_REDISH);
 		}
-#else
-		UnpackRGB(r,g,b, RGB_YELLOWISH);
-#endif // defined ( HUNGER_CLIENT_DLL )
 	}
 	else
 	{
@@ -390,7 +384,6 @@ int CHudHealth::DrawDamage(float flTime)
 	if (!m_bitsDamage)
 		return 1;
 
-#if defined ( HUNGER_CLIENT_DLL )
 	if (bIsMultiplayer())
 	{
 		UnpackRGB(r, g, b, RGB_YELLOWISH);
@@ -399,9 +392,6 @@ int CHudHealth::DrawDamage(float flTime)
 	{
 		UnpackRGB(r, g, b, RGB_REDISH);
 	}
-#else
-	UnpackRGB(r,g,b, RGB_YELLOWISH);
-#endif // defined ( HUNGER_CLIENT_DLL )
 	
 	a = (int)( std::abs(std::sin(flTime*2)) * 256.0);
 

@@ -41,7 +41,6 @@ void EV_SnarkFire( struct event_args_s *args );
 
 
 void EV_TrainPitchAdjust( struct event_args_s *args );
-#if defined ( HUNGER_CLIENT_DLL )
 void EV_Shovel(struct event_args_s *args);
 void EV_Spanner(struct event_args_s *args);
 void EV_Medkit(struct event_args_s *args);
@@ -51,7 +50,6 @@ void EV_FireChaingun2(struct event_args_s *args);
 void EV_FireSniper(struct event_args_s *args);
 void EV_FireSniper2(struct event_args_s *args);
 void EV_FireTaurus(struct event_args_s *args);
-#endif // defined ( HUNGER_CLIENT_DLL )
 }
 
 /*
@@ -88,7 +86,6 @@ void Game_HookEvents( void )
 	gEngfuncs.pfnHookEvent( "events/firehornet.sc",				EV_HornetGunFire );
 	gEngfuncs.pfnHookEvent( "events/tripfire.sc",				EV_TripmineFire );
 	gEngfuncs.pfnHookEvent( "events/snarkfire.sc",				EV_SnarkFire );
-#if defined ( HUNGER_CLIENT_DLL )
 	gEngfuncs.pfnHookEvent( "events/shovel.sc",					EV_Shovel );
 	gEngfuncs.pfnHookEvent( "events/spanner.sc",				EV_Spanner );
 	gEngfuncs.pfnHookEvent( "events/medkit.sc",					EV_Medkit );
@@ -98,5 +95,4 @@ void Game_HookEvents( void )
 	gEngfuncs.pfnHookEvent( "events/sniper.sc",					EV_FireSniper );
 	gEngfuncs.pfnHookEvent( "events/sniper2.sc",				EV_FireSniper2 );
 	gEngfuncs.pfnHookEvent( "events/taurus.sc",					EV_FireTaurus );
-#endif // defined ( HUNGER_CLIENT_DLL )
 }

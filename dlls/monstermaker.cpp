@@ -22,9 +22,7 @@
 #include "cbase.h"
 #include "monsters.h"
 #include "saverestore.h"
-#if defined ( HUNGER_DLL )
 #include "barney.h"
-#endif // defined ( HUNGER_DLL )
 
 // Monstermaker spawnflags
 #define	SF_MONSTERMAKER_START_ON	1 // start active ( if has targetname )
@@ -217,7 +215,6 @@ void CMonsterMaker::MakeMonster( void )
 	if ( pev->spawnflags & SF_MONSTERMAKER_MONSTERCLIP )
 		SetBits( pevCreate->spawnflags, SF_MONSTER_HITMONSTERCLIP );
 
-#if defined ( HUNGER_DLL )
 	// Override monster blood color.
 	if (pev->spawnflags & SF_MONSTER_REDBLOOD)
 		SetBits(pevCreate->spawnflags, SF_MONSTER_REDBLOOD);
@@ -229,7 +226,6 @@ void CMonsterMaker::MakeMonster( void )
 	// Override monster framerate.
 	if (pev->spawnflags & SF_MONSTER_FASTZOMBIEMODE)
 		SetBits(pevCreate->spawnflags, SF_MONSTER_FASTZOMBIEMODE);
-#endif // defined ( HUNGER_DLL )
 	DispatchSpawn( ENT( pevCreate ) );
 	pevCreate->owner = edict();
 
@@ -239,11 +235,9 @@ void CMonsterMaker::MakeMonster( void )
 		pevCreate->targetname = pev->netname;
 	}
 
-#if defined ( HUNGER_DLL )
 	CBarney* pBarney = (CBarney*)CBaseEntity::Instance( pevCreate );
 	if (pBarney)
 		pBarney->FixupBarneySkin( ( pev->spawnflags & SF_MONSTER_ZOMBIECOP ) ? TRUE : FALSE );
-#endif // defined ( HUNGER_DLL )
 	m_cLiveChildren++;// count this monster
 	m_cNumMonsters--;
 

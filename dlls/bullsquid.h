@@ -16,7 +16,6 @@
 #ifndef BULLSQUID_H
 #define BULLSQUID_H
 
-#if defined ( HUNGER_DLL )
 //=========================================================
 // monster-specific schedule types
 //=========================================================
@@ -96,5 +95,4 @@ public:
 	float m_flLastHurtTime;// we keep track of this, because if something hurts a squid, it will forget about its love of headcrabs for a while.
 	float m_flNextSpitTime;// last time the bullsquid used the spit attack.
 };
-#endif // defined ( HUNGER_DLL )
 #endif // BULLSQUID_H

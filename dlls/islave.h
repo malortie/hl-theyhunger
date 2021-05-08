@@ -16,7 +16,6 @@
 #ifndef ISLAVE_H
 #define ISLAVE_H
 
-#if defined ( HUNGER_DLL )
 #define		ISLAVE_MAX_BEAMS	8
 
 class CISlave : public CSquadMonster
@@ -41,9 +40,7 @@ public:
 	void IdleSound( void );
 
 	void Killed( entvars_t *pevAttacker, int iGib );
-#if defined ( HUNGER_DLL )
 	BOOL ShouldGibMonster(int iGib) { return FALSE; }
-#endif
 
     void StartTask ( Task_t *pTask );
 	Schedule_t *GetSchedule( void );
@@ -76,5 +73,4 @@ public:
 	static const char *pPainSounds[];
 	static const char *pDeathSounds[];
 };
-#endif // defined ( HUNGER_DLL )
 #endif // ISLAVE_H
