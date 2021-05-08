@@ -55,6 +55,12 @@
     <Filter Include="Source Files\_hl\cl_dll\hl">
       <UniqueIdentifier>{bd9d5958-4e67-4bff-bbd8-6ba6dfcdb720}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\cl_dll\Hunger">
+      <UniqueIdentifier>{bdf59b4f-7b01-4431-9b8a-17e1a098b7f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\_hl\dlls\Hunger">
+      <UniqueIdentifier>{3f6c60bc-0b44-430e-8126-eb0205056025}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\dlls\crossbow.cpp">
@@ -305,6 +311,36 @@
     </ClCompile>
     <ClCompile Include="..\..\public\interface.cpp">
       <Filter>Source Files\public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cl_dll\Hunger\zoom.cpp">
+      <Filter>Source Files\cl_dll\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\ap9.cpp">
+      <Filter>Source Files\_hl\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\chaingun.cpp">
+      <Filter>Source Files\_hl\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\hkg36.cpp">
+      <Filter>Source Files\_hl\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\medkit.cpp">
+      <Filter>Source Files\_hl\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\shovel.cpp">
+      <Filter>Source Files\_hl\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\sniper.cpp">
+      <Filter>Source Files\_hl\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\spanner.cpp">
+      <Filter>Source Files\_hl\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\taurus.cpp">
+      <Filter>Source Files\_hl\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\weapon_einar1.cpp">
+      <Filter>Source Files\_hl\dlls\Hunger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

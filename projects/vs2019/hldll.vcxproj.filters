@@ -34,6 +34,9 @@
     <Filter Include="Header Files\pm_shared">
       <UniqueIdentifier>{37941113-16fa-4ce0-9bdd-a72a1ced8902}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\dlls\Hunger">
+      <UniqueIdentifier>{263d6989-ba4e-4974-b8eb-d772ae01b624}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\dlls\aflock.cpp">
@@ -342,6 +345,63 @@
     <ClCompile Include="..\..\dlls\xen.cpp">
       <Filter>Source Files\dlls</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\ap9.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\babykelly.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\boss.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\chaingun.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\chicken.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\civilian.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\cyberfranklin.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\flame.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\hand.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\hkg36.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\medkit.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\megasquid.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\shovel.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\sniper.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\spanner.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\taurus.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\tnt.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\weapon_einar1.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Hunger\zombiebull.cpp">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\dlls\doors.h">
@@ -477,6 +537,33 @@
       <Filter>Header Files\dlls</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\vector.h">
+      <Filter>Header Files\dlls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Hunger\flame.h">
+      <Filter>Source Files\dlls\Hunger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\apache.h">
+      <Filter>Header Files\dlls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\barney.h">
+      <Filter>Header Files\dlls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\bullsquid.h">
+      <Filter>Header Files\dlls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\headcrab.h">
+      <Filter>Header Files\dlls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\hgrunt.h">
+      <Filter>Header Files\dlls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\islave.h">
+      <Filter>Header Files\dlls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\scientist.h">
+      <Filter>Header Files\dlls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\zombie.h">
       <Filter>Header Files\dlls</Filter>
     </ClInclude>
   </ItemGroup>
