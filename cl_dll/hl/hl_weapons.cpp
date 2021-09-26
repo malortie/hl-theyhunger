@@ -46,6 +46,8 @@ static globalvars_t	Globals;
 
 static CBasePlayerWeapon *g_pWpns[ 32 ];
 
+static int g_currentweaponid = -1;
+
 float g_flApplyVel = 0.0;
 int   g_irunninggausspred = 0;
 
@@ -1002,8 +1004,11 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 
 	// Make sure that weapon animation matches what the game .dll is telling us
 	//  over the wire ( fixes some animation glitches )
-	if ( g_runfuncs && ( HUD_GetWeaponAnim() != to->client.weaponanim ) )
+	if ( g_runfuncs && ( g_currentweaponid != to->client.m_iId || HUD_GetWeaponAnim() != to->client.weaponanim ) )
 	{
+		// Update weapon client id.
+		g_currentweaponid = to->client.m_iId;
+
 		int body = 2;
 
 		//Pop the model to body 0.
