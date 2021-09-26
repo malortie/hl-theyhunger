@@ -947,6 +947,7 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 				
 				player.m_pLastItem = player.m_pActiveItem;
 				player.m_pActiveItem = pNew;
+				pWeapon = pNew; // Update current weapon pointer.
 
 				// Deploy new weapon
 				if (player.m_pActiveItem)
