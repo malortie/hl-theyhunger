@@ -983,24 +983,24 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 
 	if ( player.m_pActiveItem->m_iId == WEAPON_RPG )
 	{
-		 from->client.vuser2[ 1 ] = ( ( CRpg * )player.m_pActiveItem)->m_fSpotActive;
-		 from->client.vuser2[ 2 ] = ( ( CRpg * )player.m_pActiveItem)->m_cActiveRockets;
+		 to->client.vuser2[ 1 ] = ( ( CRpg * )player.m_pActiveItem)->m_fSpotActive;
+		 to->client.vuser2[ 2 ] = ( ( CRpg * )player.m_pActiveItem)->m_cActiveRockets;
 	}
 	else if (player.m_pActiveItem->m_iId == WEAPON_GLOCK)
 	{
-		from->client.vuser2[1] = ( ( CGlock * )player.m_pActiveItem)->m_fSilencerOn;
+		to->client.vuser2[1] = ( ( CGlock * )player.m_pActiveItem)->m_fSilencerOn;
 	}
 	else if (player.m_pActiveItem->m_iId == WEAPON_AP9)
 	{
-		from->client.vuser2[1] = player.ammo_ap9;
+		to->client.vuser2[1] = player.ammo_ap9;
 	}
 	else if (player.m_pActiveItem->m_iId == WEAPON_TAURUS)
 	{
-		from->client.vuser2[1] = player.ammo_taurus;
+		to->client.vuser2[1] = player.ammo_taurus;
 	}
 	else if (player.m_pActiveItem->m_iId == WEAPON_EINAR1 || player.m_pActiveItem->m_iId == WEAPON_HKG36)
 	{
-		from->client.vuser2[1] = player.ammo_sniper;
+		to->client.vuser2[1] = player.ammo_sniper;
 	}
 
 	// Make sure that weapon animation matches what the game .dll is telling us
