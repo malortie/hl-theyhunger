@@ -32,7 +32,8 @@ extern CGraph WorldGraph;
 // houndeye does 20 points of damage spread over a sphere 384 units in diameter, and each additional 
 // squad member increases the BASE damage by 110%, per the spec.
 #define HOUNDEYE_MAX_SQUAD_SIZE			4
-#define	HOUNDEYE_MAX_ATTACK_RADIUS		96
+#define	HOUNDEYE_MAX_ATTACK_RADIUS		384
+#define	HOUNDEYE_BITE_ATTACK_RADIUS		96
 #define	HOUNDEYE_SQUAD_BONUS			(float)1.1
 
 #define HOUNDEYE_EYE_FRAMES 4 // how many different switchable maps for the eye
@@ -98,6 +99,8 @@ public:
 	BOOL FCanActiveIdle ( void );
 	Schedule_t *GetScheduleOfType ( int Type );
 	Schedule_t *GetSchedule( void );
+	void BiteAttack( void );
+	inline bool IsNoZapFlagSet() const { return FBitSet(pev->spawnflags, SF_SQUADMONSTER_NOZAP) ? true : false; }
 
 	int	Save( CSave &save ); 
 	int Restore( CRestore &restore );
@@ -193,7 +196,8 @@ BOOL CHoundeye :: FCanActiveIdle ( void )
 //=========================================================
 BOOL CHoundeye :: CheckRangeAttack1 ( float flDot, float flDist )
 {
-	if ( flDist <= ( HOUNDEYE_MAX_ATTACK_RADIUS * 0.5 ) && flDot >= 0.3 )
+	float radius = IsNoZapFlagSet() ? HOUNDEYE_BITE_ATTACK_RADIUS : HOUNDEYE_MAX_ATTACK_RADIUS;
+	if ( flDist <= ( radius * 0.5 ) && flDot >= 0.3 )
 	{
 		return TRUE;
 	}
@@ -282,24 +286,9 @@ void CHoundeye :: HandleAnimEvent( MonsterEvent_t *pEvent )
 			break;
 
 		case HOUND_AE_STARTATTACK:
-			{
-				// SOUND HERE!
-
-				CBaseEntity *pHurt = CheckTraceHullAttack(80, gSkillData.houndeyeDmgBite, DMG_SLASH);
-
-				if (pHurt)
-				{
-					if (pHurt->pev->flags & (FL_CLIENT | FL_MONSTER))
-					{
-						pHurt->pev->punchangle.x = 2;
-					}
-
-					pHurt->pev->velocity = pHurt->pev->velocity - gpGlobals->v_forward * 16;
-					pHurt->pev->velocity = pHurt->pev->velocity + gpGlobals->v_up * 8;
-				}
-
-				WarmUpSound();
-			}
+			WarmUpSound();
+			if ( IsNoZapFlagSet() )
+				BiteAttack();
 			break;
 
 		case HOUND_AE_HOPBACK:
@@ -315,6 +304,11 @@ void CHoundeye :: HandleAnimEvent( MonsterEvent_t *pEvent )
 			}
 
 		case HOUND_AE_THUMP:
+			if ( !IsNoZapFlagSet() )
+			{
+				// emit the shockwaves
+				SonicAttack();
+			}
 			break;
 
 		case HOUND_AE_ANGERSOUND1:
@@ -1320,4 +1314,28 @@ Schedule_t *CHoundeye :: GetSchedule( void )
 	}
 
 	return CSquadMonster :: GetSchedule();
+}
+
+void CHoundeye::BiteAttack( void )
+{
+	CBaseEntity *pEntity = NULL;
+	// iterate on all entities in the vicinity.
+	while ((pEntity = UTIL_FindEntityInSphere( pEntity, pev->origin, HOUNDEYE_BITE_ATTACK_RADIUS / 2 )) != NULL)
+	{
+		if ( pEntity->pev->takedamage != DAMAGE_NO )
+		{
+			if ( pEntity->Classify() != Classify() && 
+				 !FClassnameIs(pEntity->pev, "func_breakable") && 
+				 !FClassnameIs(pEntity->pev, "func_pushable") )
+			{
+				pEntity->TakeDamage ( pev, pev, gSkillData.houndeyeDmgBite, DMG_SLASH );
+
+				if ( pEntity->IsPlayer() )
+				{
+					pEntity->pev->punchangle.x = 5;
+					pEntity->pev->punchangle.z = RANDOM_LONG(0, 1) == 1 ? -5 : 5;
+				}
+			}
+		}
+	}
 }
