@@ -1764,7 +1764,7 @@ void UpdateClientData ( const edict_t *ent, int sendweapons, struct clientdata_s
 					}
 					else if (pl->m_pActiveItem->m_iId == WEAPON_GLOCK)
 					{
-						cd->vuser2.y = ( ( CGlock * )pl->m_pActiveItem)->m_fSilencerOn;
+						cd->vuser2.y = ( ( CGlock * )pl->m_pActiveItem)->pev->body;
 					}
 					else if (pl->m_pActiveItem->m_iId == WEAPON_AP9)
 					{

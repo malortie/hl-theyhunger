@@ -903,7 +903,12 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 	}
 	else if (player.m_pActiveItem->m_iId== WEAPON_GLOCK)
 	{
-		( ( CGlock * )player.m_pActiveItem)->m_fSilencerOn = (int)from->client.vuser2[1];
+		( ( CGlock * )player.m_pActiveItem)->pev->body = (int)from->client.vuser2[1];
+
+		// Update viewmodel body to match the one sent by the server.
+		cl_entity_t* pViewmodel = gEngfuncs.GetViewModel();
+		if ( pViewmodel )
+			pViewmodel->curstate.body = ( ( CGlock * )player.m_pActiveItem)->pev->body;
 	}
 	else if (player.m_pActiveItem->m_iId== WEAPON_AP9)
 	{
@@ -988,7 +993,7 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 	}
 	else if (player.m_pActiveItem->m_iId == WEAPON_GLOCK)
 	{
-		to->client.vuser2[1] = ( ( CGlock * )player.m_pActiveItem)->m_fSilencerOn;
+		to->client.vuser2[1] = ( ( CGlock * )player.m_pActiveItem)->pev->body;
 	}
 	else if (player.m_pActiveItem->m_iId == WEAPON_AP9)
 	{
@@ -1019,8 +1024,8 @@ void HUD_WeaponsPostThink( local_state_s *from, local_state_s *to, usercmd_t *cm
 		//Show laser sight/scope combo
 		if ( pWeapon == &g_Python && bIsMultiplayer() )
 			 body = 1;
-		if ( pWeapon == &g_Glock && ((CGlock*)pWeapon)->m_fSilencerOn )
-			body = 1;
+		if ( pWeapon == &g_Glock )
+			body = g_Glock.pev->body;
 		
 		// Force a fixed anim down to viewmodel
 		HUD_SendWeaponAnim( to->client.weaponanim, body, 1 );

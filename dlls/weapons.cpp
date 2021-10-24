@@ -1645,7 +1645,6 @@ IMPLEMENT_SAVERESTORE( CSatchel, CBasePlayerWeapon );
 
 TYPEDESCRIPTION	CGlock::m_SaveData[] =
 {
-	DEFINE_FIELD(CGlock, m_fSilencerOn, FIELD_BOOLEAN),
 	DEFINE_FIELD(CGlock, m_fInAttack, FIELD_INTEGER),
 };
 IMPLEMENT_SAVERESTORE(CGlock, CBasePlayerWeapon);

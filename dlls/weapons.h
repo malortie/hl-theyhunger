@@ -547,9 +547,9 @@ public:
 	static	TYPEDESCRIPTION m_SaveData[];
 #endif
 
-	int GetViewModelBody(void) const;
-	void UpdateViewModelBody(void);
-	BOOL m_fSilencerOn;
+	BOOL IsSilencerOn(void) const;
+	void SetSilencerOn( BOOL bOn );
+
 private:
 	int m_iShell;
 	
