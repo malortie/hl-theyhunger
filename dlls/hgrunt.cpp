@@ -1017,11 +1017,14 @@ void CHGrunt :: Spawn()
 
 	if (FBitSet( pev->weapons, HGRUNT_SHOTGUN ))
 	{
-		SetBodygroup( HEAD_GROUP, HEAD_SHOTGUN);
+		if ( IsZombieSoldier() )
+			SetBodygroup( HEAD_GROUP, HEAD_COMMANDER );
+		else
+			SetBodygroup( HEAD_GROUP, HEAD_SHOTGUN);
 	}
 	else if (FBitSet( pev->weapons, HGRUNT_GRENADELAUNCHER ))
 	{
-		SetBodygroup( HEAD_GROUP, HEAD_M203 );
+		SetBodygroup( HEAD_GROUP, HEAD_GRUNT );
 		pev->skin = 1; // alway dark skin
 	}
 
