@@ -1655,12 +1655,6 @@ TYPEDESCRIPTION	CAP9::m_SaveData[] =
 };
 IMPLEMENT_SAVERESTORE(CAP9, CBasePlayerWeapon);
 
-TYPEDESCRIPTION	CSniper::m_SaveData[] =
-{
-	DEFINE_FIELD(CSniper, m_fInZoom, FIELD_BOOLEAN),
-};
-IMPLEMENT_SAVERESTORE(CSniper, CBasePlayerWeapon);
-
 TYPEDESCRIPTION	CEinar1::m_SaveData[] =
 {
 	DEFINE_FIELD( CEinar1, m_fInAttack, FIELD_INTEGER ),

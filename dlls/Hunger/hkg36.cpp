@@ -66,6 +66,8 @@ void CHKG36::Spawn()
 	m_iDefaultAmmo = SNIPER_DEFAULT_GIVE;
 
 	FallInit();// get ready to fall down.
+
+	CSniper::Spawn();
 }
 
 

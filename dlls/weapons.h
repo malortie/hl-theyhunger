@@ -1175,6 +1175,8 @@ public:
 	static	TYPEDESCRIPTION m_SaveData[];
 #endif
 
+	virtual void Spawn( void );
+
 	virtual int GetPrimaryAttackActivity(void) = 0;
 	virtual int GetZoomedAttackActivity(void) = 0;
 
@@ -1203,6 +1205,9 @@ public:
 
 protected:
 	unsigned short m_usFireSniper;
+
+private:
+	BOOL m_bRestoreZoom;
 };
 
 class CHKG36 : public CSniper

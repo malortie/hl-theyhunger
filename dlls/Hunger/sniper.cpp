@@ -23,6 +23,11 @@
 
 extern int gmsgZoom;
 
+void CSniper::Spawn( void )
+{
+	m_bRestoreZoom = FALSE;
+}
+
 int CSniper::AddToPlayer(CBasePlayer *pPlayer)
 {
 	if (CBasePlayerWeapon::AddToPlayer(pPlayer))
@@ -128,6 +133,12 @@ void CSniper::WeaponIdle(void)
 	ResetEmptySound();
 
 	m_pPlayer->GetAutoaimVector(AUTOAIM_10DEGREES);
+
+	if ( m_bRestoreZoom )
+	{
+		m_bRestoreZoom = FALSE;
+		SetZoomState( m_fInZoom );
+	}
 }
 
 void CSniper::SetZoomState(BOOL bState)
@@ -149,6 +160,32 @@ void CSniper::ToggleZoom(void)
 	SetZoomState(!m_fInZoom);
 }
 
+#ifndef CLIENT_DLL
+TYPEDESCRIPTION	CSniper::m_SaveData[] =
+{
+	DEFINE_FIELD(CSniper, m_fInZoom, FIELD_BOOLEAN),
+};
+
+int CSniper::Save( CSave &save )
+{
+	if ( !CBasePlayerWeapon::Save(save) )
+		return 0;
+
+	return save.WriteFields( "CSniper", this, m_SaveData, ARRAYSIZE(m_SaveData) );
+}
+
+int CSniper::Restore( CRestore &restore )
+{
+	if ( !CBasePlayerWeapon::Restore(restore) )
+		return 0;
+
+	int status = restore.ReadFields( "CSniper", this, m_SaveData, ARRAYSIZE(m_SaveData) );
+
+	m_bRestoreZoom = TRUE;
+
+	return status;
+}
+#endif
 
 class CSniperAmmo : public CBasePlayerAmmo
 {

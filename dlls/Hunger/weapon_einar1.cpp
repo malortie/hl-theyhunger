@@ -79,6 +79,8 @@ void CEinar1::Spawn()
 	m_fInSpecialReload = 0;
 
 	FallInit();// get ready to fall down.
+
+	CSniper::Spawn();
 }
 
 void CEinar1::Precache(void)
