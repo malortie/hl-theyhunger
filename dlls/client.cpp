@@ -39,6 +39,7 @@
 #include "usercmd.h"
 #include "netadr.h"
 #include "pm_shared.h"
+#include "mod_config.h"
 
 #if !defined ( _WIN32 )
 #include <ctype.h>
@@ -593,6 +594,10 @@ void ClientCommand( edict_t *pEntity )
 
 		if ( pPlayer->IsObserver() )
 			pPlayer->Observer_FindNextPlayer( std::atoi( CMD_ARGV(1) )?true:false );
+	}
+	else if ( FStrEq( pcmd, "modinfo" )  ) // Display mod info.
+	{
+		ClientPrint( &pEntity->v, HUD_PRINTCONSOLE, UTIL_VarArgs( "%s %s\n", HLSDK_MOD_DESCRIPTION, HLSDK_MOD_VERSION ) );
 	}
 	else if ( g_pGameRules->ClientCommand( GetClassPtr((CBasePlayer *)pev), pcmd ) )
 	{
