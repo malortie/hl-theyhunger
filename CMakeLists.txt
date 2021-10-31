@@ -83,7 +83,7 @@ if (ENABLE_MOD_ARCHIVE)
   set(MOD_ARCHIVE_COMPRESSED_FILE_NAME ${MOD_ARCHIVE_FOLDER}-${PROJECT_VERSION}.zip)
   set(MOD_ARCHIVE_COMPRESSED_FILE_PATH ${MOD_ARCHIVE_DIR}/${MOD_ARCHIVE_COMPRESSED_FILE_NAME})
 
-  add_custom_target(mod_archive ALL
+  add_custom_target(mod_archive
     COMMAND ${CMAKE_COMMAND} -E echo Creating mod archive...
     # Move mod files directory to a temporary archive folder.
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${MOD_FILES_DIR} ${MOD_ARCHIVE_TEMP_DIR}
