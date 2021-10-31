@@ -244,22 +244,23 @@ target_link_libraries(${TARGET_NAME}
   ${LIB_DIR}/public/sdl2.lib
 )
 
-if (IS_MOD_DIR_VALID)
-  set(LAUNCH_OPT_DEBUG "-game ${MOD_FOLDER} -dev -console +sv_cheats 1")
-  set(LAUNCH_OPT_RELEASE "-game ${MOD_FOLDER} -console +sv_cheats 1")
+set(LAUNCH_OPT_DEBUG "-game ${MOD_FOLDER} -dev -console +sv_cheats 1")
+set(LAUNCH_OPT_RELEASE "-game ${MOD_FOLDER} -console +sv_cheats 1")
 
-  # Configuration for launching from Visual Studio
-  set_target_properties(${TARGET_NAME}
-    PROPERTIES 
-      VS_DEBUGGER_COMMAND ${GAME_DIR}/hl.exe
-      VS_DEBUGGER_COMMAND_ARGUMENTS $<IF:$<CONFIG:Debug>,${LAUNCH_OPT_DEBUG},${LAUNCH_OPT_RELEASE}>
-      VS_DEBUGGER_WORKING_DIRECTORY ${GAME_DIR}
-  )
+# Configuration for launching from Visual Studio
+set_target_properties(${TARGET_NAME}
+  PROPERTIES 
+    VS_DEBUGGER_COMMAND ${GAME_DIR}/hl.exe
+    VS_DEBUGGER_COMMAND_ARGUMENTS $<IF:$<CONFIG:Debug>,${LAUNCH_OPT_DEBUG},${LAUNCH_OPT_RELEASE}>
+    VS_DEBUGGER_WORKING_DIRECTORY ${GAME_DIR}
+)
 
-  # Used to copy the DLL file to the cl_dlls folder in mod directory.
-  add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${TARGET_NAME}> ${MOD_DIR}/cl_dlls/$<TARGET_FILE_NAME:${TARGET_NAME}>
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_PDB_FILE:${TARGET_NAME}> ${MOD_DIR}/cl_dlls/$<TARGET_PDB_FILE_NAME:${TARGET_NAME}>
-    VERBATIM
-  )
-endif()
+# Used to copy the DLL file to the cl_dlls folder in mod directory.
+add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${TARGET_NAME}> ${MOD_DIR}/cl_dlls/$<TARGET_FILE_NAME:${TARGET_NAME}>
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_PDB_FILE:${TARGET_NAME}> ${MOD_DIR}/cl_dlls/$<TARGET_PDB_FILE_NAME:${TARGET_NAME}>
+  VERBATIM
+)
+
+# Installation
+install(TARGETS ${TARGET_NAME} DESTINATION cl_dlls)

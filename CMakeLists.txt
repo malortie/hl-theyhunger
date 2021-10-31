@@ -3,28 +3,24 @@
 cmake_minimum_required(VERSION 3.21)
 project(projects VERSION 1.0.0 LANGUAGES CXX)
 
-set(MOD_DIR "" CACHE PATH "Absolute path to the mod directory.")
 set(MOD_ARCHIVE_DIR "" CACHE PATH "Absolute path where to save the mod archive.")
 set(MOD_ARCHIVE_FOLDER "" CACHE STRING "Folder name of the mod archive.")
 
 option(ENABLE_MOD_ARCHIVE "Enable mod archive target." ON)
-option(ENABLE_MOD_SETUP "Enable mod setup target." ON)
 
-set(IS_MOD_DIR_VALID FALSE)
-if (NOT MOD_DIR STREQUAL "")
-  if (NOT IS_DIRECTORY ${MOD_DIR})
-    message(FATAL_ERROR "MOD_DIR either does not exist or is not a directory.")
-  elseif(NOT IS_ABSOLUTE ${MOD_DIR})
-    message(FATAL_ERROR "MOD_DIR is not an absolute path.")
-  else()
-    set(IS_MOD_DIR_VALID TRUE)
-
-    # Get the mod folder.
-    cmake_path(GET MOD_DIR FILENAME MOD_FOLDER)
-    # Get the game directory.
-    cmake_path(GET MOD_DIR PARENT_PATH GAME_DIR)
-  endif()
+if (NOT IS_DIRECTORY ${CMAKE_INSTALL_PREFIX})
+  message(FATAL_ERROR "CMAKE_INSTALL_PREFIX either does not exist or is not a directory.")
+elseif(NOT IS_ABSOLUTE ${CMAKE_INSTALL_PREFIX})
+  message(FATAL_ERROR "CMAKE_INSTALL_PREFIX is not an absolute path.")
+else()
+  # Get the mod folder.
+  cmake_path(GET CMAKE_INSTALL_PREFIX FILENAME MOD_FOLDER)
+  # Get the game directory.
+  cmake_path(GET CMAKE_INSTALL_PREFIX PARENT_PATH GAME_DIR)
 endif()
+
+# Mod directory is the install directory.
+set(MOD_DIR ${CMAKE_INSTALL_PREFIX})
 
 if (ENABLE_MOD_ARCHIVE)
   if (NOT IS_DIRECTORY ${MOD_ARCHIVE_DIR})
@@ -59,21 +55,6 @@ configure_file(
   @ONLY
 )
 
-if (ENABLE_MOD_SETUP)
-  # Setup target definition
-  if (NOT IS_MOD_DIR_VALID)
-    message(FATAL_ERROR "Unable to configure mod setup. MOD_DIR has no value.")
-  else()
-    add_custom_target(mod_setup ALL
-      COMMAND ${CMAKE_COMMAND} -E copy_directory ${MOD_FILES_DIR} ${MOD_DIR}
-      COMMAND call SETUP.bat
-      WORKING_DIRECTORY ${MOD_DIR}
-      VERBATIM
-      COMMENT "Running mod setup..."
-    )
-  endif()
-endif()
-
 add_subdirectory(cl_dll)
 add_subdirectory(dlls)
 
@@ -104,3 +85,8 @@ if (ENABLE_MOD_ARCHIVE)
       hldll
   )
 endif()
+
+# Installation
+install(DIRECTORY mod_files/ DESTINATION .)
+install(CODE "execute_process(COMMAND cmd /C \"echo Running mod setup...\")")
+install(CODE "execute_process(COMMAND cmd /C \"call SETUP.bat\" WORKING_DIRECTORY \"${MOD_DIR}\")")
