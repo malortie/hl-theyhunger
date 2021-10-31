@@ -16,6 +16,7 @@
 #include "eiface.h"
 #include "util.h"
 #include "game.h"
+#include "mod_config.h"
 
 cvar_t	displaysoundlist = {"displaysoundlist","0"};
 
@@ -886,5 +887,8 @@ void GameDLLInit( void )
 // END REGISTER CVARS FOR SKILL LEVEL STUFF
 
 	SERVER_COMMAND( "exec skill.cfg\n" );
+
+	// Display mod info.
+	ALERT( at_console, "Game DLL: %s %s\n", HLSDK_MOD_DESCRIPTION, HLSDK_MOD_VERSION );
 }
 
