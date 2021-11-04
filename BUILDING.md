@@ -1,5 +1,9 @@
 # Building The Code
 
+## Supported Platforms
+
+See [supported platforms](README#Supported-Platforms).
+
 ## Prerequisites
 
 - CMake 3.21 or higher
