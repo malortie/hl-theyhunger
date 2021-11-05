@@ -61,17 +61,24 @@ add_subdirectory(dlls)
 if (ENABLE_MOD_ARCHIVE)
   # Archive target definition
   set(MOD_ARCHIVE_TEMP_DIR ${MOD_ARCHIVE_DIR}/${MOD_ARCHIVE_FOLDER})
+  set(MOD_ARCHIVE_MOD_DIR ${MOD_ARCHIVE_TEMP_DIR}/${MOD_FOLDER})
   set(MOD_ARCHIVE_COMPRESSED_FILE_NAME ${MOD_ARCHIVE_FOLDER}-${PROJECT_VERSION}.zip)
   set(MOD_ARCHIVE_COMPRESSED_FILE_PATH ${MOD_ARCHIVE_DIR}/${MOD_ARCHIVE_COMPRESSED_FILE_NAME})
 
   add_custom_target(mod_archive
     COMMAND ${CMAKE_COMMAND} -E echo Creating mod archive...
+    # Copy Changelog.
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/CHANGELOG.md ${MOD_ARCHIVE_TEMP_DIR}/CHANGELOG.md
+    # Copy License.
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE.md ${MOD_ARCHIVE_TEMP_DIR}/LICENSE.md
+    # Copy Installation instructions.
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/INSTALL.md ${MOD_ARCHIVE_TEMP_DIR}/INSTALL.md
     # Move mod files directory to a temporary archive folder.
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${MOD_FILES_DIR} ${MOD_ARCHIVE_TEMP_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${MOD_FILES_DIR} ${MOD_ARCHIVE_MOD_DIR}
     # Copy client.dll to temporary archive folder.
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:hl_cdll> ${MOD_ARCHIVE_TEMP_DIR}/cl_dlls/$<TARGET_FILE_NAME:hl_cdll>
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:hl_cdll> ${MOD_ARCHIVE_MOD_DIR}/cl_dlls/$<TARGET_FILE_NAME:hl_cdll>
     # Copy hl.dll to temporary archive folder.
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:hldll> ${MOD_ARCHIVE_TEMP_DIR}/dlls/$<TARGET_FILE_NAME:hldll>
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:hldll> ${MOD_ARCHIVE_MOD_DIR}/dlls/$<TARGET_FILE_NAME:hldll>
     # Compress and create the archive.
     COMMAND ${CMAKE_COMMAND} -E chdir ${MOD_ARCHIVE_DIR} tar "cfv" ${MOD_ARCHIVE_COMPRESSED_FILE_NAME} --format=zip ${MOD_ARCHIVE_FOLDER}
     # Remove the temporary archive folder.
