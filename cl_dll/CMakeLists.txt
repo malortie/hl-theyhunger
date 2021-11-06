@@ -47,7 +47,9 @@ set(LINK_OPTS_RELEASE
 # Include directories
 set(INCLUDE_DIRS 
   ${DLLS_DIR}
+  ${HUNGER_DLLS_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
+  ${HUNGER_CL_DLL_DIR}
   ${PUBLIC_DIR}
   ${COMMON_DIR}
   ${PM_SHARED_DIR}
@@ -100,6 +102,16 @@ set(HEADER_FILES
   ${PM_SHARED_DIR}/pm_movevars.h
   ${PM_SHARED_DIR}/pm_shared.h
   ${MOD_CONFIG_FILE_PATH}
+  ${HUNGER_CL_DLL_DIR}/zoom.cpp
+  ${HUNGER_DLLS_DIR}/ap9.cpp
+  ${HUNGER_DLLS_DIR}/chaingun.cpp
+  ${HUNGER_DLLS_DIR}/hkg36.cpp
+  ${HUNGER_DLLS_DIR}/medkit.cpp
+  ${HUNGER_DLLS_DIR}/shovel.cpp
+  ${HUNGER_DLLS_DIR}/sniper.cpp
+  ${HUNGER_DLLS_DIR}/spanner.cpp
+  ${HUNGER_DLLS_DIR}/taurus.cpp
+  ${HUNGER_DLLS_DIR}/weapon_einar1.cpp
 )
 
 # Source files

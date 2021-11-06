@@ -50,6 +50,7 @@ set(LINK_OPTS_RELEASE
 # Include directories
 set(INCLUDE_DIRS
   ${CMAKE_CURRENT_SOURCE_DIR}
+  ${HUNGER_DLLS_DIR}
   ${ENGINE_DIR}
   ${COMMON_DIR}
   ${PM_SHARED_DIR}
@@ -62,7 +63,10 @@ set(HEADER_FILES
   activity.h
   activitymap.h
   animation.h
+  apache.h
+  barney.h
   basemonster.h
+  bullsquid.h
   cbase.h
   cdll_dll.h
   client.h
@@ -76,7 +80,10 @@ set(HEADER_FILES
   flyingmonster.h
   func_break.h
   gamerules.h
+  headcrab.h
+  hgrunt.h
   hornet.h
+  islave.h
   items.h
   monsterevent.h
   monsters.h
@@ -85,6 +92,7 @@ set(HEADER_FILES
   player.h
   saverestore.h
   schedule.h
+  scientist.h
   scripted.h
   scriptevent.h
   skill.h
@@ -97,6 +105,7 @@ set(HEADER_FILES
   util.h
   vector.h
   weapons.h
+  zombie.h
   ${ENGINE_DIR}/eiface.h
   ${PM_SHARED_DIR}/pm_debug.h
   ${PM_SHARED_DIR}/pm_defs.h
@@ -105,6 +114,7 @@ set(HEADER_FILES
   ${PM_SHARED_DIR}/pm_movevars.h
   ${PM_SHARED_DIR}/pm_shared.h
   ${MOD_CONFIG_FILE_PATH}
+  ${HUNGER_DLLS_FOLDER}/flame.h
 )
 
 # Source files
@@ -208,6 +218,25 @@ set(SOURCE_FILES
   xen.cpp
   zombie.cpp
   ${GAME_SHARED_DIR}/voice_gamemgr.cpp
+  ${HUNGER_DLLS_FOLDER}/ap9.cpp
+  ${HUNGER_DLLS_FOLDER}/babykelly.cpp
+  ${HUNGER_DLLS_FOLDER}/boss.cpp
+  ${HUNGER_DLLS_FOLDER}/chaingun.cpp
+  ${HUNGER_DLLS_FOLDER}/chicken.cpp
+  ${HUNGER_DLLS_FOLDER}/civilian.cpp
+  ${HUNGER_DLLS_FOLDER}/cyberfranklin.cpp
+  ${HUNGER_DLLS_FOLDER}/flame.cpp
+  ${HUNGER_DLLS_FOLDER}/hand.cpp
+  ${HUNGER_DLLS_FOLDER}/hkg36.cpp
+  ${HUNGER_DLLS_FOLDER}/medkit.cpp
+  ${HUNGER_DLLS_FOLDER}/megasquid.cpp
+  ${HUNGER_DLLS_FOLDER}/shovel.cpp
+  ${HUNGER_DLLS_FOLDER}/sniper.cpp
+  ${HUNGER_DLLS_FOLDER}/spanner.cpp
+  ${HUNGER_DLLS_FOLDER}/taurus.cpp
+  ${HUNGER_DLLS_FOLDER}/tnt.cpp
+  ${HUNGER_DLLS_FOLDER}/weapon_einar1.cpp
+  ${HUNGER_DLLS_FOLDER}/zombiebull.cpp
 )
 
 set(PM_SHARED_SOURCE_FILES
