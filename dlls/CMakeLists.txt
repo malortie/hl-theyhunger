@@ -242,7 +242,7 @@ add_library(${TARGET_NAME} MODULE
 
 set_target_properties(${TARGET_NAME}
   PROPERTIES 
-    OUTPUT_NAME hl
+    OUTPUT_NAME einar
 )
 
 target_include_directories(${TARGET_NAME} PRIVATE ${INCLUDE_DIRS})
