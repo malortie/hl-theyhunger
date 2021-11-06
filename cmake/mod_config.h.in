@@ -1,0 +1,4 @@
+#pragma once
+
+#define HLSDK_MOD_DESCRIPTION "Malortie HL SDK Base"
+#define HLSDK_MOD_VERSION "@PROJECT_VERSION@"

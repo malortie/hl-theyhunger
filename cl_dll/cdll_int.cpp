@@ -34,6 +34,7 @@ extern "C"
 #include "hud_servers.h"
 #include "vgui_int.h"
 #include "interface.h"
+#include "mod_config.h"
 
 #ifdef _WIN32
 #include "winsani_in.h"
@@ -157,6 +158,10 @@ int CL_DLLEXPORT Initialize( cl_enginefunc_t *pEnginefuncs, int iVersion )
 	CL_LoadParticleMan();
 
 	// get tracker interface, if any
+
+	// Display mod info.
+	gEngfuncs.Con_Printf( "Client DLL: %s %s\n", HLSDK_MOD_DESCRIPTION, HLSDK_MOD_VERSION );
+
 	return 1;
 }
 
