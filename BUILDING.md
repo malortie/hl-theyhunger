@@ -2,7 +2,7 @@
 
 ## Supported Platforms
 
-See [supported platforms](README#Supported-Platforms).
+See [supported platforms](README.md#Supported-Platforms).
 
 ## Prerequisites
 
