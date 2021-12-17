@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added missing TH_NOZAP flag in monstermaker (2.0.1)
 - Added missing FADECORPSE flag in monstermaker (2.0.1)
+- Added skill.cfg from previous Steampipe patch (2.0.1)
 
 ## [2.0.0] - 2021-11-07
 
