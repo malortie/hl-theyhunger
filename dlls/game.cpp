@@ -452,83 +452,83 @@ cvar_t	sk_player_leg3	= { "sk_player_leg3","1" };
 // MONSTERS
 
 // Baby Kelly
-cvar_t	sk_babykelly_health1 = { "sk_babykelly_health1", "20" };
-cvar_t	sk_babykelly_health2 = { "sk_babykelly_health2", "30" };
-cvar_t	sk_babykelly_health3 = { "sk_babykelly_health3", "60" };
+cvar_t	sk_babykelly_health1 = { "sk_babykelly_health1", "0" };
+cvar_t	sk_babykelly_health2 = { "sk_babykelly_health2", "0" };
+cvar_t	sk_babykelly_health3 = { "sk_babykelly_health3", "0" };
 
 // Boss
-cvar_t	sk_boss_health1 = { "sk_boss_health1", "150" };
-cvar_t	sk_boss_health2 = { "sk_boss_health2", "200" };
-cvar_t	sk_boss_health3 = { "sk_boss_health3", "250" };
+cvar_t	sk_boss_health1 = { "sk_boss_health1", "0" };
+cvar_t	sk_boss_health2 = { "sk_boss_health2", "0" };
+cvar_t	sk_boss_health3 = { "sk_boss_health3", "0" };
 
 // Boss
-cvar_t	sk_cyberfranklin_health1 = { "sk_cyberfranklin_health1", "150" };
-cvar_t	sk_cyberfranklin_health2 = { "sk_cyberfranklin_health2", "200" };
-cvar_t	sk_cyberfranklin_health3 = { "sk_cyberfranklin_health3", "250" };
+cvar_t	sk_cyberfranklin_health1 = { "sk_cyberfranklin_health1", "0" };
+cvar_t	sk_cyberfranklin_health2 = { "sk_cyberfranklin_health2", "0" };
+cvar_t	sk_cyberfranklin_health3 = { "sk_cyberfranklin_health3", "0" };
 
 // Houndeye
-cvar_t	sk_houndeye_dmg_bite1 = { "sk_houndeye_dmg_bite1", "6" };
-cvar_t	sk_houndeye_dmg_bite2 = { "sk_houndeye_dmg_bite2", "10" };
-cvar_t	sk_houndeye_dmg_bite3 = { "sk_houndeye_dmg_bite3", "10" };
+cvar_t	sk_houndeye_dmg_bite1 = { "sk_houndeye_dmg_bite1", "0" };
+cvar_t	sk_houndeye_dmg_bite2 = { "sk_houndeye_dmg_bite2", "0" };
+cvar_t	sk_houndeye_dmg_bite3 = { "sk_houndeye_dmg_bite3", "0" };
 
 // Megasquid
-cvar_t	sk_megasquid_health1 = { "sk_megasquid_health1", "30" };
-cvar_t	sk_megasquid_health2 = { "sk_megasquid_health2", "40" };
-cvar_t	sk_megasquid_health3 = { "sk_megasquid_health3", "120" };
+cvar_t	sk_megasquid_health1 = { "sk_megasquid_health1", "0" };
+cvar_t	sk_megasquid_health2 = { "sk_megasquid_health2", "0" };
+cvar_t	sk_megasquid_health3 = { "sk_megasquid_health3", "0" };
 
 // Zombie bull
-cvar_t	sk_zombiebull_health1 = { "sk_zombiebull_health1", "180" };
-cvar_t	sk_zombiebull_health2 = { "sk_zombiebull_health2", "240" };
-cvar_t	sk_zombiebull_health3 = { "sk_zombiebull_health3", "720" };
+cvar_t	sk_zombiebull_health1 = { "sk_zombiebull_health1", "0" };
+cvar_t	sk_zombiebull_health2 = { "sk_zombiebull_health2", "0" };
+cvar_t	sk_zombiebull_health3 = { "sk_zombiebull_health3", "0" };
 
-cvar_t	sk_zombiebull_dmg_bite1 = { "sk_zombiebull_dmg_bite1", "15" };
-cvar_t	sk_zombiebull_dmg_bite2 = { "sk_zombiebull_dmg_bite2", "25" };
-cvar_t	sk_zombiebull_dmg_bite3 = { "sk_zombiebull_dmg_bite3", "25" };
+cvar_t	sk_zombiebull_dmg_bite1 = { "sk_zombiebull_dmg_bite1", "0" };
+cvar_t	sk_zombiebull_dmg_bite2 = { "sk_zombiebull_dmg_bite2", "0" };
+cvar_t	sk_zombiebull_dmg_bite3 = { "sk_zombiebull_dmg_bite3", "0" };
 
-cvar_t	sk_zombiebull_dmg_whip1 = { "sk_zombiebull_dmg_whip1", "25" };
-cvar_t	sk_zombiebull_dmg_whip2 = { "sk_zombiebull_dmg_whip2", "35" };
-cvar_t	sk_zombiebull_dmg_whip3 = { "sk_zombiebull_dmg_whip3", "35" };
+cvar_t	sk_zombiebull_dmg_whip1 = { "sk_zombiebull_dmg_whip1", "0" };
+cvar_t	sk_zombiebull_dmg_whip2 = { "sk_zombiebull_dmg_whip2", "0" };
+cvar_t	sk_zombiebull_dmg_whip3 = { "sk_zombiebull_dmg_whip3", "0" };
 
 
 // PLAYER WEAPONS
 
 // Shovel
-cvar_t	sk_plr_shovel1 = { "sk_plr_shovel1", "10" };
-cvar_t	sk_plr_shovel2 = { "sk_plr_shovel2", "10" };
-cvar_t	sk_plr_shovel3 = { "sk_plr_shovel3", "10" };
+cvar_t	sk_plr_shovel1 = { "sk_plr_shovel1", "0" };
+cvar_t	sk_plr_shovel2 = { "sk_plr_shovel2", "0" };
+cvar_t	sk_plr_shovel3 = { "sk_plr_shovel3", "0" };
 
 // Spanner
-cvar_t	sk_plr_spanner1 = { "sk_plr_spanner1", "10" };
-cvar_t	sk_plr_spanner2 = { "sk_plr_spanner2", "10" };
-cvar_t	sk_plr_spanner3 = { "sk_plr_spanner3", "10" };
+cvar_t	sk_plr_spanner1 = { "sk_plr_spanner1", "0" };
+cvar_t	sk_plr_spanner2 = { "sk_plr_spanner2", "0" };
+cvar_t	sk_plr_spanner3 = { "sk_plr_spanner3", "0" };
 
 // AP9 Round
-cvar_t	sk_plr_ap9_bullet1 = { "sk_plr_ap9_bullet1", "5" };
-cvar_t	sk_plr_ap9_bullet2 = { "sk_plr_ap9_bullet2", "5" };
-cvar_t	sk_plr_ap9_bullet3 = { "sk_plr_ap9_bullet3", "5" };
+cvar_t	sk_plr_ap9_bullet1 = { "sk_plr_ap9_bullet1", "0" };
+cvar_t	sk_plr_ap9_bullet2 = { "sk_plr_ap9_bullet2", "0" };
+cvar_t	sk_plr_ap9_bullet3 = { "sk_plr_ap9_bullet3", "0" };
 
 // Taurus Round
-cvar_t	sk_plr_taurus_bullet1 = { "sk_plr_taurus_bullet1", "9" };
-cvar_t	sk_plr_taurus_bullet2 = { "sk_plr_taurus_bullet2", "9" };
-cvar_t	sk_plr_taurus_bullet3 = { "sk_plr_taurus_bullet3", "9" };
+cvar_t	sk_plr_taurus_bullet1 = { "sk_plr_taurus_bullet1", "0" };
+cvar_t	sk_plr_taurus_bullet2 = { "sk_plr_taurus_bullet2", "0" };
+cvar_t	sk_plr_taurus_bullet3 = { "sk_plr_taurus_bullet3", "0" };
 
 // Sniper Round
-cvar_t	sk_plr_sniper_bullet1 = { "sk_plr_sniper_bullet1", "15" };
-cvar_t	sk_plr_sniper_bullet2 = { "sk_plr_sniper_bullet2", "15" };
-cvar_t	sk_plr_sniper_bullet3 = { "sk_plr_sniper_bullet3", "15" };
+cvar_t	sk_plr_sniper_bullet1 = { "sk_plr_sniper_bullet1", "0" };
+cvar_t	sk_plr_sniper_bullet2 = { "sk_plr_sniper_bullet2", "0" };
+cvar_t	sk_plr_sniper_bullet3 = { "sk_plr_sniper_bullet3", "0" };
 
 // Flamethrower
-cvar_t	sk_plr_flame1 = { "sk_plr_flame1", "18" };
-cvar_t	sk_plr_flame2 = { "sk_plr_flame2", "18" };
-cvar_t	sk_plr_flame3 = { "sk_plr_flame3", "18" };
+cvar_t	sk_plr_flame1 = { "sk_plr_flame1", "0" };
+cvar_t	sk_plr_flame2 = { "sk_plr_flame2", "0" };
+cvar_t	sk_plr_flame3 = { "sk_plr_flame3", "0" };
 
 
 // HEALTH/SUIT CHARGE DISTRIBUTION
 
 // Medkit
-cvar_t	sk_medkit1 = { "sk_medkit1", "25" };
-cvar_t	sk_medkit2 = { "sk_medkit2", "25" };
-cvar_t	sk_medkit3 = { "sk_medkit3", "25" };
+cvar_t	sk_medkit1 = { "sk_medkit1", "0" };
+cvar_t	sk_medkit2 = { "sk_medkit2", "0" };
+cvar_t	sk_medkit3 = { "sk_medkit3", "0" };
 // END Cvars for Skill Level settings
 
 // Register your console variables here
