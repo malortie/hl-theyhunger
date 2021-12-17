@@ -227,6 +227,10 @@ void CMonsterMaker::MakeMonster( void )
 	if (pev->spawnflags & SF_MONSTER_NOZAP)
 		SetBits(pevCreate->spawnflags, SF_MONSTER_NOZAP);
 
+	// Override monster fade corpse
+	if (pev->spawnflags & SF_MONSTER_FADECORPSE)
+		SetBits(pevCreate->spawnflags, SF_MONSTER_FADECORPSE);
+
 	// Override monster framerate.
 	if (pev->spawnflags & SF_MONSTER_FASTZOMBIEMODE)
 		SetBits(pevCreate->spawnflags, SF_MONSTER_FASTZOMBIEMODE);
