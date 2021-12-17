@@ -100,7 +100,7 @@ public:
 	Schedule_t *GetScheduleOfType ( int Type );
 	Schedule_t *GetSchedule( void );
 	void BiteAttack( void );
-	inline bool IsNoZapFlagSet() const { return FBitSet(pev->spawnflags, SF_SQUADMONSTER_NOZAP) ? true : false; }
+	inline bool IsNoZapFlagSet() const { return FBitSet(pev->spawnflags, SF_MONSTER_NOZAP) ? true : false; }
 
 	int	Save( CSave &save ); 
 	int Restore( CRestore &restore );

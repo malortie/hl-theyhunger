@@ -223,6 +223,10 @@ void CMonsterMaker::MakeMonster( void )
 	if (pev->spawnflags & SF_MONSTER_ZOMBIECOP)
 		SetBits(pevCreate->spawnflags, SF_MONSTER_ZOMBIECOP);
 
+	// Override monster nozap
+	if (pev->spawnflags & SF_MONSTER_NOZAP)
+		SetBits(pevCreate->spawnflags, SF_MONSTER_NOZAP);
+
 	// Override monster framerate.
 	if (pev->spawnflags & SF_MONSTER_FASTZOMBIEMODE)
 		SetBits(pevCreate->spawnflags, SF_MONSTER_FASTZOMBIEMODE);
