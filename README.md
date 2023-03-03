@@ -42,5 +42,4 @@ Thanks to the following resources for templates, guides and or general structura
 
 - [Apache Licence v2.0](https://www.apache.org/licenses/LICENSE-2.0)
 - [Best README Template](https://github.com/othneildrew/Best-README-Template)
-- [Contributor Covenant](https://www.contributor-covenant.org/)
 - [Keep a Changelog](https://keepachangelog.com/)
